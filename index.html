@@ -30,17 +30,21 @@
         <h1>
 <a id="用asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用ASUS Merlin 路由器 VPN 科学上网</h1>
 
+<p>时间：2016-08-09</p>
+
 <h2>
 <a id="准备" class="anchor" href="#%E5%87%86%E5%A4%87" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>准备</h2>
 
 <ul>
-<li>首先，你需要一台ASUS的路由器。</li>
+<li>
+<strong>首先，你需要一台ASUS的路由器</strong>。</li>
 </ul>
 
 <p>注：朋友安利我的是 <strong>华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路</strong></p>
 
 <ul>
-<li>然后你需要一个VPN。</li>
+<li>
+<strong>然后你需要一个VPN</strong>。</li>
 </ul>
 
 <p>注：我用的是PPTP，可以上AWS日本申请个免费试用一年的EC2 VPS，或是Linode买个一月USD10刀的VPS，然后自建一个PPTP的VPN</p>
@@ -57,32 +61,37 @@
 
 <p>另外，不必担心把路由器刷费了，华硕的路由器可以让你一键重置回来</p>
 
-<p>1）先到 <a href="https://asuswrt.lostrealm.ca/download">https://asuswrt.lostrealm.ca/download</a> 下载相应的固件，并解压。（我下载的是 <code>RT-AC68U_380.61_0.zip</code> ）</p>
+<p><strong>1）下载固件</strong>。先到 <a href="https://asuswrt.lostrealm.ca/download">https://asuswrt.lostrealm.ca/download</a> 下载相应的固件，并解压。（我下载的是 <code>RT-AC68U_380.61_0.zip</code> ）</p>
 
-<p>2）登录到你的路由器后台 <code>http://192.168.1.1/，在</code>系统管理<code>-&gt;</code>固件升级<code>中上传固件文件（我上传的是：</code>RT-AC68U_380.61_0.trx`）</p>
+<p><strong>2）升级固件</strong>。登录到你的路由器后台 <code>http://192.168.1.1/，在</code>系统管理<code>-&gt;</code>固件升级<code>中上传固件文件（我上传的是：</code>RT-AC68U_380.61_0.trx`）</p>
 
-<p>3）打开 jffs分区。<code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>Persistent JFFS2 partition</code></p>
-
-<ul>
-<li>Format JFFS partition at next boot - 否</li>
-<li>Enable JFFS custom scripts and configs - 是</li>
-</ul>
-
-<p>4）打开 ssh 登录。 <code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>SSH Daemon</code> </p>
+<p><strong>3）打开 JFFS 分区</strong>。<code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>Persistent JFFS2 partition</code></p>
 
 <ul>
 <li>
-<code>Allow SSH password login</code> - 是</li>
+<code>Format JFFS partition at next boot</code> - <code>否</code>
+</li>
+<li>
+<code>Enable JFFS custom scripts and configs</code> - <code>是</code>
+</li>
+</ul>
+
+<p><strong>4）打开 ssh 登录</strong>。 <code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>SSH Daemon</code> </p>
+
+<ul>
+<li>
+<code>Allow SSH password login</code> - <code>是</code>
+</li>
 </ul>
 
 <h3>
 <a id="连接-vpn" class="anchor" href="#%E8%BF%9E%E6%8E%A5-vpn" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>连接 VPN</h3>
 
-<p>1）到 <code>VPN</code> -&gt; <code>PPTP/L2TP Client</code> 中 添加设置文件。</p>
+<p><strong>1）到 <code>VPN</code> -&gt; <code>PPTP/L2TP Client</code> 中 添加设置文件。</strong></p>
 
 <p>注：最好使用PPTP，设置起来比较简单。L2TP不支持PEK的共享密码。</p>
 
-<p>2）保存配置后，点 <code>Active</code>， 如果一切正确，可以看到连接成功。</p>
+<p><strong>2）保存配置后，点 <code>Active</code>， 如果一切正确，可以看到连接成功。</strong></p>
 
 <h3>
 <a id="设置路由" class="anchor" href="#%E8%AE%BE%E7%BD%AE%E8%B7%AF%E7%94%B1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置路由</h3>
@@ -92,7 +101,53 @@
 <pre><code>ssh admin@192.168.1.1
 </code></pre>
 
-<p>（未完）</p>
+<h4>
+<a id="下载路由表" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E8%B7%AF%E7%94%B1%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载路由表</h4>
+
+<pre><code>cd /jffs
+wget https://raw.githubusercontent.com/haoel/haoel.github.io/master/downloads/route.sh
+</code></pre>
+
+<p><strong><code>route.sh</code> 怎么来的？</strong></p>
+
+<ul>
+<li>这个脚本的路由表是由来自这个项目：<a href="https://github.com/fivesheep/chnroutes">https://github.com/fivesheep/chnroutes</a>
+</li>
+<li>这个脚本包含6000多条路由规则，几乎包括了中国的网段。</li>
+<li>我修改了一下他生成出来的ip-up，其会自动查看路由器的wan的网关。</li>
+<li>你可以使用 <code>route.sh add</code> 来生效路由表，用 <code>./route.sh delete</code> 来删除路由表。</li>
+</ul>
+
+<p>注意，路由器是拨号的，所以，IP和网关会变，因此，如果网关变了，路由表需要被更新。（<strong>因为我刚刚才试用这个路由器，所以乱写了这个脚本，等日后再完善</strong>）</p>
+
+<h4>
+<a id="下载动态dns配置" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E5%8A%A8%E6%80%81dns%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载动态DNS配置</h4>
+
+<pre><code>cd /jffs/configs
+wget https://github.com/haoel/haoel.github.io/blob/master/downloads/dnsmasq.conf.add
+</code></pre>
+
+<p><strong><code>dnsmasq.conf.add</code>怎么来的？</strong></p>
+
+<ul>
+<li>这个配置来自 <a href="https://github.com/felixonmars/dnsmasq-china-list">https://github.com/felixonmars/dnsmasq-china-list</a>
+</li>
+<li>因为似乎他没有加上 itunes.apple.com ，所以，我就简单的把 <code>server=itunes.apple.com/114.114.114.114</code> 加到了 <code>accelerated-domains.china.conf</code> ，然后直接改名为 dnsmasq.conf.add</li>
+</ul>
+
+<h4>
+<a id="运行命令生效" class="anchor" href="#%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E7%94%9F%E6%95%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>运行命令生效</h4>
+
+<pre><code>/jffs/route.sh add 
+service restart_dnsmasq
+</code></pre>
+
+<h4>
+<a id="其它" class="anchor" href="#%E5%85%B6%E5%AE%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>其它</h4>
+
+<p>接下来，你需要让你的设备重接一下WiFi路由器，就好了。</p>
+
+<p>（全文完）</p>
       </section>
     </div>
 
