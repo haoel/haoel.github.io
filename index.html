@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Haoel.GitHub.io : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Haoel.GitHub.io</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/haoel">View on GitHub</a>
+
+          <h1 id="project_title">Haoel.GitHub.io</h1>
+          <h2 id="project_tagline"></h2>
+
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="用asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用ASUS Merlin 路由器 VPN 科学上网</h1>
+
+<h2>
+<a id="准备" class="anchor" href="#%E5%87%86%E5%A4%87" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>准备</h2>
+
+<ul>
+<li>首先，你需要一台ASUS的路由器。</li>
+</ul>
+
+<p>注：朋友安利我的是 <strong>华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路</strong></p>
+
+<ul>
+<li>然后你需要一个VPN。</li>
+</ul>
+
+<p>注：我用的是PPTP，可以上AWS日本申请个免费试用一年的EC2 VPS，或是Linode买个一月USD10刀的VPS，然后自建一个PPTP的VPN</p>
+
+<h2>
+<a id="路由器设置" class="anchor" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E8%AE%BE%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>路由器设置</h2>
+
+<h3>
+<a id="刷-merlin-固件" class="anchor" href="#%E5%88%B7-merlin-%E5%9B%BA%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>刷 merlin 固件</h3>
+
+<p>首先Asuswrt是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：<a href="https://github.com/RMerl/asuswrt-merlin">https://github.com/RMerl/asuswrt-merlin</a></p>
+
+<p>Merlin固件拥有更多的功能，由于第三方不断维护代码，各种新功能也在不断增加。Merlin固件的升级并不需要反复的操作过程，方法与官方固件的升级相同，有很好的硬件软件兼容性。继承了Asuswrt官方固件优秀的交互界面。Koolshare论坛所分享的固件大多是基于Merlin代码再次改进，增加适合国内使用的功能。</p>
+
+<p>另外，不必担心把路由器刷费了，华硕的路由器可以让你一键重置回来</p>
+
+<p>1）先到 <a href="https://asuswrt.lostrealm.ca/download">https://asuswrt.lostrealm.ca/download</a> 下载相应的固件，并解压。（我下载的是 <code>RT-AC68U_380.61_0.zip</code> ）</p>
+
+<p>2）登录到你的路由器后台 <code>http://192.168.1.1/，在</code>系统管理<code>-&gt;</code>固件升级<code>中上传固件文件（我上传的是：</code>RT-AC68U_380.61_0.trx`）</p>
+
+<p>3）打开 jffs分区。<code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>Persistent JFFS2 partition</code></p>
+
+<ul>
+<li>Format JFFS partition at next boot - 否</li>
+<li>Enable JFFS custom scripts and configs - 是</li>
+</ul>
+
+<p>4）打开 ssh 登录。 <code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>SSH Daemon</code> </p>
+
+<ul>
+<li>
+<code>Allow SSH password login</code> - 是</li>
+</ul>
+
+<h3>
+<a id="连接-vpn" class="anchor" href="#%E8%BF%9E%E6%8E%A5-vpn" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>连接 VPN</h3>
+
+<p>1）到 <code>VPN</code> -&gt; <code>PPTP/L2TP Client</code> 中 添加设置文件。</p>
+
+<p>注：最好使用PPTP，设置起来比较简单。L2TP不支持PEK的共享密码。</p>
+
+<p>2）保存配置后，点 <code>Active</code>， 如果一切正确，可以看到连接成功。</p>
+
+<h3>
+<a id="设置路由" class="anchor" href="#%E8%AE%BE%E7%BD%AE%E8%B7%AF%E7%94%B1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置路由</h3>
+
+<p>此时，你的路由器就VPN了，但是，包括访问中国的网站也被代理了。所以，还要设置一下路由表。</p>
+
+<pre><code>ssh admin@192.168.1.1
+</code></pre>
+
+<p>（未完）</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
