@@ -106,9 +106,10 @@
 <h4>
 <a id="下载路由表" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E8%B7%AF%E7%94%B1%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载路由表</h4>
 
-<pre><code>cd /jffs
+<pre><code>cd /jffs/scripts
 wget https://haoel.github.io/downloads/route.sh
-chmod -x ./route.sh
+echo -e "#!/bin/sh\n\n/jffs/scripts/route.sh add" &gt; wan-start
+chmod a+rx /jffs/scripts/*
 </code></pre>
 
 <p><strong>route.sh 怎么来的？</strong></p>
@@ -131,6 +132,8 @@ chmod -x ./route.sh
 <pre><code>cd /jffs/configs
 wget https://haoel.github.io/downloads/dnsmasq.conf.add
 </code></pre>
+
+<p><strong>注：文件里用到的是 <code>114.114.114.114</code> 作为国内的DNS解析服务。经网友指出这个不靠谱 <a href="http://bobao.360.cn/news/detail/1793.html">http://bobao.360.cn/news/detail/1793.html</a> ，这里需要更新</strong></p>
 
 <p><strong>dnsmasq.conf.add怎么来的？</strong></p>
 
