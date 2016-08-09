@@ -63,7 +63,7 @@
 
 <p><strong>1）下载固件</strong>。先到 <a href="https://asuswrt.lostrealm.ca/download">https://asuswrt.lostrealm.ca/download</a> 下载相应的固件，并解压。（我下载的是 <code>RT-AC68U_380.61_0.zip</code> ）</p>
 
-<p><strong>2）升级固件</strong>。登录到你的路由器后台 <code>http://192.168.1.1/，在</code>系统管理<code>-&gt;</code>固件升级<code>中上传固件文件（我上传的是：</code>RT-AC68U_380.61_0.trx`）</p>
+<p><strong>2）升级固件</strong>。登录到你的路由器后台 <code>http://192.168.1.1/</code> ，在 <code>系统管理</code> -&gt; <code>固件升级</code> 中上传固件文件（我上传的是：<code>RT-AC68U_380.61_0.trx</code>）</p>
 
 <p><strong>3）打开 JFFS 分区</strong>。<code>系统管理</code> -&gt; <code>系统设置</code> -&gt; <code>Persistent JFFS2 partition</code></p>
 
@@ -101,11 +101,14 @@
 <pre><code>ssh admin@192.168.1.1
 </code></pre>
 
+<p>输入你设置的路由器后台的登录口令，你就可以进入路由器的操作系统了。</p>
+
 <h4>
 <a id="下载路由表" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E8%B7%AF%E7%94%B1%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载路由表</h4>
 
 <pre><code>cd /jffs
 wget https://haoel.github.io/downloads/route.sh
+chmod -x ./route.sh
 </code></pre>
 
 <p><strong>route.sh 怎么来的？</strong></p>
