@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Haoel.GitHub.io : ">
+    <meta name="description" content="科学上网 : 左耳朵">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -18,8 +18,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/haoel">View on GitHub</a>
 
-          <h1 id="project_title">Haoel.GitHub.io</h1>
-          <h2 id="project_tagline"></h2>
+          <h1 id="project_title">科学上网</h1>
+          <h2 id="project_tagline">左耳朵</h2>
 
         </header>
     </div>
@@ -28,32 +28,44 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="用asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用ASUS Merlin 路由器 VPN 科学上网</h1>
+<a id="用-asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8-asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用 ASUS Merlin 路由器 VPN 科学上网</h1>
 
-<p>时间：2016-08-09</p>
+<p>作者：左耳朵 <a href="http://coolshell.cn">http://coolshell.cn</a>
+更新时间：2016-08-10</p>
 
 <h2>
 <a id="准备" class="anchor" href="#%E5%87%86%E5%A4%87" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>准备</h2>
 
-<ul>
-<li>
-<strong>首先，你需要一台ASUS的路由器</strong>。</li>
-</ul>
+<h3>
+<a id="首先你应该对英文读写没什么问题" class="anchor" href="#%E9%A6%96%E5%85%88%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AF%B9%E8%8B%B1%E6%96%87%E8%AF%BB%E5%86%99%E6%B2%A1%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>首先，你应该对英文读写没什么问题</h3>
 
-<p>注：朋友安利我的是 <strong>华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路</strong></p>
+<p>为什么这么说？<strong>逻辑是这样的，如果你上了Google还是在用中文关键词，那么你科学上网有什么意义呢？</strong> 换言之，科学上网的目的是为了进入广阔的世界范围与全世界的人交流，所以，英文是必备的，如果你英文有问题，VPN过去也的用处也不大。</p>
 
-<ul>
-<li>
-<strong>然后你需要一个VPN</strong>。</li>
-</ul>
+<p>所以，我把这个前提条件放在第一的位置，就是说—— <strong>真正的墙不是GFW，而是人的大脑</strong></p>
 
-<p>注：我用的是PPTP，可以上AWS日本申请个免费试用一年的EC2 VPS，或是Linode买个一月USD10刀的VPS，然后自建一个PPTP的VPN</p>
+<h3>
+<a id="然后你需要一个vpn" class="anchor" href="#%E7%84%B6%E5%90%8E%E4%BD%A0%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AAvpn" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>然后，你需要一个VPN</h3>
+
+<p>这里我用的是PPTP，可以上AWS日本申请个免费试用一年的EC2 VPS，或是Linode买个一月USD10刀的VPS，然后自建一个PPTP的VPN。</p>
+
+<p>我在北京，感觉日本的VPS是比较快，其本上ping值可以在100ms以内，linode的似乎可以在50ms左右。Anyway，<strong>现在你买一台VPS也不贵了，也就是一个月10美金左右（60-70元），千万别告诉我，一个月你花60-70元钱对你是件很奢侈的事</strong>。</p>
+
+<p>关于PPTP服务器的设置，请参看 《<a href="https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp">How To Setup Your Own VPN With PPTP</a>》</p>
+
+<h3>
+<a id="最后你需要一台asus的路由器" class="anchor" href="#%E6%9C%80%E5%90%8E%E4%BD%A0%E9%9C%80%E8%A6%81%E4%B8%80%E5%8F%B0asus%E7%9A%84%E8%B7%AF%E7%94%B1%E5%99%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>最后，你需要一台ASUS的路由器</h3>
+
+<p>用这台路由器的目的是为了用路由器科学上网，这样全家或全公司就科学上网了。</p>
+
+<p>朋友安利我的是 <strong>华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路</strong>，可能这个路由器对你来说有点贵，你也可以看看别的，比如：RT-AC66U，大约600元。</p>
+
+<p>当然，不用这样的路由器也没有什么问题，在所有的客户端设备上设置VPN也没有问题。</p>
 
 <h2>
 <a id="路由器设置" class="anchor" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E8%AE%BE%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>路由器设置</h2>
 
 <h3>
-<a id="刷-merlin-固件" class="anchor" href="#%E5%88%B7-merlin-%E5%9B%BA%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>刷 merlin 固件</h3>
+<a id="给路由器刷-merlin-固件" class="anchor" href="#%E7%BB%99%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7-merlin-%E5%9B%BA%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>给路由器刷 merlin 固件</h3>
 
 <p>首先Asuswrt是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：<a href="https://github.com/RMerl/asuswrt-merlin">https://github.com/RMerl/asuswrt-merlin</a></p>
 
@@ -106,34 +118,39 @@
 <h4>
 <a id="下载路由表" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E8%B7%AF%E7%94%B1%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载路由表</h4>
 
+<p><strong>为什么要设置路由表？</strong></p>
+
+<p>路由器VPN后，你所有的网络访问都得多国外绕一圈了。所以，需要把国内的IP给过滤出来，所以，需要设置静态路由表。</p>
+
 <pre><code>cd /jffs/scripts
 wget https://haoel.github.io/downloads/route.sh
-echo -e "#!/bin/sh\n\n/jffs/scripts/route.sh add" &gt; wan-start
+echo -e "#!/bin/sh\n\n/jffs/scripts/route.sh delete\n/jffs/scripts/route.sh add" &gt; /jffs/scripts/wan-start
 chmod a+rx /jffs/scripts/*
 </code></pre>
+
+<p><strong>wan-start 是什么？</strong></p>
+
+<p>注：<code>wan-start</code> 是一个事件脚本，在wan口连上后会运行，这里的运行指令是，先删除路由，再加入（因为WAN口的IP可能会换了）</p>
 
 <p><strong>route.sh 怎么来的？</strong></p>
 
 <ul>
-<li>这个脚本的路由表是由来自这个项目：<a href="https://github.com/fivesheep/chnroutes">https://github.com/fivesheep/chnroutes</a>
-</li>
-<li>这个脚本包含6000多条路由规则，几乎包括了中国的网段。</li>
-<li>我修改了一下他生成出来的ip-up，其会自动查看路由器的wan的网关。</li>
+<li>这个脚本的路由表是由来高春辉高老板的这个项目。 <a href="https://github.com/17mon/china_ip_list">https://github.com/17mon/china_ip_list</a> （之前的<a href="https://github.com/fivesheep/chnroutes">https://github.com/fivesheep/chnroutes</a> 已经没有人维护）</li>
+<li>这个脚本包含5000多条路由规则，几乎包括了中国的网段。</li>
+<li>我使用这个配置生成了 <code>route.sh</code> （生成脚本 <a href="https://github.com/haoel/haoel.github.io/tree/master/scripts">https://github.com/haoel/haoel.github.io/tree/master/scripts</a> ）</li>
 <li>你可以使用 <code>route.sh add</code> 来生效路由表，用 <code>./route.sh delete</code> 来删除路由表。</li>
 </ul>
-
-<p>注意，路由器是拨号的，所以，IP和网关会变，因此，如果网关变了，路由表需要被更新。（<strong>因为我刚刚才试用这个路由器，所以乱写了这个脚本，等日后再完善</strong>）</p>
-
-<p><strong>再注：你可以使用高春辉高老板的中国IP网段来生成这个文件。 <a href="https://github.com/17mon/china_ip_list">https://github.com/17mon/china_ip_list</a></strong></p>
 
 <h4>
 <a id="下载动态dns配置" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E5%8A%A8%E6%80%81dns%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载动态DNS配置</h4>
 
+<p><strong>为什么要设置动态DNS？</strong></p>
+
+<p>因为很多网站都会使用CDN，使用CDN的通常都会用DNS的CNAME做解析，所以，你的路由器VPN后，你的DNS服务器也会变了，我们这里默认使用的是Google的8.8.8.8，当然，这台服务器在国外，所以，用这台服务器解析域名的时候，就会解析到国外。所以，我们还需要一个动态的DNS配置，对于国内的站点，使用国内的DNS，对于国外的站点，使用8.8.8.8</p>
+
 <pre><code>cd /jffs/configs
 wget https://haoel.github.io/downloads/dnsmasq.conf.add
 </code></pre>
-
-<p><strong>注：文件里用到的是 <code>114.114.114.114</code> 作为国内的DNS解析服务。经网友指出这个不靠谱 <a href="http://bobao.360.cn/news/detail/1793.html">http://bobao.360.cn/news/detail/1793.html</a> ，这里需要更新</strong></p>
 
 <p><strong>dnsmasq.conf.add怎么来的？</strong></p>
 
@@ -141,12 +158,20 @@ wget https://haoel.github.io/downloads/dnsmasq.conf.add
 <li>这个配置来自 <a href="https://github.com/felixonmars/dnsmasq-china-list">https://github.com/felixonmars/dnsmasq-china-list</a>
 </li>
 <li>因为似乎他没有加上 itunes.apple.com ，所以，我就简单的把 <code>server=itunes.apple.com/114.114.114.114</code> 加到了 <code>accelerated-domains.china.conf</code> ，然后直接改名为 dnsmasq.conf.add</li>
+<li>生成脚本 <a href="https://github.com/haoel/haoel.github.io/tree/master/scripts">https://github.com/haoel/haoel.github.io/tree/master/scripts</a> </li>
 </ul>
+
+<p><em>注：文件里用到的是 <code>114.114.114.114</code> 作为国内的DNS解析服务。经网友指出这个不靠谱 <a href="http://bobao.360.cn/news/detail/1793.html">http://bobao.360.cn/news/detail/1793.html</a></em></p>
+
+<p>你可以在路由器上通过 <code>nvram get wan0_dns</code> 查看你自己的DNS，然后替换掉，如：</p>
+
+<pre><code>sed -i "s/114.114.114.114/$(nvram get wan0_dns|awk '{print $1}')/" dnsmasq.conf.add
+</code></pre>
 
 <h4>
 <a id="运行命令生效" class="anchor" href="#%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E7%94%9F%E6%95%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>运行命令生效</h4>
 
-<pre><code>/jffs/route.sh add 
+<pre><code>/jffs/scripts/route.sh add 
 service restart_dnsmasq
 </code></pre>
 
