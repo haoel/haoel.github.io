@@ -160,6 +160,7 @@ wget https://haoel.github.io/downloads/dnsmasq.conf.add
 <li>这个配置来自 <a href="https://github.com/felixonmars/dnsmasq-china-list">https://github.com/felixonmars/dnsmasq-china-list</a>
 </li>
 <li>因为似乎他没有加上 itunes.apple.com ，所以，我就简单的把 <code>server=itunes.apple.com/114.114.114.114</code> 加到了 <code>accelerated-domains.china.conf</code> ，然后直接改名为 dnsmasq.conf.add</li>
+<li>另外，<code>linkedin.com</code> 使用到的 <code>static.licdn.com</code> 也在这个文件中，建议去掉，不然linkedin.com打开会因为找不到相应的资源文件而异常。</li>
 <li>生成脚本 <a href="https://github.com/haoel/haoel.github.io/tree/master/scripts">https://github.com/haoel/haoel.github.io/tree/master/scripts</a> </li>
 </ul>
 
