@@ -34,6 +34,8 @@ curl -L https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/
 
 echo -e "Generated  ${DNSMASQ_FILE}"
 
+#linkedin.com uses static.licdn.com, it must be resolved out of China, so remove it
+sed -i.bak '/static.licdn.com/d' ${DNSMASQ_FILE} 
 
 echo -e "server=/itunes.apple.com/114.114.114.114
 server=/init.itunes.apple.com/114.114.114.114
@@ -41,3 +43,4 @@ server=/radio.itunes.apple.com/114.114.114.114
 server=/radio-activity.itunes.apple.com/114.114.114.114
 server=/radio-services.itunes.apple.com/114.114.114.114" >> ${DNSMASQ_FILE}
 echo -e "Added Apple Store download site into  ${DNSMASQ_FILE}"
+
