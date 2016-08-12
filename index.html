@@ -198,6 +198,18 @@ service restart_dnsmasq
 
 <p>然后查一查相关的IP是的位置在哪个国家。</p>
 
+<h2>
+<a id="已知问题" class="anchor" href="#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>已知问题</h2>
+
+<h3>
+<a id="quic-的问题" class="anchor" href="#quic-%E7%9A%84%E9%97%AE%E9%A2%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>QUIC 的问题</h3>
+
+<p>使用上述配置，在使用Chrome访问Googlet系统的网站时，比如：www.google.com、www.youtube.com 会出现打不开页面的问题。我做了一些调查，发现，这个问题是和Google的 <a href="https://en.wikipedia.org/wiki/QUIC">QUIC</a> 协议相关，因为Safari和FireFox是没有这个问题的，因为Safari和Firefox用的是HTTPS而不是QUIC。</p>
+
+<p>Workaround的方式是 Disable Chrome的试验型的QUIC协议，在Chrome里访问 <code>chrome://flags/#enable-quic</code> 可以关闭QUIC。</p>
+
+<p>目前，我在ASUS Merlin的官方论坛发了个贴：<a href="http://www.snbforums.com/threads/quic-issue.34105/">http://www.snbforums.com/threads/quic-issue.34105/</a></p>
+
 <p>（全文完）</p>
       </section>
     </div>
