@@ -1,4 +1,4 @@
-# 用 ASUS Merlin 路由器 VPN 科学上网
+# VPN 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
 更新时间：2016-08-10
@@ -22,6 +22,40 @@
 
 关于PPTP服务器的设置，请参看 《[How To Setup Your Own VPN With PPTP](https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp)》
 
+####设置PPTP服务
+```
+sudo docker run -d --privileged --net=host 
+                -v {/path_to_file/chap-secrets}:/etc/ppp/chap-secrets \
+                mobtitude/vpn-pptp
+```
+PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你需要给docker容器提供这个文件，下面是这个文件的示例：
+
+```
+# Secrets for authentication using PAP
+# client    server      secret           acceptable local IP addresses
+  fuckgfw   *           whosyourdaddy    *
+```
+
+####设置L2TP/IPSec服务
+
+下面命令行中被 `{` 和 `}` 引用的地方，需要替换一下：
+
+```
+sudo docker run -d -p 500:500/udp -p 4500:4500/udp -p 1701:1701/tcp \
+                -e PSK={共享密码} -e USERNAME={用户名}-e PASSWORD={密码}\
+                siomiz/softethervpn
+```
+
+####设置Shadowsocks服务
+
+下面命令行中被 `{` 和 `}` 引用的地方，需要替换一下：
+
+```
+sudo docker run -d -p 1984:1984  -s 0.0.0.0 -p 1984 \
+                -k {密码} -m aes-256-cfb \
+                oddrationale/docker-shadowsocks
+```
+
 ### 最后，你需要一台ASUS的路由器 
 
 用这台路由器的目的是为了用路由器科学上网，这样全家或全公司就科学上网了。
@@ -30,7 +64,7 @@
 
 当然，不用这样的路由器也没有什么问题，在所有的客户端设备上设置VPN也没有问题。
 
-## 路由器设置
+## 用 ASUS Merlin 路由器 VPN 科学上网 
 
 ### 给路由器刷 merlin 固件
 
