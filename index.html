@@ -28,7 +28,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="用-asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8-asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用 ASUS Merlin 路由器 VPN 科学上网</h1>
+<a id="vpn-科学上网" class="anchor" href="#vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>VPN 科学上网</h1>
 
 <p>作者：左耳朵 <a href="http://coolshell.cn">http://coolshell.cn</a>
 更新时间：2016-08-10</p>
@@ -54,6 +54,43 @@
 
 <p>关于PPTP服务器的设置，请参看 《<a href="https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp">How To Setup Your Own VPN With PPTP</a>》</p>
 
+<p>当然，你可以使用 <code>docker</code> 来非常简单的设置翻墙服务器。</p>
+
+<h4>
+<a id="设置pptp服务" class="anchor" href="#%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置PPTP服务</h4>
+
+<pre><code>sudo docker run -d --privileged --net=host 
+                -v {/path_to_file/chap-secrets}:/etc/ppp/chap-secrets \
+                mobtitude/vpn-pptp
+</code></pre>
+
+<p>PPTP 使用 <code>/etc/ppp/chap-secrets</code> 文件设置用户名和密码，所以你需要给docker容器提供这个文件，下面是这个文件的示例：</p>
+
+<pre><code># Secrets for authentication using PAP
+# client    server      secret           acceptable local IP addresses
+  fuckgfw   *           whosyourdaddy    *
+</code></pre>
+
+<h4>
+<a id="设置l2tpipsec服务" class="anchor" href="#%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置L2TP/IPSec服务</h4>
+
+<p>下面命令行中被 <code>{</code> 和 <code>}</code> 引用的地方，需要替换一下：</p>
+
+<pre><code>sudo docker run -d -p 500:500/udp -p 4500:4500/udp -p 1701:1701/tcp \
+                -e PSK={共享密码} -e USERNAME={用户名}-e PASSWORD={密码}\
+                siomiz/softethervpn
+</code></pre>
+
+<h4>
+<a id="设置shadowsocks服务" class="anchor" href="#%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>设置Shadowsocks服务</h4>
+
+<p>下面命令行中被 <code>{</code> 和 <code>}</code> 引用的地方，需要替换一下：</p>
+
+<pre><code>sudo docker run -d -p 1984:1984  -s 0.0.0.0 -p 1984 \
+                -k {密码} -m aes-256-cfb \
+                oddrationale/docker-shadowsocks
+</code></pre>
+
 <h3>
 <a id="最后你需要一台asus的路由器" class="anchor" href="#%E6%9C%80%E5%90%8E%E4%BD%A0%E9%9C%80%E8%A6%81%E4%B8%80%E5%8F%B0asus%E7%9A%84%E8%B7%AF%E7%94%B1%E5%99%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>最后，你需要一台ASUS的路由器</h3>
 
@@ -64,7 +101,7 @@
 <p>当然，不用这样的路由器也没有什么问题，在所有的客户端设备上设置VPN也没有问题。</p>
 
 <h2>
-<a id="路由器设置" class="anchor" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E8%AE%BE%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>路由器设置</h2>
+<a id="用-asus-merlin-路由器-vpn-科学上网" class="anchor" href="#%E7%94%A8-asus-merlin-%E8%B7%AF%E7%94%B1%E5%99%A8-vpn-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用 ASUS Merlin 路由器 VPN 科学上网</h2>
 
 <h3>
 <a id="给路由器刷-merlin-固件" class="anchor" href="#%E7%BB%99%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7-merlin-%E5%9B%BA%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>给路由器刷 merlin 固件</h3>
