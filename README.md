@@ -19,13 +19,13 @@
 - Quora 问答网站，在上面有很多有趣的问答。
 - 博客和论文，很多博客和论文站点都被墙了，比如：Blogspot 和 Medium。
 - Google 的各种服务，比如：Gmail, Map, Docs，Driver，照片，图片搜索，Voices，论文搜索……包括Google官方的各种技术文档……
-- 一些云服务，比如：Dropbox，IFTTT，Imgur，archive.org
+- 一些云服务，比如：Dropbox，IFTTT，Imgur，archive.org……
 - Twitter 上 Follow 一些牛人和一些官方账号，比如：AWS、Docker……
 - 社交 Facebook, Telegram, Whatsapp，Slack…… 有一些我在国外的亲戚和朋友……
 - Reddit 是一个聚合网站，一个新闻和文章的集散地，你可以认为是各种频道的今日头条……
 - Pintrest 和 Instagram  上面有很多不错的图片和视频新闻，是我减压力的地方……
 - 新闻，如BBC。 BBC是全球最比较出从的媒体，其上有太多的有价值资源和内容了，比如纪录片……
-- 编程，有很多编程的场景需要翻墙，比如，Go语言编程时的 go get 中的很多库是放在 Google的服务器上， 然而Google是全部被墙，包括 Android 和其它一些文档和资源也是一样。包括 SourceForge 的某些项目也需要科学上网，Docker Registry也有部分被墙，还有偶尔抽疯的Github。
+- 编程，有很多编程的场景需要翻墙，比如，Go语言编程时的 go get 中的很多库是放在 Google的服务器上， 然而Google是全部被墙，包括 Android 和其它一些文档和资源也是一样。包括 SourceForge 的某些项目也需要科学上网，Docker Registry也有部分被墙，还有偶尔抽疯的Github……
 - ……等等
 
 是的，我的互联网不是——全是骗子的百度、充满广告的微信朋友圈、质量低下的公众号、娱乐至死的新浪微博、只有抖机灵和“怎么看”的知乎、毫无营养的今日头条…… 在这样的网络空间里，我真的无法生存…… 这根本不是互联网，不是为我服务的互联网，而是在消费我的互联网，是让我变傻变笨的互联网…… 我不能忍，因为它影响到了我的生存……
@@ -42,7 +42,9 @@
 
 ## 2. 购买VPS
 
-然后，你需要一个VPS
+然后，你需要一个VPS。 
+
+（注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面可能会害了对方*）
 
 **现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人一个月你花70元钱不算奢侈的事，而且会让你的生活质量得得改善**。
 
@@ -71,14 +73,14 @@
  
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
-- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了。
+- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。
 - [Gigsgigscloud](https://clientarea.gigsgigscloud.com/index.php?/cart/cloudlet-v-hk/&step=0) CN2 GIA 在香港的结点是很不错的，当然，价格也很不错（建议几个人一起平摊费用）
 - [Kvmla](https://www.kvmla.com/) 香港地区的CN2 GIA提供商 每月80元
 - [Hostdare](https://manage.hostdare.com/index.php) 的CN2 GIA产品也是三网直连，KVM和OpenVZ两种架构，KVM产品长期缺货
 
 更多的可以参考这篇文章《[CN2 GIA VPS主机收集整理汇总-电信,联通,移动三网CN2 GIA线路VPS主机](https://wzfou.com/cn2-gia-vps/)》
 
-重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度，在Youtube.com上看1080p的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
+重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度，然而，香港地区的VPS的确是有点贵了。在Youtube.com上看1080p的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
 
 
 
