@@ -2,7 +2,7 @@ title: 科学上网
 description: 左耳朵
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-leap-day
+theme: jekyll-theme-cayman
 
 gems:
   - jekyll-mentions
