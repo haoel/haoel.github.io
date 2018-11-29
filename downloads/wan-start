@@ -1,4 +1,0 @@
-#!/bin/sh
-
-/jffs/scripts/route.sh delete
-/jffs/scripts/route.sh add
