@@ -81,11 +81,11 @@
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
 
 
-注意
-
-- 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
-
-- Google Cloud Platform - GCP 的香港和台湾结点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
+> **注意**
+>
+> - 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+>
+> - Google Cloud Platform - GCP 的香港和台湾结点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
 
 ### 2.2 CN2 线路
 
@@ -201,12 +201,12 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 	2. 然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）
 	3. 然后搜索 `Wingy` ，你会搜到 `OpenWingy`, `SuperWingy` 等
 
-注意：
+> **注意**
 
-- 关于如何注册美区Apple ID账号，你可以参看如下的这几篇文章（我不保证这些文章可不可用，但是你可以自行Google）。
-  - [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
-  - [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
-  - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
+> - 关于如何注册美区Apple ID账号，你可以参看如下的这几篇文章（我不保证这些文章可不可用，但是你可以自行Google）。
+>  - [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
+>  - [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
+>  - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
 
 
 ### 4.2 VPN 客户端
@@ -215,6 +215,47 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 - [Mac OS X PPTP/L2TP设置教程](https://www.jianshu.com/p/24e48cfb574f)
 - [Windows 7操作系统配置L2TP VPN方法](http://nic.upc.edu.cn/2016/0928/c7809a132077/page.htm)
+
+## 5. 流量伪装和其它方式
+
+我们知道，你翻墙的行为，其实都是在被探测中的，因为无论你的手机还是宽带都是有需要到运营商那里开通上网账户的，所以，各大电信运营商有你的所有的上网的记录。
+
+
+在Youtube上有个视频，你可以看一下 《[哪种翻墙软件更隐蔽？](https://www.youtube.com/watch?v=G-P8eyltc5E&feature=youtu.be)》，这个播主实测过，SS也好，SSR也好，无论你怎么混淆，都是没用的，都是可以被抓出来的。只有V2Ray 和 Brook 可以伪装得很好。
+
+> **注：** 说句老实话，我其时并不想害怕别人知道自己的上什么样的网站，因为我觉得我访问的都是合法的网站，但是就今天这个局势我也没办法——为什么要让像我这样的光明正大的良民搞得跟偷鸡摸狗之徒一样……
+
+### V2Ray
+
+V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
+
+ - V2Ray 用户手册：[https://www.v2ray.com](https://www.v2ray.com)
+ - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://www.v2ray.com)
+ - V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
+
+V2Ray 配合一些模块目前来说可以伪装成正常的流量。但是配置想当复杂。大家可以自己Google自己玩吧。
+
+
+### Brook
+
+Brook是一个由 Go语言编写的跨平台代理软件，支持 Linux/MacOS/Windows/Android/iOS 各个平台。
+
+- Brook Github项目：[https://github.com/txthinking/brook](https://github.com/txthinking/brook)
+
+- Github Wiki教程：[https://github.com/txthinking/brook/wiki/使用说明(中文)](https://github.com/txthinking/brook/wiki/使用说明(中文))
+
+服务器一行命令安装：
+
+```
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh && chmod +x brook.sh && bash brook.sh
+```
+
+运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就截图了，因为这个脚本运行起来中文菜单式的。
+
+然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
+
+
+
 
 
 
