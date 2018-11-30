@@ -28,8 +28,8 @@
   - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
   - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
 - [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
-  - [V2Ray](#v2ray)
-  - [Brook](#brook)
+  - [5.1 V2Ray](#51-v2ray)
+  - [5.2 Brook](#52-brook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -229,7 +229,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 > **注：** 说句老实话，我其时并不想害怕别人知道自己的上什么样的网站，因为我觉得我访问的都是合法的网站，但是就今天这个局势我也没办法——为什么要让像我这样的光明正大的良民搞得跟偷鸡摸狗之徒一样……
 
-### V2Ray
+### 5.1 V2Ray
 
 V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
 
@@ -240,12 +240,11 @@ V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网�
 V2Ray 配合一些模块目前来说可以伪装成正常的流量。但是配置想当复杂。大家可以自己Google自己玩吧。
 
 
-### Brook
+### 5.2 Brook
 
 Brook是一个由 Go语言编写的跨平台代理软件，支持 Linux/MacOS/Windows/Android/iOS 各个平台。
 
 - Brook Github项目：[https://github.com/txthinking/brook](https://github.com/txthinking/brook)
-
 - Github Wiki教程：[https://github.com/txthinking/brook/wiki/使用说明(中文)](https://github.com/txthinking/brook/wiki/使用说明(中文))
 
 服务器一行命令安装：
