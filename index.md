@@ -23,7 +23,7 @@
   - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
   - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
   - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-  - [3.4 设置PPTP服务](#34-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
+  - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
 - [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
   - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
   - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
@@ -105,7 +105,7 @@
  
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
-- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。 ）
+- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。买完后，你可能需要重装一下操作系统，装成64位带BBR的 ）
 - [Gigsgigscloud](https://clientarea.gigsgigscloud.com/index.php?/cart/cloudlet-v-hk/&step=0) CN2 GIA 在香港的结点是很不错的，当然，价格也很不错（建议几个人一起平摊费用）
 - [Kvmla](https://www.kvmla.com/) 香港地区的CN2 GIA提供商 每月80元
 - [Hostdare](https://manage.hostdare.com/index.php) 的CN2 GIA产品也是三网直连，KVM和OpenVZ两种架构，KVM产品长期缺货
@@ -173,7 +173,7 @@ sudo docker run -d  --privileged \
     siomiz/softethervpn
 ```
 
-### 3.4 设置PPTP服务
+### 3.5 设置PPTP服务
 
 PPTP不安全，请慎重使用
 
