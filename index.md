@@ -12,28 +12,32 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-  - [0. 序](#0-%E5%BA%8F)
-  - [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
-  - [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
-     - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
-     - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
-  - [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
-     - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
-     - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
-     - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
-     - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-     - [3.4 设置PPTP服务](#34-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
-  - [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
-     - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-     - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+
+- [0. 序](#0-%E5%BA%8F)
+- [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
+- [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
+  - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
+  - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
+- [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
+  - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
+  - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
+  - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
+  - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
+  - [3.4 设置PPTP服务](#34-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
+- [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
+  - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+  - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+- [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
+  - [V2Ray](#v2ray)
+  - [Brook](#brook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## 0. 序
 
-首先，我们先明确一下，科学上网的目的主要是为了学习、工作、交友、查资料、和丰富自己的眼界，不是为了看黄片和任何地下见不得人的东西。
+首先，我们先明确一下，我科学上网的目的主要是为了学习、工作、交友、查资料、和丰富自己的眼界，不是为了看黄片，或是干一些非法、政治或是见不得人的事。
 
-下面罗列一下需要科学上网，我才能真正学习工作和生活的网站：
+对我来说，科学上网很重要，下面罗列一下需要科学上网，我才能真正学习工作和生活的网站：
 
 - Youtube 和 Vimeo 上的各种大会和教学视频，除了我自己要学，我的孩子也要学。
 - Wikipedia 维基百科是我目前唯一信得过的百科全书，我在上面可以比较系统地翻阅各种词条。
@@ -46,11 +50,11 @@
 - 社交 Facebook, Telegram, Whatsapp，Slack…… 有一些我在国外的亲戚和朋友……
 - Reddit 是一个聚合网站，一个新闻和文章的集散地，你可以认为是各种频道的今日头条……
 - Pintrest 和 Instagram  上面有很多不错的图片和视频新闻，是我减压力的地方……
-- 新闻，如BBC。 BBC是全球最比较出从的媒体，其上有太多的有价值资源和内容了，比如纪录片……
-- 编程，有很多编程的场景需要翻墙，比如，Go语言编程时的 go get 中的很多库是放在 Google的服务器上， 然而Google是全部被墙，包括 Android 和其它一些文档和资源也是一样。包括 SourceForge 的某些项目也需要科学上网，Docker Registry也有部分被墙，还有偶尔抽疯的Github……
+- 新闻，如BBC。 BBC是全球比较出众的媒体，有太多的有价值资源和内容了，比如纪录片、学英文……
+- 编程，有很多编程的场景需要翻墙，比如，Go语言编程时的 go get 中的很多库是放在 Google的服务器上， 然而Google是全部被墙，包括 Android 和其它一些文档和资源也是一样。包括 SourceForge 的某些项目也需要科学上网，Docker Registry也有部分被墙，还有偶尔抽疯的Github，以及不能访问的gist……
 - ……等等
 
-是的，我的互联网不是——全是骗子的百度、充满广告的微信朋友圈、质量低下的公众号、娱乐至死的新浪微博、只有抖机灵和“怎么看”的知乎、毫无营养的今日头条…… 在这样的网络空间里，我真的无法生存…… 这根本不是互联网，不是为我服务的互联网，而是在消费我的互联网，是让我变傻变笨的互联网…… 我不能忍，因为它影响到了我的生存……
+是的，我的互联网不是——全是骗子的百度、充满广告的微信朋友圈、质量低下的公众号、娱乐至死的新浪微博、只有抖机灵和“怎么看XX”的知乎、毫无营养的今日头条…… 在这样的网络空间里，我真的无法生存…… 这根本不是互联网，不是为我服务的互联网，而是在消费我的互联网，是让我变傻变笨的互联网…… 我不能忍，因为它影响到了我的生存……
 
 
 ## 1. 英文能力
@@ -75,11 +79,17 @@
 对于VPS，下面是一些常规选项。
 
 - [AWS](https://aws.amazon.com/cn/)日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
+- [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD10刀的VPS
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
 
-注意，日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+
+> **注意**
+>
+> - 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+>
+> - Google Cloud Platform - GCP 的香港和台湾结点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
 
 ### 2.2 CN2 线路
 
@@ -95,7 +105,7 @@
  
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
-- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。
+- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。
 - [Gigsgigscloud](https://clientarea.gigsgigscloud.com/index.php?/cart/cloudlet-v-hk/&step=0) CN2 GIA 在香港的结点是很不错的，当然，价格也很不错（建议几个人一起平摊费用）
 - [Kvmla](https://www.kvmla.com/) 香港地区的CN2 GIA提供商 每月80元
 - [Hostdare](https://manage.hostdare.com/index.php) 的CN2 GIA产品也是三网直连，KVM和OpenVZ两种架构，KVM产品长期缺货
@@ -195,6 +205,13 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 	2. 然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）
 	3. 然后搜索 `Wingy` ，你会搜到 `OpenWingy`, `SuperWingy` 等
 
+> **注意**
+
+> - 关于如何注册美区Apple ID账号，你可以参看如下的这几篇文章（我不保证这些文章可不可用，但是你可以自行Google）。
+>  - [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
+>  - [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
+>  - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
+
 
 ### 4.2 VPN 客户端
 
@@ -202,6 +219,48 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 - [Mac OS X PPTP/L2TP设置教程](https://www.jianshu.com/p/24e48cfb574f)
 - [Windows 7操作系统配置L2TP VPN方法](http://nic.upc.edu.cn/2016/0928/c7809a132077/page.htm)
+
+## 5. 流量伪装和其它方式
+
+我们知道，你翻墙的行为，其实都是在被探测中的，因为无论你的手机还是宽带都是有需要到运营商那里开通上网账户的，所以，各大电信运营商有你的所有的上网的记录。
+
+
+在Youtube上有个视频，你可以看一下 《[哪种翻墙软件更隐蔽？](https://www.youtube.com/watch?v=G-P8eyltc5E&feature=youtu.be)》，这个播主实测过，SS也好，SSR也好，无论你怎么混淆，都是没用的，都是可以被抓出来的。只有V2Ray 和 Brook 可以伪装得很好。
+
+> **注：** 说句老实话，我其时并不想害怕别人知道自己的上什么样的网站，因为我觉得我访问的都是合法的网站，但是就今天这个局势我也没办法——为什么要让像我这样的光明正大的良民搞得跟偷鸡摸狗之徒一样……
+
+### V2Ray
+
+V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
+
+ - V2Ray 用户手册：[https://www.v2ray.com](https://www.v2ray.com)
+ - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://www.v2ray.com)
+ - V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
+
+V2Ray 配合一些模块目前来说可以伪装成正常的流量。但是配置想当复杂。大家可以自己Google自己玩吧。
+
+
+### Brook
+
+Brook是一个由 Go语言编写的跨平台代理软件，支持 Linux/MacOS/Windows/Android/iOS 各个平台。
+
+- Brook Github项目：[https://github.com/txthinking/brook](https://github.com/txthinking/brook)
+
+- Github Wiki教程：[https://github.com/txthinking/brook/wiki/使用说明(中文)](https://github.com/txthinking/brook/wiki/使用说明(中文))
+
+服务器一行命令安装：
+
+```
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh && chmod +x brook.sh && bash brook.sh
+```
+
+运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就截图了，因为这个脚本运行起来中文菜单式的。
+
+然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
+
+
+
+
 
 
 （全文完）
