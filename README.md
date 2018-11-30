@@ -80,7 +80,12 @@
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
 
-注意，日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+
+注意
+
+- 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+
+- Google Cloud Platform - GCP 的香港和台湾结点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
 
 ### 2.2 CN2 线路
 
@@ -96,7 +101,7 @@
  
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
-- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。
+- [搬瓦工](https://bandwagonhost.com/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。
 - [Gigsgigscloud](https://clientarea.gigsgigscloud.com/index.php?/cart/cloudlet-v-hk/&step=0) CN2 GIA 在香港的结点是很不错的，当然，价格也很不错（建议几个人一起平摊费用）
 - [Kvmla](https://www.kvmla.com/) 香港地区的CN2 GIA提供商 每月80元
 - [Hostdare](https://manage.hostdare.com/index.php) 的CN2 GIA产品也是三网直连，KVM和OpenVZ两种架构，KVM产品长期缺货
@@ -196,6 +201,13 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 	2. 然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）
 	3. 然后搜索 `Wingy` ，你会搜到 `OpenWingy`, `SuperWingy` 等
 
+注意：
+
+- 关于如何注册美区Apple ID账号，你可以参看如下的这几篇文章（我不保证这些文章可不可用，但是你可以自行Google）。
+  - [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
+  - [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
+  - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
+
 
 ### 4.2 VPN 客户端
 
@@ -203,6 +215,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 - [Mac OS X PPTP/L2TP设置教程](https://www.jianshu.com/p/24e48cfb574f)
 - [Windows 7操作系统配置L2TP VPN方法](http://nic.upc.edu.cn/2016/0928/c7809a132077/page.htm)
+
 
 
 （全文完）
