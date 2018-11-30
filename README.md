@@ -254,7 +254,7 @@ Brook是一个由 Go语言编写的跨平台代理软件，支持 Linux/MacOS/Wi
 wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh && chmod +x brook.sh && bash brook.sh
 ```
 
-运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就截图了，因为这个脚本运行起来中文菜单式的。
+运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就不截图了，因为这个脚本运行起来中文菜单式的。
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
 
