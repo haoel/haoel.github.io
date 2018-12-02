@@ -13,23 +13,25 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [0. 序](#0-%E5%BA%8F)
-- [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
-- [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
-  - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
-  - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
-- [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
-  - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
-  - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
-  - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
-  - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-  - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
-- [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
-  - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-  - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-- [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
-  - [5.1 V2Ray](#51-v2ray)
-  - [5.2 Brook](#52-brook)
+- [科学上网](#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91)
+    - [0. 序](#0-%E5%BA%8F)
+    - [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
+    - [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
+        - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
+        - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
+        - [2.3 NCP 线路](#23-ncp-%E7%BA%BF%E8%B7%AF)
+    - [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
+        - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
+        - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
+        - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
+        - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
+        - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
+    - [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
+        - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+        - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+    - [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
+        - [5.1 V2Ray](#51-v2ray)
+        - [5.2 Brook](#52-brook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -114,7 +116,18 @@
 
 重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度，然而，香港地区的VPS的确是有点贵了。在Youtube.com上看1080p的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
 
+### 2.3 NCP 线路
+**NCP** 全称 New Cross Pacific（新跨太平洋海底光缆系统）。
+2018年11月底，中国到美国之间的海底光缆新开通了NCP线路，并且容量更大（系统设计容量超过80Tbps），路由更少（中国上海到美国中间路由节点只有11个，ping值110ms）。
 
+NCP线路全长13,000公里，连接美国俄勒冈州希尔斯伯勒，连接崇明（中国大陆），南汇（中国大陆），临港（中国大陆），釜山（韩国），头城（台湾），和丸山（日本）。
+
+相对于第二条中美直达海底光缆系统（跨太平洋快线，TPE），现阶段NCP线路的网络流量更少更稳定。特征是华东/中地区流量会经过NCP直达路由节点，IP地址为202.97.95.201/202。
+
+关于 `NCP` 线路的主机提供商，下面罗列两个
+
+- [50KVM VPS](https://www.50kvm.com) 截止2018年12月2日KVM 产品最低价格￥81.60/月。
+- [OLVPS](https://t667.com/) 截止2018年12月2日KVM 产品最低价格¥22/月。
 
 ## 3. 搭建 Shadowsocks 和 VPN 服务
 
