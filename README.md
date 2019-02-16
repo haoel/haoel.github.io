@@ -247,7 +247,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 V2Ray 是一个与 Shadowsocks 类似的代理软件。
 
  - V2Ray 用户手册：[https://www.v2ray.com](https://www.v2ray.com)
- - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://www.v2ray.com)
+ - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
  - V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
 
 V2Ray 配合一些模块目前来说可以伪装成正常的流量。但是配置相当复杂。大家可以自己Google自己玩吧。
