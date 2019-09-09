@@ -13,25 +13,25 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [科学上网](#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91)
-    - [0. 序](#0-%E5%BA%8F)
-    - [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
-    - [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
-        - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
-        - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
-        - [2.3 NCP 线路](#23-ncp-%E7%BA%BF%E8%B7%AF)
-    - [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
-        - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
-        - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
-        - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
-        - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-        - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
-    - [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
-        - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-        - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-    - [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
-        - [5.1 V2Ray](#51-v2ray)
-        - [5.2 Brook](#52-brook)
+- [科学上网](#科学上网)
+  - [0. 序](#0-序)
+  - [1. 英文能力](#1-英文能力)
+  - [2. 购买VPS](#2-购买vps)
+    - [2.1 常规VPS](#21-常规vps)
+    - [2.2 CN2 线路](#22-cn2-线路)
+    - [2.3 NCP 线路](#23-ncp-线路)
+  - [3. 搭建 Shadowsocks 和 VPN 服务](#3-搭建-shadowsocks-和-vpn-服务)
+    - [3.1 设置Docker服务](#31-设置docker服务)
+    - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
+    - [3.3 设置Shadowsocks服务](#33-设置shadowsocks服务)
+    - [3.4 设置L2TP/IPSec服务](#34-设置l2tpipsec服务)
+    - [3.5 设置PPTP服务](#35-设置pptp服务)
+  - [4. 客户端设置](#4-客户端设置)
+    - [4.1 Shadowsocks 客户端](#41-shadowsocks-客户端)
+    - [4.2 VPN 客户端](#42-vpn-客户端)
+  - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
+    - [5.1 V2Ray](#51-v2ray)
+    - [5.2 Brook](#52-brook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -72,15 +72,17 @@
 
 然后，你需要一个VPS。 
 
-（注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面可能会害了对方*）
+（注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面通常这样的服务非常的不稳定，而且也容易被代理方做中间件攻击*）
 
-**现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人一个月你花70元钱不算奢侈的事，而且会让你的生活质量得得改善**。
+**现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人觉得一个月花70元钱不算奢侈的事，而且会让你的生活质量得得改善**。
+
+（注：*我现在每个投入在科学上网上的成本大概在不到1000元人民币左右，常备3-5个不同国家的VPS，因为国内的网络路由经常性的变化，所以，为了确保总是有一条快的，所以，得多备几个*）。
 
 ### 2.1 常规VPS
 
 对于VPS，下面是一些常规选项。
 
-- [AWS](https://aws.amazon.com/cn/)日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
+- [AWS](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD10刀的VPS
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
@@ -88,6 +90,9 @@
 
 
 > **注意**
+> - 在中国，因为有太多的网络提供商，所以，国内的网络也是很奇葩的，可以看到的是，不同的地方，不同的网络，到不同的国家完全不一样，而且还经常性地调整路由，所以，经常性地有时候快有时候慢，简真就是随机的。所以，像我这样要求比较高的人，一般会备3-5个不同国家地区的VPS，以保障上网的速度。
+> 
+> - 香港网速应该是比较好的，但是香港的成本也是比较高的。
 >
 > - 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
 >
@@ -112,7 +117,7 @@
 - [Kvmla](https://www.kvmla.com/) 香港地区的CN2 GIA提供商 每月80元
 - [Hostdare](https://manage.hostdare.com/index.php) 的CN2 GIA产品也是三网直连，KVM和OpenVZ两种架构，KVM产品长期缺货
 
-更多的可以参考这篇文章《[CN2 GIA VPS主机收集整理汇总-电信,联通,移动三网CN2 GIA线路VPS主机](https://wzfou.com/cn2-gia-vps/)》
+更多的可以参考这篇文章《[CN2 GIA VPS主机收集整理汇总-电信,联通,移动三网CN2 GIA线路VPS主机](https://wzfou.com/cn2-gia-vps/)》（注：随时间推移，这篇文章的内容可能会失效）
 
 重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度，然而，香港地区的VPS的确是有点贵了。在Youtube.com上看1080p的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
 
