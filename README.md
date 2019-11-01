@@ -82,11 +82,12 @@
 
 对于VPS，下面是一些常规选项。
 
-- [AWS](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
+- [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，目前的Zone不多，推荐使用日本或新加坡（需要国际信用卡）
+- [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD10刀的VPS
-- [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
+- [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
 
 
 > **注意**
@@ -94,7 +95,7 @@
 > 
 > - 香港网速应该是比较好的，但是香港的成本也是比较高的。
 >
-> - 日本区的网络质量并不是很好，有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+> - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
 >
 > - Google Cloud Platform - GCP 的香港和台湾结点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
 
