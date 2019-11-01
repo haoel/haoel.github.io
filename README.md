@@ -63,9 +63,9 @@
 
 **首先，你应该对英文读写没什么问题!**
 
-为什么这么说？**逻辑是这样的，如果你上了Google还是在用中文关键词，那么你科学上网有什么意义呢？** 换言之，科学上网的目的是为了进入广阔的世界范围与全世界的人交流，所以，英文是必备的，如果你英文有问题，VPN过去的用处也不大。
+为什么这么说？**这主要是针对计算机相关的知识，逻辑是这样的，如果你上了Google还是在用中文关键词，那么你好不容易出来了，结果又回去了，所以没什么意义呢？** 换言之，科学上网的目的是为了进入广阔的世界范围与全世界的人交流，所以，英文是必备的，如果你英文有问题，VPN过去的用处也不大。
 
-所以，我把这个前提条件放在第一的位置，就是说—— **真正的墙不是GFW，而是人的大脑！**
+所以，我把这个前提条件放在第一的位置，就是说—— **真正的墙不是GFW，而是人的大脑！** 意思是，屏蔽你获得信息能力的不是墙，而很大一部分则是我们自己的语言能力！
 
 
 ## 2. 购买VPS
@@ -279,9 +279,9 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 ## 6. 其它 
 
+如下还有一些其它的方式（注：均由网友提供，我没有验证过）
+
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
-
-
 
 （全文完）
 
