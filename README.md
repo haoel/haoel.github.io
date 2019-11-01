@@ -9,9 +9,6 @@
 
 ![](./images/cover.jpg)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [科学上网](#科学上网)
   - [0. 序](#0-序)
   - [1. 英文能力](#1-英文能力)
@@ -31,9 +28,11 @@
   - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
     - [5.1 V2Ray](#51-v2ray)
     - [5.2 Brook](#52-brook)
-  - [6. 其它](#6-其它)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [6. 针对 IP 被封的解决方案](#6-针对-ip-被封的解决方案)
+    - [6.1 Cloudflare](#61-cloudflare)
+    - [6.2 V2Ray](#62-v2ray)
+    - [6.3 补充](#63-补充)
+  - [7. 其它](#7-其它)
 
 ## 0. 序
 
@@ -277,7 +276,36 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
 
-## 6. 其它 
+## 6. 针对 IP 被封的解决方案
+
+花钱购买的 VPS 即便做了流量伪装依然有很大的几率 IP 被封锁，大多 VPS 服务商并不提供更换 IP 的服务，使用 CDN 可以让被封锁的 VPS 继续发挥翻墙功能。
+
+### 6.1 Cloudflare
+
+Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可以作为跳板来实现翻墙。
+
+注册 Cloudflare 帐号，并有一个空闲域名（三级域名即可），交给 Cloudflare 托管并将域名指向被封的 VPS IP，注意开启 Proxied 并且 SSL-TLS 使用 Flexible 选项。
+
+Cloudflare 只需免费方案足以，不必花钱。
+
+### 6.2 V2Ray
+
+VPS 上正常安装并配置好 V2Ray，注意两点:
+
+1. 传输协议必须要使用 ws
+2. 要使用 80 或者 8080 端口
+
+如果端口有其他用途，那么用 Nginx/Caddy 之类软件，做一个 WebSocket proxy 到 V2Ray 即可。
+
+### 6.3 补充
+
+客户端注意使用网址来连接。
+
+目前支持 WebSocket 的免费 CDN 似乎只有 Cloudflare 一家，国内 CDN 服务商既不支持也不安全，不要考虑了。如果有更好的服务商欢迎补充。
+
+网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
+
+## 7. 其它 
 
 如下还有一些其它的方式（注：均由网友提供，我没有验证过）
 
