@@ -12,7 +12,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [科学上网](#科学上网)
   - [0. 序](#0-序)
   - [1. 英文能力](#1-英文能力)
@@ -32,6 +31,7 @@
   - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
     - [5.1 V2Ray](#51-v2ray)
     - [5.2 Brook](#52-brook)
+  - [6. 其它](#6-其它)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
