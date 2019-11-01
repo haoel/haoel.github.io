@@ -277,7 +277,36 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
 
-## 6. 其它 
+### 6. 针对 IP 被封的解决方案
+
+花钱购买的 VPS 即便做了流量伪装依然有很大的几率 IP 被封锁，大多 VPS 服务商并不提供更换 IP 的服务，使用 CDN 可以让被封锁的 VPS 继续发挥翻墙功能。
+
+### 6.1 Cloudflare
+
+Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，于是可以作为跳板来实现翻墙。
+
+注册 Cloudflare 帐号，并有一个空闲域名（三级域名即可），交给 Cloudflare 托管并将域名指向被封的 VPS IP），注意开启 Proxied 并且 SSL-TLS 使用 Flexible 选项。
+
+Cloudflare 只需免费方案足以，不必花钱。
+
+### 6.2 V2Ray
+
+VPS 上正常安装并配置好 V2Ray，注意两点:
+
+1. 传输协议必须要使用 ws
+2. 要使用 80 或者 8080 端口
+
+如果端口有其他用途，那么用 Nginx/Caddy 之类软件，做一个 WebSocket proxy 到 V2Ray 即可。
+
+### 6.3 补充
+
+客户端注意使用网址来连接。
+
+目前支持 WebSocket 的免费 CDN 似乎只有 Cloudflare 一家，国内 CDN 服务商既不支持也不安全，不要考虑了。如果有更好的服务商欢迎补充。
+
+网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
+
+## 7. 其它 
 
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
 
