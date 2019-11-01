@@ -9,35 +9,30 @@
 
 ![](./images/cover.jpg)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [0. 序](#0-%E5%BA%8F)
-- [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
-- [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
-  - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
-  - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
-  - [2.3 NCP 线路](#23-ncp-%E7%BA%BF%E8%B7%AF)
-- [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
-  - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
-  - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
-  - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
-  - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-  - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
-- [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
-  - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-  - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-- [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
-  - [5.1 V2Ray](#51-v2ray)
-  - [5.2 Brook](#52-brook)
-- [6. 针对 IP 被封的解决方案](#6-%E9%92%88%E5%AF%B9-ip-%E8%A2%AB%E5%B0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
-  - [6.1 Cloudflare](#61-cloudflare)
-  - [6.2 V2Ray](#62-v2ray)
-  - [6.3 补充](#63-%E8%A1%A5%E5%85%85)
-- [7. 其它](#7-%E5%85%B6%E5%AE%83)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- [科学上网](#科学上网)
+  - [0. 序](#0-序)
+  - [1. 英文能力](#1-英文能力)
+  - [2. 购买VPS](#2-购买vps)
+    - [2.1 常规VPS](#21-常规vps)
+    - [2.2 CN2 线路](#22-cn2-线路)
+    - [2.3 NCP 线路](#23-ncp-线路)
+  - [3. 搭建 Shadowsocks 和 VPN 服务](#3-搭建-shadowsocks-和-vpn-服务)
+    - [3.1 设置Docker服务](#31-设置docker服务)
+    - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
+    - [3.3 设置Shadowsocks服务](#33-设置shadowsocks服务)
+    - [3.4 设置L2TP/IPSec服务](#34-设置l2tpipsec服务)
+    - [3.5 设置PPTP服务](#35-设置pptp服务)
+  - [4. 客户端设置](#4-客户端设置)
+    - [4.1 Shadowsocks 客户端](#41-shadowsocks-客户端)
+    - [4.2 VPN 客户端](#42-vpn-客户端)
+  - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
+    - [5.1 V2Ray](#51-v2ray)
+    - [5.2 Brook](#52-brook)
+  - [6. 针对 IP 被封的解决方案](#6-针对-ip-被封的解决方案)
+    - [6.1 Cloudflare](#61-cloudflare)
+    - [6.2 V2Ray](#62-v2ray)
+    - [6.3 补充](#63-补充)
+  - [7. 其它](#7-其它)
 
 ## 0. 序
 
