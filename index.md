@@ -13,25 +13,28 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [科学上网](#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91)
-    - [0. 序](#0-%E5%BA%8F)
-    - [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
-    - [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
-        - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
-        - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
-        - [2.3 NCP 线路](#23-ncp-%E7%BA%BF%E8%B7%AF)
-    - [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
-        - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
-        - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
-        - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
-        - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
-        - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
-    - [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
-        - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-        - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-    - [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
-        - [5.1 V2Ray](#51-v2ray)
-        - [5.2 Brook](#52-brook)
+- [0. 序](#0-%E5%BA%8F)
+- [1. 英文能力](#1-%E8%8B%B1%E6%96%87%E8%83%BD%E5%8A%9B)
+- [2. 购买VPS](#2-%E8%B4%AD%E4%B9%B0vps)
+  - [2.1 常规VPS](#21-%E5%B8%B8%E8%A7%84vps)
+  - [2.2 CN2 线路](#22-cn2-%E7%BA%BF%E8%B7%AF)
+  - [2.3 NCP 线路](#23-ncp-%E7%BA%BF%E8%B7%AF)
+- [3. 搭建 Shadowsocks 和 VPN 服务](#3-%E6%90%AD%E5%BB%BA-shadowsocks-%E5%92%8C-vpn-%E6%9C%8D%E5%8A%A1)
+  - [3.1 设置Docker服务](#31-%E8%AE%BE%E7%BD%AEdocker%E6%9C%8D%E5%8A%A1)
+  - [3.2 开启 TCP BBR 拥塞控制算法](#32-%E5%BC%80%E5%90%AF-tcp-bbr-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95)
+  - [3.3 设置Shadowsocks服务](#33-%E8%AE%BE%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1)
+  - [3.4 设置L2TP/IPSec服务](#34-%E8%AE%BE%E7%BD%AEl2tpipsec%E6%9C%8D%E5%8A%A1)
+  - [3.5 设置PPTP服务](#35-%E8%AE%BE%E7%BD%AEpptp%E6%9C%8D%E5%8A%A1)
+- [4. 客户端设置](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE)
+  - [4.1 Shadowsocks 客户端](#41-shadowsocks-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+  - [4.2 VPN 客户端](#42-vpn-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+- [5. 流量伪装和其它方式](#5-%E6%B5%81%E9%87%8F%E4%BC%AA%E8%A3%85%E5%92%8C%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F)
+  - [5.1 V2Ray](#51-v2ray)
+  - [5.2 Brook](#52-brook)
+- [6. 针对 IP 被封的解决方案](#6-%E9%92%88%E5%AF%B9-ip-%E8%A2%AB%E5%B0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+  - [6.1 Cloudflare](#61-cloudflare)
+  - [6.2 V2Ray](#62-v2ray)
+  - [6.3 补充](#63-%E8%A1%A5%E5%85%85)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -270,9 +273,34 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
 
+## 6. 针对 IP 被封的解决方案
 
+花钱购买的 VPS 即便做了流量伪装依然有很大的几率 IP 被封锁，大多 VPS 服务商并不提供更换 IP 的服务，使用 CDN 可以让被封锁的 VPS 继续发挥翻墙功能。
 
+### 6.1 Cloudflare
 
+Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可以作为跳板来实现翻墙。
+
+注册 Cloudflare 帐号，并有一个空闲域名（三级域名即可），交给 Cloudflare 托管并将域名指向被封的 VPS IP），注意开启 Proxied 并且 SSL-TLS 使用 Flexible 选项。
+
+Cloudflare 只需免费方案足以，不必花钱。
+
+### 6.2 V2Ray
+
+VPS 上正常安装并配置好 V2Ray，注意两点:
+
+1. 传输协议必须要使用 ws
+2. 要使用 80 或者 8080 端口
+
+如果端口有其他用途，那么用 Nginx/Caddy 之类软件，做一个 WebSocket proxy 到 V2Ray 即可。
+
+### 6.3 补充
+
+客户端注意使用网址来连接。
+
+目前支持 WebSocket 的免费 CDN 似乎只有 Cloudflare 一家，国内 CDN 服务商既不支持也不安全，不要考虑了。如果有更好的服务商欢迎补充。
+
+网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
 
 
 （全文完）
