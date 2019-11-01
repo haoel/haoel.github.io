@@ -80,7 +80,7 @@
 
 对于VPS，下面是一些常规选项。
 
-- [AWS](https://aws.amazon.com/cn/)日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡）
+- [AWS](https://aws.amazon.com/cn/)日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡，现在不需要国际信用卡，2019-10-23号[亲测带教程](https://tech.laogongshuo.com/posts/free-aws-ladder/)）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD10刀的VPS
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
