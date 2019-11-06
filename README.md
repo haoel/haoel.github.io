@@ -277,7 +277,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
 
-对于手机端，我带用的是iPhone下的 `Potatso Lite` 和 `Shadorocket` 这两个APP直接支持 HTTPS 的代理，配置上就好了。
+对于手机端，我带用的是iPhone下的 `Potatso Lite` 和 `ShadowRocket` 这两个APP直接支持 HTTPS 的代理，配置上就好了。
 
 
 ### 4.2 Shadowsocks 客户端
@@ -290,7 +290,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 - iPhone 端就比较麻烦了。因为国内全都被下架了。
 	1. 你需要注册一个美国的苹果ID.
 	2. 然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）
-	3. 然后搜索 `Potatso Lite` ，`Shadorocket`, `Wingy`, `Quantumult` 等。（我使用前两个）
+	3. 然后搜索 `Potatso Lite` ，`ShadowRocket`, `Wingy`, `Quantumult` 等。（我使用前两个）
 
 > **注意**
 >
