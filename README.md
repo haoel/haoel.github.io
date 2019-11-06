@@ -16,15 +16,17 @@
     - [2.1 常规VPS](#21-常规vps)
     - [2.2 CN2 线路](#22-cn2-线路)
     - [2.3 NCP 线路](#23-ncp-线路)
-  - [3. 搭建 Shadowsocks 和 VPN 服务](#3-搭建-shadowsocks-和-vpn-服务)
+  - [3. 搭建相关代理服务](#3-搭建相关代理服务)
     - [3.1 设置Docker服务](#31-设置docker服务)
     - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
-    - [3.3 设置Shadowsocks服务](#33-设置shadowsocks服务)
-    - [3.4 设置L2TP/IPSec服务](#34-设置l2tpipsec服务)
-    - [3.5 设置PPTP服务](#35-设置pptp服务)
+    - [3.3 用 gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
+    - [3.4 设置Shadowsocks服务](#34-设置shadowsocks服务)
+    - [3.5 设置L2TP/IPSec服务](#35-设置l2tpipsec服务)
+    - [3.6 设置PPTP服务](#36-设置pptp服务)
   - [4. 客户端设置](#4-客户端设置)
-    - [4.1 Shadowsocks 客户端](#41-shadowsocks-客户端)
-    - [4.2 VPN 客户端](#42-vpn-客户端)
+    - [4.1 gost 客户端](#41-gost-客户端)
+    - [4.2 Shadowsocks 客户端](#42-shadowsocks-客户端)
+    - [4.3 VPN 客户端](#43-vpn-客户端)
   - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
     - [5.1 V2Ray](#51-v2ray)
     - [5.2 Brook](#52-brook)
@@ -135,7 +137,7 @@ NCP线路全长13,000公里，连接美国俄勒冈州希尔斯伯勒，连接�
 - [50KVM VPS](https://www.50kvm.com) 截止2018年12月2日KVM 产品最低价格￥81.60/月。
 - [OLVPS](https://t667.com/) 截止2018年12月2日KVM 产品最低价格¥22/月。（**特别注意** ： 在 OLVPS 上的《[服务条款](https://olvps.com/index.php?rp=/knowledgebase/1/TOS.html)》 中有一条说明：“**禁止OpenV*P*N/Socks5/PPTP/L2TP等软件、公共代理**”，所以，可能OLPVS并不太适合）
 
-## 3. 搭建 Shadowsocks 和 VPN 服务
+## 3. 搭建相关代理服务
 
 ### 3.1 设置Docker服务
 
@@ -154,7 +156,56 @@ BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
 如果开启，请参看 《[开启TCP BBR拥塞控制算法](https://github.com/iMeiji/shadowsocks_install/wiki/开启TCP-BBR拥塞控制算法) 》
 
-### 3.3 设置Shadowsocks服务
+### 3.3 用 gost 设置 HTTPS 服务
+
+[gost](https://github.com/ginuerzh/gost) 是一个非常强的代理服务，它可以设置成 HTTPS 代理，然后把你的服务伪装成一个Web服务器，**我感觉这比其它的流量伪装更好，也更隐蔽。这也是这里强烈推荐的一个方式**。
+
+为了更为的隐蔽，你需要一个域名，然后使用 [Let's Encrypt](https://letsencrypt.org) 来签 一个证书。使用 Let's Encrypt 证书你需要在服务器上安装一个 [certbot](https://certbot.eff.org/instructions)，点击 [certbot](https://certbot.eff.org/instructions) 这个链接，你可以选择你的服务器，操作系统，然后就跟着指令走吧。
+
+接下来，你需要申请一个证书（我们使用standalone的方式，然后，你需要输入你的电子邮件和你的域名）：
+
+```
+$ sudo certbot certonly --standalone
+```
+
+证书默认生成在 `/etc/letsencrypt/live/<YOUR.DOMAIN.COM/>` 目录下，这个证书90天后就过期了，所以，需要使用一个 cron job 来定期更新（稍后给出）
+
+接下来就是启动 gost 服务了，我们这里还是使用 Docker 的方式建立 gost 服务器。
+```
+#!bin/bash
+
+## 下面的四个参数需要改成你的
+DOMAIN="YOU.DOMAIN.NAME"
+USER="username"
+PASS="password"
+PORT=443
+
+BIND_IP=0.0.0.0
+CERT_DIR=/etc/letsencrypt/
+CERT=${CERT_DIR}/live/${DOMAIN}/fullchain.pem
+KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
+docker run -d --name gost \
+    -v ${CERT_DIR}:${CERT_DIR}:ro \
+    --net=host ginuerzh/gost \
+    -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=code:404"
+```
+
+上面这个脚本，你需要配置：域名(`DOMAIN`), 用户名 (`USER`), 密码 (`PASS`) 和 端口号(`PORT`) 这几个变量。
+
+关于 gost 的参数， 你可以参看其文档：[Gost Wiki](https://docs.ginuerzh.xyz/gost/)，上面我设置一个参数 `probe_resist=code:404` 意思是，如果服务器被探测，或是用浏览器来访问，返回404错误，也可以返回一个网页（如：`probe_resist=file:/path/to/file.txt` 或其它网站 `probe_resist=web:example.com/page.html`）
+
+如无意外，你的服务就启起来了。接下来就是证书的自动化更新。
+
+可以使用命令  `crontab -e`  来编辑定时任务：
+
+```
+0 0 1 * * /usr/bin/certbot renew --force-renewal
+5 0 1 * * /usr/bin/docker restart gost
+```
+
+这样，服务器就配置完成了。客户端请移动后面的客户端章节。
+
+### 3.4 设置Shadowsocks服务
 
 Shadowsocks 的 Docker 启动脚本 （其中的 `SS_PORT` 和 `SS_PASSWD` 需要重新定义一下）
 
@@ -171,7 +222,7 @@ sudo docker run -dt --name ss \
 ```
 
 
-### 3.4 设置L2TP/IPSec服务
+### 3.5 设置L2TP/IPSec服务
 
 L2TP/IPSec 的启动脚本，其中的三个环境变量 `USER`， `PASS` 和 `PSK` 需要替换一下。
 
@@ -192,7 +243,7 @@ sudo docker run -d  --privileged \
     siomiz/softethervpn
 ```
 
-### 3.5 设置PPTP服务
+### 3.6 设置PPTP服务
 
 PPTP不安全，请慎重使用
 
@@ -212,7 +263,24 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 ## 4. 客户端设置
 
-### 4.1 Shadowsocks 客户端
+### 4.1 gost 客户端
+
+大多数的代理服务都支持 https 的代理，但是我们需要智能代理（也就是该翻的时候翻，不用翻的时候不翻），那么我们可以重用 Shadowsocks 的客户端。
+
+对于电脑来说，你同样可以 [下载 gost 程序](https://github.com/ginuerzh/gost/releases)，然后使用下面的命令行：
+
+```
+gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
+```
+这样用 gost 在你的本机启动了一个 `Shadowsocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
+
+你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
+
+
+对于手机端，我带用的是iPhone下的 `Potatso Lite` 和 `Shadorocket` 这两个APP直接支持 HTTPS 的代理，配置上就好了。
+
+
+### 4.2 Shadowsocks 客户端
 
 对于 Shadowsocks 客户端，可以到这里查看 [Shadowsocks Clients](https://shadowsocks.org/en/download/clients.html)
 
@@ -222,7 +290,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 - iPhone 端就比较麻烦了。因为国内全都被下架了。
 	1. 你需要注册一个美国的苹果ID.
 	2. 然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）
-	3. 然后搜索 `Wingy` ，你会搜到 `OpenWingy`, `SuperWingy` 等
+	3. 然后搜索 `Potatso Lite` ，`Shadorocket`, `Wingy`, `Quantumult` 等。（我使用前两个）
 
 > **注意**
 >
@@ -232,7 +300,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 >    - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
 
 
-### 4.2 VPN 客户端
+### 4.3 VPN 客户端
 
 对于L2TP/IPSec，几乎所有的客户端操作系统（无论是Windows/Mac/Linux的电脑，还是iPhone/Android）都支持，你可以自行Google。
 
@@ -241,10 +309,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 ## 5. 流量伪装和其它方式
 
-我们知道，你翻墙的行为，其实都是在被探测中的，因为无论你的手机还是宽带都是有需要到运营商那里开通上网账户的，所以，各大电信运营商有你的所有的上网的记录。
-
-
-在Youtube上有个视频，你可以看一下 《[哪种翻墙软件更隐蔽？](https://www.youtube.com/watch?v=G-P8eyltc5E&feature=youtu.be)》，这个播主实测过，SS也好，SSR也好，无论你怎么混淆，都是没用的，都是可以被抓出来的。只有V2Ray 和 Brook 可以伪装得很好。
+无论你用VPN，SS，V2Ray, Brook，都能被识别，**只有使用 gost 建造 HTTPS 的服务，才无法分别**
 
 > **注：** 说句老实话，我其时并不想害怕别人知道自己的上什么样的网站，因为我觉得我访问的都是合法的网站，但是就今天这个局势我也没办法——为什么要让像我这样的光明正大的良民搞得跟偷鸡摸狗之徒一样……
 
