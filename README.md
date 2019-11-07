@@ -90,6 +90,7 @@
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）
 - [Oracle Cloud](https://www.oracle.com/cloud/free/)两台VPS无限期使用，可选美日韩等地（需要国际信用卡）
+- [腾讯云](https://buy.cloud.tencent.com/cvm?tab=lite)香港机房1M-2M带宽约1年1000RMB左右，注意选择Linux系统（支持弹性公网IP更换，被封还有救）
 
 
 > **注意**
@@ -306,6 +307,14 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 
 - [Mac OS X PPTP/L2TP设置教程](https://www.jianshu.com/p/24e48cfb574f)
 - [Windows 7操作系统配置L2TP VPN方法](http://nic.upc.edu.cn/2016/0928/c7809a132077/page.htm)
+
+### 4.4 SSH 客户端
+
+通过 SSH 的方式无需在服务端做配置，默认 22 端口的 SSH 能连上即可。
+
+客户端下载 Bitvise SSH Client，打开代理设置端口，浏览器设置自动切换代理插件。
+
+- [SSH 代理教程](http://blog.wdlyb.com/tools-for-vps.html?replytocom=5472)
 
 ## 5. 流量伪装和其它方式
 
