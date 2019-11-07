@@ -154,7 +154,7 @@ TCP BBR（Bottleneck Bandwidth and Round-trip propagation time）是由Google设
 
 BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
-如果开启，请参看 《[开启TCP BBR拥塞控制算法](https://github.com/iMeiji/shadowsocks_install/wiki/开启TCP-BBR拥塞控制算法) 》
+如果开启，请参看 《[开启TCP BBR拥塞控制算法](https://github.com/iMeiji/shadowsocks_install/wiki/开启-TCP-BBR-拥塞控制算法) 》
 
 ### 3.3 用 gost 设置 HTTPS 服务
 
