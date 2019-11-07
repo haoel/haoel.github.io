@@ -313,7 +313,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 通过 SSH 的方式无需在服务端做配置，默认 22 端口的 SSH 能连上即可。
 
 #### windows环境
-客户端下载 Bitvise SSH Client，打开代理设置端口，浏览器设置自动切换代理插件。
+客户端下载 Bitvise SSH Client，打开代理设置端口，浏览器设置自动切换代理插件(Chrome可以安装插件SwitchyOmega自动切换环境)。
 
 - [SSH 代理教程](http://blog.wdlyb.com/tools-for-vps.html?replytocom=5472)
 
