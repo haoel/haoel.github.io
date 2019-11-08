@@ -309,13 +309,13 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 
 ## 5. 流量伪装和其它方式
 
-无论你用VPN，SS，V2Ray, Brook，都能被识别，**只有使用 gost 建造 HTTPS 的服务，才无法分别**
+无论你用VPN，SS，SSR，都有可能被识别，**只有使用 HTTP over TLS 的样子，才会跟正常的流量混在一起，很难被识别**，所以，目前来说，V2Ray客户端 + Nginx + V2Ray服务端的方式，或是gost的HTTPS的方式，基本上来说，在网络四层上看到的都是TLS的包，很难被识别。这种代理服务只，我觉得只能做探测，或是得到更多的算力来做统计学分析。所以，V2Ray 和 gost 的服务器端用 nginx 再挡一道，那么就很难被发现了。
 
 > **注：** 说句老实话，我其时并不想害怕别人知道自己的上什么样的网站，因为我觉得我访问的都是合法的网站，但是就今天这个局势我也没办法——为什么要让像我这样的光明正大的良民搞得跟偷鸡摸狗之徒一样……
 
 ### 5.1 V2Ray
 
-V2Ray 是一个与 Shadowsocks 类似的代理软件。
+V2Ray 可以配置成一个非常隐蔽的代理软件。
 
  - V2Ray 用户手册：[https://www.v2ray.com](https://www.v2ray.com)
  - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
