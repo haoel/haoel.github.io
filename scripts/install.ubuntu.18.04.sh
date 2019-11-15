@@ -161,7 +161,7 @@ init(){
         PS3="Please select a option: "
         re='^[0-9]+$'
         select opt in "安装 TCP BBR 拥塞控制算法" "安装 Docker 服务程序" "安装 Let's crypt 证书" "安装 Gost HTTP/2 代理服务" \
-                      "安装 ShadowSocks 代理服务" "安装 VPN/L2TP 服务" "安装 Brook 代理服务" "退出" ; do
+                      "安装 ShadowSocks 代理服务" "安装 VPN/L2TP 服务" "安装 Brook 代理服务" "创建证书更新 CronJob" "退出" ; do
             if ! [[ $REPLY =~ $re ]] ; then
                 echo -e "${COLOR_ERROR}Invalid option. Please input a number.${COLOR_NONE}"
                 break;
@@ -188,17 +188,13 @@ init(){
                 install_brook
                 break
             elif (( REPLY == 8 )) ; then
+                create_cront_job
+                break
+            elif (( REPLY == 9 )) ; then
                 exit
             else
                 echo -e "${COLOR_ERROR}Invalid option. Try another one.${COLOR_NONE}"
             fi
-        
-        
-        
-        
-        install_vpn
-
-        create_cront_job
         done
     done
 
