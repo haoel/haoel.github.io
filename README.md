@@ -172,7 +172,7 @@ $ sudo certbot certonly --standalone
 
 接下来就是启动 gost 服务了，我们这里还是使用 Docker 的方式建立 gost 服务器。
 ```
-#!bin/bash
+#!/bin/bash
 
 ## 下面的四个参数需要改成你的
 DOMAIN="YOU.DOMAIN.NAME"
