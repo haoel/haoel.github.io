@@ -105,8 +105,13 @@ create_cert() {
 }
 
 install_gost() {
+    if ! [ -x "$(command -v docker)" ]; then
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        return
+    fi
+
     if [ 1 = "$(check_container gost)" ]; then
-        echo "Gost 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 Gost。"
+        echo -e "${COLOR_ERROR}Gost 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 Gost。 ${COLOR_NONE}"
         return
     fi
 
@@ -140,16 +145,27 @@ create_cron_job(){
     # 写入前先检查，避免重复任务。
     if ! crontab_exists "cerbot renew --force-renewal"; then
         echo "0 0 1 * * /usr/bin/certbot renew --force-renewal" >> /var/spool/cron/crontabs/root
+        echo "${COLOR_SUCC}成功安装证书renew定时作业！${COLOR_NONE}"
+    else
+        echo "${COLOR_SUCC}证书renew定时作业已经安装过！${COLOR_NONE}"
     fi
 
     if ! crontab_exists "docker restart gost"; then 
         echo "5 0 1 * * /usr/bin/docker restart gost" >> /var/spool/cron/crontabs/root
+        echo "${COLOR_SUCC}成功安装gost更新证书定时作业！${COLOR_NONE}"
+    else
+        echo "${COLOR_SUCC}gost更新证书定时作业已经成功安装过！${COLOR_NONE}"
     fi
 }
 
 install_shadowsocks(){
+    if ! [ -x "$(command -v docker)" ]; then
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        return
+    fi
+
     if [ 1 = "$(check_container ss)" ]; then
-        echo "ShadowSocks 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 ShadowSocks。"
+        echo -e "${COLOR_ERROR}ShadowSocks 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 ShadowSocks。${COLOR_NONE}"
         return
     fi
 
@@ -170,8 +186,13 @@ install_shadowsocks(){
 }
 
 install_vpn(){
+    if ! [ -x "$(command -v docker)" ]; then
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        return
+    fi
+
     if [ 1 = "$(check_container vpn)" ]; then
-        echo "VPN 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 VPN。"
+        echo -e "${COLOR_ERROR}VPN 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 VPN。${COLOR_NONE}"
         return
     fi
 
