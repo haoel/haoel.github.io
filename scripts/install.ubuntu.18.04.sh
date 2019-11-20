@@ -132,10 +132,19 @@ install_gost() {
         -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=code:400"
 }
 
-create_cront_job(){
-    # TODO: 写入前先检查，避免重复任务。
-    echo "0 0 1 * * /usr/bin/certbot renew --force-renewal" >> /var/spool/cron/crontabs/root
-    echo "5 0 1 * * /usr/bin/docker restart gost" >> /var/spool/cron/crontabs/root
+crontab_exists() {
+    crontab -l 2>/dev/null | grep "$1" >/dev/null 2>/dev/null
+}
+
+create_cron_job(){
+    # 写入前先检查，避免重复任务。
+    if ! crontab_exists "cerbot renew --force-renewal"; then
+        echo "0 0 1 * * /usr/bin/certbot renew --force-renewal" >> /var/spool/cron/crontabs/root
+    fi
+
+    if ! crontab_exists "docker restart gost"; then 
+        echo "5 0 1 * * /usr/bin/docker restart gost" >> /var/spool/cron/crontabs/root
+    fi
 }
 
 install_shadowsocks(){
@@ -238,7 +247,7 @@ init(){
                 install_brook
                 break
             elif (( REPLY == 8 )) ; then
-                create_cront_job
+                create_cron_job
                 break
             elif (( REPLY == 9 )) ; then
                 exit
