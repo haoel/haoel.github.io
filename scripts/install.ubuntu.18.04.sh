@@ -191,8 +191,10 @@ install_vpn(){
 }
 
 install_brook(){
-    # TODO: 检查 brook 进程是否存在。
-    wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh && chmod +x brook.sh && bash brook.sh
+    brook_file="/usr/local/brook/brook"
+    [[ -e ${brook_file} ]] && echo -e "${COLOR_ERROR}Brook 已经安装，请检查!" && return
+    wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh &&\
+        chmod +x brook.sh && sudo bash brook.sh
 }
 
 # TODO: install v2ray
