@@ -15,7 +15,7 @@ update_core(){
     sudo apt install -y -qq --install-recommends linux-generic-hwe-18.04
     sudo apt autoremove
 
-    echo -e "内核更新完成,重新启动机器...${COLOR_NONE}"
+    echo -e "${COLOR_SUCC}内核更新完成,重新启动机器...${COLOR_NONE}"
     sudo reboot
 }
 
@@ -96,12 +96,11 @@ create_cert() {
 
     if ! [[ "$has_record" = "Y" ]] ;then
         echo "请操作完成后再继续."
-        exit
+        return
     fi
 
     read -p "请输入你要使用的域名:" domain
 
-    create_cert $domain
     sudo certbot certonly --standalone -d $domain
 }
 
@@ -127,7 +126,7 @@ install_gost() {
     CERT=${CERT_DIR}/live/${DOMAIN}/fullchain.pem
     KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
 
-    docker run -d --name gost \
+    sudo docker run -d --name gost \
         -v ${CERT_DIR}:${CERT_DIR}:ro \
         --net=host ginuerzh/gost \
         -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=code:400"
