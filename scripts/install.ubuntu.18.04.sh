@@ -65,13 +65,15 @@ install_docker() {
     fi
 }
 
+
 check_container(){
     has_container=$(sudo docker ps --format "{{.Names}}" | grep "$1")
 
+    # test 命令规范： 0 为 true, 1 为 false, >1 为 error
     if [ -n "$has_container" ] ;then
-        return 1
-    else
         return 0
+    else
+        return 1
     fi
 }
 
@@ -110,7 +112,7 @@ install_gost() {
         return
     fi
 
-    if [ 1 = "$(check_container gost)" ]; then
+    if check_container gost ; then
         echo -e "${COLOR_ERROR}Gost 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 Gost。 ${COLOR_NONE}"
         return
     fi
@@ -164,7 +166,7 @@ install_shadowsocks(){
         return
     fi
 
-    if [ 1 = "$(check_container ss)" ]; then
+    if [ check_container ss ; then
         echo -e "${COLOR_ERROR}ShadowSocks 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 ShadowSocks。${COLOR_NONE}"
         return
     fi
@@ -191,7 +193,7 @@ install_vpn(){
         return
     fi
 
-    if [ 1 = "$(check_container vpn)" ]; then
+    if check_container vpn ; then
         echo -e "${COLOR_ERROR}VPN 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 VPN。${COLOR_NONE}"
         return
     fi
