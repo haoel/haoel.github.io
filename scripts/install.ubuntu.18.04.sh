@@ -166,7 +166,7 @@ install_shadowsocks(){
         return
     fi
 
-    if [ check_container ss ; then
+    if check_container ss ; then
         echo -e "${COLOR_ERROR}ShadowSocks 容器已经在运行了，你可以手动停止容器，并删除容器，然后再执行本命令来重新安装 ShadowSocks。${COLOR_NONE}"
         return
     fi
