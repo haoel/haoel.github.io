@@ -141,7 +141,7 @@ NCP线路全长13,000公里，连接美国俄勒冈州希尔斯伯勒，连接�
 
 ## 3. 搭建相关代理服务
 
-> 注：如下的搭建和安装脚本可参看本库的 scripts 目录下的脚本，如： [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) （感谢网友 [@gongzili45](https://github.com/gongzili45) 开发）
+> 注：如下的搭建和安装脚本可参看本库的 scripts 目录下的脚本，如： [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) （感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
 ### 3.1 设置Docker服务
 
@@ -384,7 +384,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 ### 7.2 搭建脚本
 
-上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili45](https://github.com/gongzili45) 开发）
+上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
 -  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) 
 
