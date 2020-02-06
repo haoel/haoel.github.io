@@ -280,7 +280,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
 
-对于手机端，我带用的是iPhone下的 `Potatso Lite` 和 `ShadowRocket` 这两个APP直接支持 HTTPS 的代理，配置上就好了。
+对于手机端，我使用的是iPhone下的 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
 
 
 ### 4.2 Shadowsocks 客户端
