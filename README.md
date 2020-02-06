@@ -324,7 +324,10 @@ V2Ray 可以配置成一个非常隐蔽的代理软件。
  - V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
  - V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
 
-V2Ray 配合一些模块目前来说可以伪装成正常的流量。但是配置相当复杂。大家可以自己Google自己玩吧。
+
+一般来说，祼用 V2Ray 不是一个很好的方式，现在比较流行的是使用nginx来代理，也就是 V2Ray + Websocket + TLS + Nginx，可以参看这篇文章《[V2Ray+WebSocket+TLS+Nginx配置与使用教程](https://doubibackup.com/v2ray-ws-tls-nginx.html)》（需要翻墙）。
+
+我个人觉得，配置起来比较复杂，而且环节太多，不如直接用 `gost` 的 https/http2 的方式配置起来简单，所以，没有放在前面。
 
 
 ### 5.2 Brook
