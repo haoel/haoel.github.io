@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2019-11-24
+更新时间：2020-03-10
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -280,7 +280,10 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
 
-对于手机端，我使用的是iPhone下的 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
+对于手机端
+
+ - iPhone，可以考虑使用 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
+ - Android，可以考虑使用这个Plugin - [ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin) 
 
 
 ### 4.2 Shadowsocks 客户端
