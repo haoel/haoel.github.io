@@ -199,6 +199,7 @@ sudo docker run -d --name gost \
 
 如无意外，你的服务就启起来了。接下来就是证书的自动化更新。
 
+
 可以使用命令  `crontab -e`  来编辑定时任务：
 
 ```
@@ -285,6 +286,13 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
  - iPhone，可以考虑使用 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
  - Android，可以考虑使用这个Plugin - [ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin) 
 
+如果你之前使用了Chrome插件 SwitchyOmega，经实际验证(2.5.21版本)无法直接配置HTTPS代理，具体原因待查。不过可使用gost客户端在本机启动一个
+SOCKS5的代理服务用来代替。比如:
+
+```
+gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'
+```
+然后在SwitchyOmega配置代理为'127.0.0.1:1080'即可.
 
 ### 4.2 Shadowsocks 客户端
 
