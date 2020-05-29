@@ -199,7 +199,6 @@ sudo docker run -d --name gost \
 
 如无意外，你的服务就启起来了。接下来就是证书的自动化更新。
 
-
 可以使用命令  `crontab -e`  来编辑定时任务：
 
 ```
@@ -293,6 +292,11 @@ SOCKS5的代理服务用来代替。比如:
 gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'
 ```
 然后在SwitchyOmega配置代理为'127.0.0.1:1080'即可.
+
+另外，在配置前，可使用下面的命令验证你的gost服务是否正常。
+```
+curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
+```
 
 ### 4.2 Shadowsocks 客户端
 
