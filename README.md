@@ -19,7 +19,7 @@
   - [3. 搭建相关代理服务](#3-搭建相关代理服务)
     - [3.1 设置Docker服务](#31-设置docker服务)
     - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
-    - [3.3 用 gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
+    - [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
     - [3.4 设置Shadowsocks服务](#34-设置shadowsocks服务)
     - [3.5 设置L2TP/IPSec服务](#35-设置l2tpipsec服务)
     - [3.6 设置PPTP服务](#36-设置pptp服务)
@@ -159,7 +159,7 @@ BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
 如果开启，请参看 《[开启TCP BBR拥塞控制算法](https://github.com/iMeiji/shadowsocks_install/wiki/开启-TCP-BBR-拥塞控制算法) 》
 
-### 3.3 用 gost 设置 HTTPS 服务
+### 3.3 用 Gost 设置 HTTPS 服务
 
 [gost](https://github.com/ginuerzh/gost) 是一个非常强的代理服务，它可以设置成 HTTPS 代理，然后把你的服务伪装成一个Web服务器，**我感觉这比其它的流量伪装更好，也更隐蔽。这也是这里强烈推荐的一个方式**。
 
@@ -190,14 +190,23 @@ KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
 sudo docker run -d --name gost \
     -v ${CERT_DIR}:${CERT_DIR}:ro \
     --net=host ginuerzh/gost \
-    -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=code:404"
+    -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=${DOMAIN}"
 ```
 
 上面这个脚本，你需要配置：域名(`DOMAIN`), 用户名 (`USER`), 密码 (`PASS`) 和 端口号(`PORT`) 这几个变量。
 
 关于 gost 的参数， 你可以参看其文档：[Gost Wiki](https://docs.ginuerzh.xyz/gost/)，上面我设置一个参数 `probe_resist=code:404` 意思是，如果服务器被探测，或是用浏览器来访问，返回404错误，也可以返回一个网页（如：`probe_resist=file:/path/to/file.txt` 或其它网站 `probe_resist=web:example.com/page.html`）
 
-如无意外，你的服务就启起来了。接下来就是证书的自动化更新。
+**注意**：开启了探测防御功能后，当认证失败时服务器默认不会响应 `407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的 SwitchyOmega 插件)。通过knock参数设置服务器才会发送407响应。
+
+如无意外，你的服务就启起来了。你可以使用下面的命令验证你的 gost 服务是否正常。
+
+```
+curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
+```
+
+
+接下来就是证书的自动化更新。
 
 可以使用命令  `crontab -e`  来编辑定时任务：
 
@@ -279,24 +288,15 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 
 你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
-
 对于手机端
 
  - iPhone，可以考虑使用 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
  - Android，可以考虑使用这个Plugin - [ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin) 
 
-如果你之前使用了Chrome插件 SwitchyOmega，经实际验证(2.5.21版本)无法直接配置HTTPS代理，具体原因待查。不过可使用gost客户端在本机启动一个
-SOCKS5的代理服务用来代替。比如:
+**注明**：如果你之前使用了Chrome插件 SwitchyOmega，如果无法直接配置HTTPS代理，具体原因可能是因为你设置了`probe_resist`以开启探测防御功能。这里，你需要在服务器端设置 `knock` 参数（参看 [用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务) 中的“注意”一节 ）
 
-```
-gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'
-```
-然后在SwitchyOmega配置代理为'127.0.0.1:1080'即可.
+或是，干脆使用gost客户端在本机启动一个 SOCKS5的代理服务用来代替（`gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'`），然后在SwitchyOmega配置代理为'127.0.0.1:1080'即可。比如:
 
-另外，在配置前，可使用下面的命令验证你的gost服务是否正常。
-```
-curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
-```
 
 ### 4.2 Shadowsocks 客户端
 
