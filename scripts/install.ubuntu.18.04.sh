@@ -145,7 +145,7 @@ crontab_exists() {
 
 create_cron_job(){
     # 写入前先检查，避免重复任务。
-    if ! crontab_exists "cerbot renew --force-renewal"; then
+    if ! crontab_exists "certbot renew --force-renewal"; then
         echo "0 0 1 * * /usr/bin/certbot renew --force-renewal" >> /var/spool/cron/crontabs/root
         echo "${COLOR_SUCC}成功安装证书renew定时作业！${COLOR_NONE}"
     else
