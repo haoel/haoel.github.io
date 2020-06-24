@@ -37,7 +37,7 @@
   - [7. 其它](#7-其它)
     - [7.1 其它方式](#71-其它方式)
     - [7.2 搭建脚本](#72-搭建脚本)
-    - [7.3 Chrome plugin](#73-Chrome plugin)
+    - [7.3 Chrome_plugin](#73-Chrome_plugin)
     - [7.4 lantern](#74-lantern)
 
 ## 0. 序
@@ -407,7 +407,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 -  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) 
 
-### 7.3 Chrome plugin
+### 7.3 Chrome_plugin
 
 - step 1: 使用[必应搜索](https://cn.bing.com) `谷歌访问助手` ，或者使用下面地址下载：
 
