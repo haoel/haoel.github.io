@@ -37,6 +37,8 @@
   - [7. 其它](#7-其它)
     - [7.1 其它方式](#71-其它方式)
     - [7.2 搭建脚本](#72-搭建脚本)
+    - [7.3 Chrome plugin](#73-Chrome plugin)
+    - [7.4 lantern](#74-lantern)
 
 ## 0. 序
 
@@ -114,7 +116,7 @@
 - **CN2 GT**: CN2 里属于Global Transit的产品(又名GIS-Global Internet Service)，在CN2里等级低，省级/出国节点为 `202.97` 开头，国际骨干节点有2～4个 `59.43` 开头的CN2节点。在出国线路上拥堵程度一般，相对于163骨干网的稍强，相比CN2 GIA，性价比也较高。
 
 - **CN2 GIA**: CN2 里属于Global Internet Access的产品，等级最高，省级/出国/国际骨干节点都以`59.43`开头，全程没有`202.97`开头的节点。在出国线路上表现最好，很少拥堵，理论上速度最快最稳定，当然，价格也相对 CN2 GT 偏高。
- 
+
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
 - [搬瓦工](https://bwh8.net/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。买完后，你可能需要重装一下操作系统，装成64位带BBR的 ）
@@ -404,6 +406,41 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
 -  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) 
+
+### 7.3 Chrome plugin
+
+- step 1: 使用[必应搜索](https://cn.bing.com) `谷歌访问助手` ，或者使用下面地址下载：
+
+  - [谷歌访问助手下载地址1](https://chrome.zzzmh.cn/info?token=gocklaboggjfkolaknpbhddbaopcepfp)
+  - [谷歌访问助手下载地址2](https://www.gugeapps.net/webstore/detail/%E8%B0%B7%E6%AD%8C%E8%AE%BF%E9%97%AE%E5%8A%A9%E6%89%8B/fjbknnledpckpbjcglogolokonffggpc) `推荐`
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/01.png)
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/02.png)
+
+- step 2: 下载 完`谷歌访问助手`插件后，解压到自定义的目录下
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/03.png)
+
+- step 3: 在Chrome浏览器中安装`谷歌访问助手插件`
+
+  - `自定义及控制Google Chrome` -> `更多工具` -> `扩展程序` -> `打开开发者模式` -> `加载已解压的扩展程序` 
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/04.png)
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/05.png)
+
+- step 4: 启动插件，在浏览器地址栏输入 `google.com` ,确认是否可以访问到谷歌
+
+- step 5: 打开 `Chrome 网上应用商店` , 搜索 `Astar vpn` ，添加扩展程序
+
+- step 6: 如下图操作
+
+  ![](https://github.com/MarkShen1992/haoel.github.io/blob/master/images/chrome_plugin/06.png)
+
+- step 7: 访问 google
+
+### [7.4 lantern](https://github.com/getlantern/lantern)
 
 欢迎补充和改善！
 
