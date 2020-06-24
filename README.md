@@ -442,6 +442,8 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 ### [7.4 lantern](https://github.com/getlantern/lantern)
 
+- 每月500M免费流量
+
 欢迎补充和改善！
 
 （全文完）
