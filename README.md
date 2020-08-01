@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2020-03-10
+更新时间：2020-08-01
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -34,9 +34,13 @@
     - [6.1 Cloudflare](#61-cloudflare)
     - [6.2 V2Ray](#62-v2ray)
     - [6.3 补充](#63-补充)
-  - [7. 其它](#7-其它)
-    - [7.1 其它方式](#71-其它方式)
-    - [7.2 搭建脚本](#72-搭建脚本)
+  - [7. 透明网关](#7-透明网关)
+    - [7.1 OpenWRT 路由器](#71-openwrt-路由器)
+    - [7.2 通过树莓派做旁路网关](#72-通过树莓派做旁路网关)
+    - [7.3 安装 Clash](#73-安装-clash)
+  - [8. 其它](#8-其它)
+    - [8.1 其它方式](#81-其它方式)
+    - [8.2 搭建脚本](#82-搭建脚本)
 
 ## 0. 序
 
@@ -73,11 +77,11 @@
 
 ## 2. 购买VPS
 
-然后，你需要一个VPS。 
+然后，你需要一个VPS。 在这里，强烈建议通过自建的方式，可能成本会略高一点，但是，整体来说比共享的好很多了。
 
 （注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面通常这样的服务非常的不稳定，而且也容易被代理方做中间人攻击*）
 
-**现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人觉得一个月花70元钱不算奢侈的事，而且会让你的生活质量得得改善**。
+**现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人觉得一个月花70元钱不算奢侈的事，而且会让你的生活质量得得改善。当然，线路好的得需要多花一些钱。**。
 
 （注：*我现在每个投入在科学上网上的成本大概在不到1000元人民币左右，常备3-5个不同国家的VPS，因为国内的网络路由经常性的变化，所以，为了确保总是有一条快的，所以，得多备几个*）。
 
@@ -123,7 +127,7 @@
 
 更多的可以参考这篇文章《[CN2 GIA VPS主机收集整理汇总-电信,联通,移动三网CN2 GIA线路VPS主机](https://wzfou.com/cn2-gia-vps/)》（注：随时间推移，这篇文章的内容可能会失效）
 
-重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度，然而，香港地区的VPS的确是有点贵了。在Youtube.com上看1080p的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
+重点说一下，**CN2 GIA + 香港机房**，你会得到巨快无比的上网速度（无论你在中国的哪个位置，无论使用哪家运营商，CN2 GIA都是最优的），然而，香港地区的VPS的确是有点贵了。在Youtube.com上看 4K 的视频毫无压力。虽然阿里云和腾讯的也有，但是被查到的风险基本上是100%，不建议使用，被抓了别怪我没警告过你。
 
 ### 2.3 NCP 线路
 **NCP** 全称 New Cross Pacific（新跨太平洋海底光缆系统）。
@@ -163,7 +167,7 @@ BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
 [gost](https://github.com/ginuerzh/gost) 是一个非常强的代理服务，它可以设置成 HTTPS 代理，然后把你的服务伪装成一个Web服务器，**我感觉这比其它的流量伪装更好，也更隐蔽。这也是这里强烈推荐的一个方式**。
 
-为了更为的隐蔽，你需要一个域名，然后使用 [Let's Encrypt](https://letsencrypt.org) 来签 一个证书。使用 Let's Encrypt 证书你需要在服务器上安装一个 [certbot](https://certbot.eff.org/instructions)，点击 [certbot](https://certbot.eff.org/instructions) 这个链接，你可以选择你的服务器，操作系统，然后就跟着指令走吧。
+为了更为的隐蔽，你需要一个域名（可以上 Godaddy，但一定要使用美国版），然后使用 [Let's Encrypt](https://letsencrypt.org) 来签 一个证书。使用 Let's Encrypt 证书你需要在服务器上安装一个 [certbot](https://certbot.eff.org/instructions)，点击 [certbot](https://certbot.eff.org/instructions) 这个链接，你可以选择你的服务器，操作系统，然后就跟着指令走吧。
 
 接下来，你需要申请一个证书（我们使用standalone的方式，然后，你需要输入你的电子邮件和你的域名）：
 
@@ -219,6 +223,8 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 
 ### 3.4 设置Shadowsocks服务
 
+**（注：Shadowsocks被查的机率非常大，不推荐使用）**
+
 Shadowsocks 的 Docker 启动脚本 （其中的 `SS_PORT` 和 `SS_PASSWD` 需要重新定义一下）
 
 
@@ -235,6 +241,8 @@ sudo docker run -dt --name ss \
 
 
 ### 3.5 设置L2TP/IPSec服务
+
+**（注：VPN方式被查的机率非常大，不推荐使用）**
 
 L2TP/IPSec 的启动脚本，其中的三个环境变量 `USER`， `PASS` 和 `PSK` 需要替换一下。
 
@@ -257,7 +265,7 @@ sudo docker run -d  --privileged \
 
 ### 3.6 设置PPTP服务
 
-PPTP不安全，请慎重使用
+**（注：PPTP不安全，请不要使用）**
 
 ```
 sudo docker run -d --privileged --net=host 
@@ -391,15 +399,212 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
 
-## 7. 其它 
+## 7. 透明网关
 
-### 7.1 其它方式
+### 7.1 OpenWRT 路由器
+
+所谓透明网关的意思是，一些都交给网关来做。最好的方式是你需要一个 OpenWRT 的路由器，推荐使用华硕的路由器，贵是贵一些，但是这几年用下来，非常不错。我用的是  **华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路** 。
+
+路由器买来后，要刷一下固件。首先Asuswrt是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：[https://github.com/RMerl/asuswrt-merlin](https://github.com/RMerl/asuswrt-merlin)
+
+不必担心把路由器刷废了，华硕的路由器可以让你一键重置回来
+
+**1）下载固件**。先到 [https://asuswrt.lostrealm.ca/download](https://asuswrt.lostrealm.ca/download) 下载相应的固件，并解压。（我下载的是 `RT-AC68U_380.61_0.zip` ）
+
+**2）升级固件**。登录到你的路由器后台 `http://192.168.1.1/` ，在 `系统管理` -> `固件升级` 中上传固件文件（我上传的是：`RT-AC68U_380.61_0.trx`）
+
+**3）打开 JFFS 分区**。`系统管理` -> `系统设置` -> `Persistent JFFS2 partition`
+
+- `Format JFFS partition at next boot` - `否`
+- `Enable JFFS custom scripts and configs` - `是`
+
+
+**4）打开 ssh 登录**。 `系统管理` -> `系统设置` -> `SSH Daemon` 
+
+- `Allow SSH password login` - `是`
+
+### 7.2 通过树莓派做旁路网关
+
+如果你的路由器不能刷OpenWRT，也就是没发通过SSH登录上去装软件，你就用一个别的设备。比如用一个树莓派。我正好有一个很老旧的树莓派，刷了一个老旧的Debain 7.5的操作系统。
+
+把它连上你的路由器上，然后，
+- 你需要把你设备上的IP地址、网关和DNS服务器都要手动设置到这个树莓派上。
+- 于是，所有的路由就会通过路由器转到树莓派上，再由树莓派决定是否要走代理。
+
+大概的示意图如下所示。
+
+- 1 --> 2 是设备把所有的请求都发给树莓派。
+- 3 --> 3.1 或 3.2 是由树莓派来决走是否翻墙。
+
+```
+              Phone/PC/Pad
+                    +
+                    |  1
+                    |
+            +-------v-------+      2      +--------+
+            |               |------------->        |
+            |  WiFi 路由器   |             |  树莓派 |
+            |               <-------------|        |
+            +------+--+-----+      3      +--------+
+                   |  |
+                3.1|  | 3.2
+                   |  +---------->  China LAN
+                   v
+               +---+---+
+               | Proxy |
+               +---+---+
+                   |
+                   |
+                   v
+             Internet WAN
+
+```
+
+### 7.3 安装 Clash
+
+Clash 的 Github项目是：[Dreamacro/clash](https://github.com/Dreamacro/clash) ，在它的 Release 页面上，你可以找到相关的下载。（注：在本文更新的时候，如果你需要支持 Tun，你需要下载 Clash 的 [Premium 版本](https://github.com/Dreamacro/clash/releases/tag/premium)
+
+Clash支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell，Trojan。
+
+在你的 OpenWRT 或 树莓派 下用 `uname -m` 查看一下你的硬件架构是什么的，比如，我的是华硕和树莓派都是 `armv7l` 的，所以，需要下载 `clash-linux-armv7-....`的版本。 下载完解压后，加个可执行权限 `chmod +x clash` 就可以运行了，不过，还差一个界面和两个配置文件，它们的目录关系如下：
+
+```
+├── clash                <- 建一个 clash 的目录
+│   ├── clash            <- 运行文件 
+│   ├── config.yaml      <- 配置文件 
+│   ├── Country.mmdb     <- IP地址库
+│   └── ui               <- Clash 的 UI
+│       ├── index.html
+│       ├── ...
+```
+
+- UI界面可以到 [haishah/yacd](https://github.com/haishanh/yacd) 下载。放到clash的配置目录下 `ui` 目录下
+
+- 一个是 `Country.mmdb` 这是IP地址的在哪个国家的数据库。你需要到这里下载 - [Country.mmdb](https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb) （当然，clash启动时，会自动下载，我这里给你一个手动下载的链接）
+
+- 另一个是 `config.yaml` 文件，这个文件详细解释可参看 - [官方Wiki](https://github.com/Dreamacro/clash/wiki/configuration)
+
+
+下面是个示例：
+
+```
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+ipv6: false
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: '0.0.0.0:9090'
+external-ui: ui
+secret: ''
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - tcp://8.8.8.8:53
+    - udp://8.8.8.8:53
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:53
+  default-nameserver:
+    - 114.114.114.114
+  #enhanced-mode: redir-host
+  enhanced-mode: fake-ip #如果要玩netflix，需要使用fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 114.114.114.114
+    - 223.5.5.5
+    - tls://8.8.8.8:853
+  fallback:
+    - tls://8.8.8.8:853
+
+# 两个代理服务器
+proxies:
+  # http
+  - name: "https01"
+    type: http
+    server: https.server.domain
+    port: 443
+    username: user
+    password: "password"
+    tls: true # https
+    skip-cert-verify: true
+  - name: "https01"
+    type: http
+    server: https.server.domain
+    port: 443
+    username: user
+    password: "passowrd"
+    tls: true # https
+    skip-cert-verify: true
+
+# 配置 Group
+proxy-groups:
+  # 自动切换
+  - name: "auto"
+    type: url-test
+    proxies:
+      - us01_https
+      #- us02_https
+      #- hk_https
+    # tolerance: 150
+    url: 'https://www.google.com/'
+    interval: 300
+  # 按需选择 - 可以在UI上选择
+  - name: "netflix"
+    type: select
+    proxies:
+      - us01_https
+      - us02_https
+      - hk_https
+
+rules:
+# LAN
+  - DOMAIN-SUFFIX,local,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+
+# Netflix
+  - DOMAIN-SUFFIX,fast.com,netflix
+  - DOMAIN-SUFFIX,api-global.netflix.com,netflix
+  - DOMAIN-SUFFIX,netflix.com,netflix
+  - DOMAIN-SUFFIX,netflix.net,netflix
+  - DOMAIN-SUFFIX,nflxext.com,netflix
+  - DOMAIN-SUFFIX,nflximg.com,netflix
+  - DOMAIN-SUFFIX,nflximg.net,netflix
+  - DOMAIN-SUFFIX,nflxso.net,netflix
+  - DOMAIN-SUFFIX,nflxvideo.net,netflix
+
+# 最终规则（除了中国区的IP之外的，全部翻墙）
+  - GEOIP,CN,DIRECT 
+  - MATCH,auto
+
+```
+更多的规则网上可以找到很多，也可以参看这里：[SS-Rule-Snippet/LAZY_RULES/clash.yaml](https://github.com/Hackl0us/SS-Rule-Snippet/blob/master/LAZY_RULES/clash.yaml)
+
+这个时候你就可以启动 clash 了：
+
+```
+/path/to/clash/cash -d /path/to/clash &
+```
+
+然后，你就可以把你的上网设备上的 路由网关 和 DNS 服务器都手动地配置成这个网关就好了（OpenWRT应该不用配置了，树莓派的方式需要手动配置一下）
+
+
+## 8. 其它 
+
+### 8.1 其它方式
 
 如下还有一些其它的方式（注：均由网友提供，我没有验证过）
 
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
 
-### 7.2 搭建脚本
+### 8.2 搭建脚本
 
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
