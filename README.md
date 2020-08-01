@@ -38,6 +38,7 @@
     - [7.1 OpenWRT 路由器](#71-openwrt-路由器)
     - [7.2 通过树莓派做旁路网关](#72-通过树莓派做旁路网关)
     - [7.3 安装 Clash](#73-安装-clash)
+    - [7.4 设置 iptables 转发](#74-设置-iptables-转发)
   - [8. 其它](#8-其它)
     - [8.1 其它方式](#81-其它方式)
     - [8.2 搭建脚本](#82-搭建脚本)
@@ -595,6 +596,31 @@ rules:
 
 然后，你就可以把你的上网设备上的 路由网关 和 DNS 服务器都手动地配置成这个网关就好了（OpenWRT应该不用配置了，树莓派的方式需要手动配置一下）
 
+### 7.4 设置 iptables 转发
+
+```
+iptables -t nat -N CLASH
+iptables -t nat -A CLASH -d 10.0.0.0/8 -j RETURN
+iptables -t nat -A CLASH -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A CLASH -d 169.254.0.0/16 -j RETURN
+iptables -t nat -A CLASH -d 172.16.0.0/12 -j RETURN
+iptables -t nat -A CLASH -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A CLASH -d 224.0.0.0/4 -j RETURN
+iptables -t nat -A CLASH -d 240.0.0.0/4 -j RETURN
+iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
+```
+然后，你可以保存一下这些iptables的规则
+
+```
+ iptables-save > /etc/iptables.up.rules
+```
+编辑  `//etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
+
+```
+#!/bin/sh
+/sbin/iptables-restore < /etc/iptables.up.rules
+```
+然后，再 `chmod +x /etc/network/if-pre-up.d/iptables` 加上可执行权限就好了。
 
 ## 8. 其它 
 
