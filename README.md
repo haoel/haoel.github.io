@@ -404,7 +404,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 ### 7.1 OpenWRT 路由器
 
-所谓透明网关的意思是，一些都交给网关来做。最好的方式是你需要一个 OpenWRT 的路由器，推荐使用华硕的路由器，贵是贵一些，但是这几年用下来，非常不错。我用的是  **华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路** 。
+所谓透明网关的意思是，一切都交给网关来做。最好的方式是你需要一个 OpenWRT 的路由器，推荐使用华硕的路由器，贵是贵一些，但是这几年用下来，非常不错。我用的是  **华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路** 。
 
 路由器买来后，要刷一下固件。首先Asuswrt是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：[https://github.com/RMerl/asuswrt-merlin](https://github.com/RMerl/asuswrt-merlin)
 
