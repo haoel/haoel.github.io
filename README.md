@@ -295,7 +295,13 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 ```
 这样用 gost 在你的本机启动了一个 `Shadowsocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
 
-你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
+```
+  +-------------------+       +-------------+       +-------------+
+  | ShadowSocks Client|------>| Gost Client |------>| Gost Server |
+  +-------------------+       +-------------+       +-------------+
+```
+
+这样，你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
 对于手机端
 
@@ -370,6 +376,22 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就不截图了，因为这个脚本运行起来中文菜单式的。
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
+
+> 注意: 如果运行出现下载错误，可能是因为brook的下载文件名问题，你需要自己修改一下脚本：
+>
+> ```
+> Download_brook(){
+>  	[[ ! -e ${file} ]] && mkdir ${file}
+>  	cd ${file}
+>  	if [[ ${bit} == "x86_64" ]]; then
+> -		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook"
+> +		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook_linux_amd64"
+> +		mv brook_linux_amd64 brook
+>  	else
+>  		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook_linux_386"
+>  		mv brook_linux_386 brook
+>  	fi
+> ```
 
 ## 6. 针对 IP 被封的解决方案
 
