@@ -34,13 +34,18 @@
     - [6.1 Cloudflare](#61-cloudflare)
     - [6.2 V2Ray](#62-v2ray)
     - [6.3 补充](#63-补充)
-  - [7. 透明网关](#7-透明网关)
+  - [7. 家用透明网关](#7-家用透明网关)
     - [7.1 OpenWRT 路由器](#71-openwrt-路由器)
     - [7.2 通过树莓派做旁路网关](#72-通过树莓派做旁路网关)
     - [7.3 安装 Clash](#73-安装-clash)
     - [7.4 设置 iptables 转发](#74-设置-iptables-转发)
-  - [8. 其它](#8-其它)
-    - [8.1 其它方式](#81-其它方式)
+  - [8. 数据中心透明网关](#8-数据中心透明网关)
+    - [8.1 AWS 网络构建](#81-aws-网络构建)
+    - [8.2 安装 Clash](#82-安装-clash)
+    - [8.3 配置私有子网中的 EC2](#83-配置私有子网中的-ec2)
+    - [8.4 私有子网中的 Kubernetes](#84-私有子网中的-kubernetes)
+  - [9. 其它](#9-其它)
+    - [9.1 其它方式](#91-其它方式)
     - [8.2 搭建脚本](#82-搭建脚本)
 
 ## 0. 序
@@ -420,7 +425,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
 
-## 7. 透明网关
+## 7. 家用透明网关
 
 ### 7.1 OpenWRT 路由器
 
@@ -642,9 +647,151 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ```
 然后，再 `chmod +x /etc/network/if-pre-up.d/iptables` 加上可执行权限就好了。
 
-## 8. 其它 
+## 8. 数据中心透明网关
 
-### 8.1 其它方式
+目前数据中心的透明网关，只支持AWS云平台。
+
+### 8.1 AWS 网络构建
+
+1. 构建一个 `172.20.0.0/16` 的 VPC，分成两个子网：
+   - 有公网IP的公有子网 - `172.20.1.0/24` 
+   - 无公网IP的私有了网 - `172.20.2.0/24`
+
+2. 在公有子网里创建 [EC2 NAT Instance](https://docs.aws.amazon.com/zh_cn/vpc/latest/userguide/VPC_NAT_Instance.html)
+   - 创建时，指定私网IP为 `172.20.1.1`
+   - （Option）为该实例分配弹性IP，可成为外网访问内网的跳板机
+
+3. 建立路由规则
+   - 创建“互网关网关”，并把“互网关网关”添加到公有子网 `172.20.1.0/24` 的路由规则中
+   - 把 EC2 NAT Instance  `172.20.1.1` 添加到私有子网`172.20.2.0/24`的路由规则中。
+
+于是整个网络就如下所示。
+
+```
+                                    ┌──────────┐
+                                    │          │
+                                    │          │
+                                    └──────────┘
+          弹性IP                      互联网网关
+        ┌───────────────┐                ▲
+        │xxx.xxx.xxx.xxx├─┐              │
+        └───────────────┘ │  ┌───────────┘
+                          │  │
+                  ┌───────┼──┼────────┐       ┌───────────────────┐
+                  │       │  │        │       │                   │
+                  │     ┌─┴──▼──┐     │       │  ┌─┐ ┌─┐ ┌─┐ ┌─┐  │
+  Public Network  │     │       │◄────┼───┬───┼─►└─┘ └─┘ └─┘ └─┘  │  Private Network
+                  │     └───────┘     │   │   │                   │
+                  │  EC2 NAT Instance │   │   │  ┌─┐ ┌─┐ ┌─┐ ┌─┐  │
+                  │    172.20.1.1     │   ├───┼─►└─┘ └─┘ └─┘ └─┘  │
+                  │                   │   │   │                   │
+                  │   (NAT Instance)  │   │   │    ┌─┐ ┌─┐ ┌─┐    │
+                  │                   │   └───┼─►  └─┘ └─┘ └─┘    │
+                  │                   │       │                   │
+                  └───────────────────┘       └───────────────────┘
+
+                      172.20.1.0/24              172.20.2.0/24
+                           ▲                            ▲
+                    subnet │                            │ subnet
+                           │                            │
+                           └──────────  VPC  ───────────┘
+                                   172.20.0.0/16
+```
+
+### 8.2 安装 Clash
+
+在 EC2 NAT Instance 上安装 clash 透明网关，安装配置参看 [7.3 安装 Clash](#73-安装-clash) ，基本一致。
+
+> 注：在实际操作中，没有设置 iptables 转发规则
+
+
+### 8.3 配置私有子网中的 EC2 
+
+只需要配置 `/etc/resolv.conf` 文件，把 EC2 NAT Instance 加入其中。如：
+
+```conf
+# /etc/resolv.conf
+nameserver 172.20.1.1  #<--- 透明网关 EC2 NAT 实例
+nameserver 172.20.0.2  #<--- AWS 的 DNS 服务
+search [zone].compute.internal
+```
+
+### 8.4 私有子网中的 Kubernetes
+
+K8s 两组 CoreDNS 部署和配置，一组是边缘的，一组是中心的。
+
+- 边缘的 Pod 名叫 `nodelocaldns`，侦听在本机。如：`169.254.25.10:53` 
+- 中心的 Pod 名叫 `coredns`，侦听在 cluster IP 上，如：`10.233.0.3:53`
+
+边缘的规则会把k8s的域名 `cluster.local`, `in-addr.arp` `ip6.arpa` 转给中心结点处理，其它的交给本地的 `/etc/resolv.conf` 处理。
+
+Kubernetes 会把v如下内容打到 Pod 里的 `/etc/resolv.conf`
+
+```conf
+nameserver 169.254.25.10
+search default.svc.cluster.local svc.cluster.local cluster.local cn-northwest-1.compute.internal
+options ndots:5
+```
+
+查看一下 `nodelocaldns` 的配置：
+
+```sh
+$ kubectl get cm nodelocaldns -n kube-system -o yaml
+```
+
+我们可以看到，除了 k8s 自己的域名外，其它的都交给了本机的 `/etc/resolv.conf`
+
+```yaml
+.:53 {
+    errors
+    cache 30
+    reload
+    loop
+    bind 169.254.25.10
+    forward . /etc/resolv.conf  # <--- 注意这条语句
+    prometheus :9253
+}
+```
+
+然而，本机的 `/etc/resolv.conf`上有两个 DNS，一个是我们的透名网关，一个是AWS的。而 CoreDNS 的 `forward` 策略是随机调选，所以，这样的会导致，时而交给AWS处理，时而交给我们自己的clash处理。最终导致IP解析紊乱。
+
+通过以下命令进行修改：
+
+```sh
+$ kubectl edit cm nodelocaldns -n kube-system
+```
+
+修改如下：（AWS的归 172.20.0.2， 其它的走我们自己的网关）
+
+```diff
++    compute.internal:53 {
++        errors
++        cache 30
++        reload
++        loop
++        bind 169.254.25.10
++        forward . 172.20.0.2
++        prometheus :9253
++    }
+     .:53 {
+         errors
+         cache 30
+         reload
+         loop
+         bind 169.254.25.10
+-        forward . /etc/resolv.conf
++        forward . /etc/resolv.conf {
++            policy sequential
++        }
+         prometheus :9253
+     }
+```
+
+退出保存后，等大约30秒左右配置就会生效。
+
+## 9. 其它 
+
+### 9.1 其它方式
 
 如下还有一些其它的方式（注：均由网友提供，我没有验证过）
 
