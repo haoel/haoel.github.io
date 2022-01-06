@@ -649,7 +649,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 
 ## 8. 数据中心透明网关
 
-目前数据中心的透明网关，只支持AWS云平台。
+这里仅针对 AWS 进行说明，其它云平台应该大同小异，大家可以补充。
 
 ### 8.1 AWS 网络构建
 
@@ -739,7 +739,7 @@ options ndots:5
 $ kubectl get cm nodelocaldns -n kube-system -o yaml
 ```
 
-我们可以看到，除了 k8s 自己的域名外，其它的都交给了本机的 `/etc/resolv.conf`
+我们可以看到，除了 k8s 自己的域名外，其它的都交给了本机的 `/etc/resolv.conf`，如下所示：
 
 ```yaml
 .:53 {
