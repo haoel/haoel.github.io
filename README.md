@@ -655,15 +655,15 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 
 1. 构建一个 `172.20.0.0/16` 的 VPC，分成两个子网：
    - 有公网IP的公有子网 - `172.20.1.0/24` 
-   - 无公网IP的私有了网 - `172.20.2.0/24`
+   - 无公网IP的私有子网 - `172.20.2.0/24`
 
 2. 在公有子网里创建 [EC2 NAT Instance](https://docs.aws.amazon.com/zh_cn/vpc/latest/userguide/VPC_NAT_Instance.html)
    - 创建时，指定私网IP为 `172.20.1.1`
    - （Option）为该实例分配弹性IP，可成为外网访问内网的跳板机
 
 3. 建立路由规则
-   - 创建“互网关网关”，并把“互网关网关”添加到公有子网 `172.20.1.0/24` 的路由规则中
-   - 把 EC2 NAT Instance  `172.20.1.1` 添加到私有子网`172.20.2.0/24`的路由规则中。
+   - 创建“互网关网关”，并把“互网关网关”添加到公有子网 `172.20.1.0/24` 的路由表中
+   - 把 EC2 NAT Instance  `172.20.1.1` 添加到私有子网`172.20.2.0/24`的路由表中。
 
 于是整个网络就如下所示。
 
@@ -702,7 +702,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 
 在 EC2 NAT Instance 上安装 clash 透明网关，安装配置参看 [7.3 安装 Clash](#73-安装-clash) ，基本一致。
 
-> 注：在实际操作中，没有设置 iptables 转发规则
+> 注：在实际操作中，没有设置 `iptables` 转发规则
 
 
 ### 8.3 配置私有子网中的 EC2 
@@ -718,14 +718,14 @@ search [zone].compute.internal
 
 ### 8.4 私有子网中的 Kubernetes
 
-K8s 两组 CoreDNS 部署和配置，一组是边缘的，一组是中心的。
+K8s 里有两组 CoreDNS 部署和配置，一组是边缘的（或是叫本地的），一组是中心的。
 
 - 边缘的 Pod 名叫 `nodelocaldns`，侦听在本机。如：`169.254.25.10:53` 
 - 中心的 Pod 名叫 `coredns`，侦听在 cluster IP 上，如：`10.233.0.3:53`
 
-边缘的规则会把k8s的域名 `cluster.local`, `in-addr.arp` `ip6.arpa` 转给中心结点处理，其它的交给本地的 `/etc/resolv.conf` 处理。
+边缘的规则会把k8s的域名 `cluster.local`, `in-addr.arp` `ip6.arpa` 转给中心的 CoreDNS 处理，其它的交给本地的 `/etc/resolv.conf` 处理。
 
-Kubernetes 会把v如下内容打到 Pod 里的 `/etc/resolv.conf`
+Kubernetes 会把如下内容打到 Pod 里的 `/etc/resolv.conf`
 
 ```conf
 nameserver 169.254.25.10
@@ -739,7 +739,7 @@ options ndots:5
 $ kubectl get cm nodelocaldns -n kube-system -o yaml
 ```
 
-我们可以看到，除了 k8s 自己的域名外，其它的都交给了本机的 `/etc/resolv.conf`，如下所示：
+我们可以看到，除了 K8s 自己的域名外，其它的都交给了本机的 `/etc/resolv.conf`，如下所示：
 
 ```yaml
 .:53 {
@@ -753,7 +753,7 @@ $ kubectl get cm nodelocaldns -n kube-system -o yaml
 }
 ```
 
-然而，本机的 `/etc/resolv.conf`上有两个 DNS，一个是我们的透名网关，一个是AWS的。而 CoreDNS 的 `forward` 策略是随机调选，所以，这样的会导致，时而交给AWS处理，时而交给我们自己的clash处理。最终导致IP解析紊乱。
+然而，本机的 `/etc/resolv.conf` 里有两个 DNS，一个是我们的透名网关，一个是AWS的。而 CoreDNS 的 `forward` 策略是随机挑选，所以，这样的会导致，时而交给AWS处理，时而交给我们自己的clash处理。最终导致IP解析紊乱。
 
 通过以下命令进行修改：
 
