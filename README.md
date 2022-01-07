@@ -662,7 +662,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
    - （Option）为该实例分配弹性IP，可成为外网访问内网的跳板机
 
 3. 建立路由规则
-   - 创建“互网关网关”，并把“互网关网关”添加到公有子网 `172.20.1.0/24` 的路由表中
+   - 创建“互联网网关”，并把“互联网网关”添加到公有子网 `172.20.1.0/24` 的路由表中
    - 把 EC2 NAT Instance  `172.20.1.1` 添加到私有子网`172.20.2.0/24`的路由表中。
 
 于是整个网络就如下所示。
@@ -753,7 +753,7 @@ $ kubectl get cm nodelocaldns -n kube-system -o yaml
 }
 ```
 
-然而，本机的 `/etc/resolv.conf` 里有两个 DNS，一个是我们的透名网关，一个是AWS的。而 CoreDNS 的 `forward` 策略是随机挑选，所以，这样的会导致，时而交给AWS处理，时而交给我们自己的clash处理。最终导致IP解析紊乱。
+然而，本机的 `/etc/resolv.conf` 里有两个 DNS，一个是我们的透明网关，一个是AWS的。而 CoreDNS 的 `forward` 策略是随机挑选，所以，这样的会导致，时而交给AWS处理，时而交给我们自己的clash处理。最终导致IP解析紊乱。
 
 通过以下命令进行修改：
 
