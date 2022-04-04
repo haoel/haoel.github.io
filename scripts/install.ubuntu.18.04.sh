@@ -43,7 +43,7 @@ start_bbr(){
 
 install_bbr() {
     # 如果内核版本号满足最小要求
-    if [ $VERSION_CURR > $VERSION_MIN ]; then
+    if [[ $VERSION_CURR > $VERSION_MIN ]]; then
         check_bbr
     else
         update_core
@@ -118,12 +118,12 @@ install_gost() {
     fi
 
     echo "准备启动 Gost 代理程序,为了安全,需要使用用户名与密码进行认证."
-    read -p "请输入你要使用的域名：" DOMAIN
-    read -p "请输入你要使用的用户名:" USER
-    read -p "请输入你要使用的密码:" PASS
-    read -p "请输入HTTP/2需要侦听的端口号(443)：" PORT 
+    read -r -p "请输入你要使用的域名：" DOMAIN
+    read -r -p "请输入你要使用的用户名:" USER
+    read -r -p "请输入你要使用的密码:" PASS
+    read -r -p "请输入HTTP/2需要侦听的端口号(443)：" PORT 
 
-    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 -a "$PORT" -le 655535 ]; then
+    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 ] && [ "$PORT" -le 655535 ]; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 443 !${COLOR_NONE}"
         PORT=443
     fi
@@ -172,12 +172,12 @@ install_shadowsocks(){
     fi
 
     echo "准备启动 ShadowSocks 代理程序,为了安全,需要使用用户名与密码进行认证."
-    read -p "请输入你要使用的密码:" PASS
-    read -p "请输入ShadowSocks需要侦听的端口号(1984)：" PORT 
+    read -r -p "请输入你要使用的密码:" PASS
+    read -r -p "请输入ShadowSocks需要侦听的端口号(1984)：" PORT 
 
     BIND_IP=0.0.0.0
 
-    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 -a "$PORT" -le 655535 ]; then
+    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 ] && [  "$PORT" -le 655535 ]; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 1984 !${COLOR_NONE}"
         PORT=1984
     fi 
@@ -232,7 +232,7 @@ init(){
     COLUMNS=50
     echo -e "\n菜单选项\n"
 
-    while [ 1 == 1 ]
+    while true 
     do
         PS3="Please select a option:"
         re='^[0-9]+$'
@@ -257,7 +257,7 @@ init(){
                 break 
             elif (( REPLY == 3 )) ; then
                 create_cert
-                loop=1
+                #loop=1
                 break
             elif (( REPLY == 4 )) ; then
                 install_gost
@@ -282,7 +282,8 @@ init(){
         done
     done
 
-     IFS=$OIFS  # Restore the IFS
+    echo "${opt}"
+    IFS=$OIFS  # Restore the IFS
 }
 
 init

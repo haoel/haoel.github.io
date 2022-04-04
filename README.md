@@ -62,7 +62,7 @@
 - Google 的各种服务，比如：Gmail, Map, Docs，Driver，照片，图片搜索，Voices，论文搜索……包括Google官方的各种技术文档……
 - 一些云服务，比如：Dropbox，IFTTT，Imgur，archive.org……
 - Twitter 上 Follow 一些牛人和一些官方账号，比如：AWS、Docker……
-- 社交 Facebook, Telegram, Whatsapp，Slack…… 有一些我在国外的亲戚和朋友……
+- 社交 Facebook, Telegram, Whatsapp, Slack……，有一些我在国外的亲戚和朋友……
 - Reddit 是一个聚合网站，一个新闻和文章的集散地，你可以认为是各种频道的今日头条……
 - Pinterest 和 Instagram  上面有很多不错的图片和视频新闻，是我减压力的地方……
 - 新闻，如BBC。 BBC是全球比较出众的媒体，有太多的有价值资源和内容了，比如纪录片、学英文……
@@ -93,7 +93,7 @@
 
 ### 2.1 常规VPS
 
-对于VPS，下面是一些常规选项。
+对于 VPS，下面是一些常规选项。
 
 - [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，目前的Zone不多，推荐使用日本或新加坡（支持银联卡）
 - [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （支持银联卡）
@@ -783,7 +783,7 @@ $ kubectl edit cm nodelocaldns -n kube-system
 +        forward . /etc/resolv.conf {
 +            policy sequential
 +        }
-         prometheus :9253
+         prometheus: 9253
      }
 ```
 
