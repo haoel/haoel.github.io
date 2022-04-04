@@ -94,16 +94,16 @@ create_cert() {
 
     echo "开始生成 SSL 证书"
     echo -e "${COLOR_ERROR}注意：生成证书前,需要将域名指向一个有效的 IP,否则无法创建证书.${COLOR_NONE}"
-    read -p "是否已经将域名指向了 IP？[Y/n]" has_record
+    read -r -p "是否已经将域名指向了 IP？[Y/n]" has_record
 
     if ! [[ "$has_record" = "Y" ]] ;then
         echo "请操作完成后再继续."
         return
     fi
 
-    read -p "请输入你要使用的域名:" domain
+    read -r -p "请输入你要使用的域名:" domain
 
-    sudo certbot certonly --standalone -d $domain
+    sudo certbot certonly --standalone -d "${domain}"
 }
 
 install_gost() {
@@ -199,13 +199,13 @@ install_vpn(){
     fi
 
     echo "准备启动 VPN/L2TP 代理程序,为了安全,需要使用用户名与密码进行认证."
-    read -p "请输入你要使用的用户名:" USER
-    read -p "请输入你要使用的密码:" PASS
-    read -p "请输入你要使用的PSK Key:" PSK
+    read -r -p "请输入你要使用的用户名:" USER
+    read -r -p "请输入你要使用的密码:" PASS
+    read -r -p "请输入你要使用的PSK Key:" PSK
 
     sudo docker run -d --name vpn --privileged \
-        -e PSK=${PSK} \
-        -e USERNAME=${USER} -e PASSWORD=${PASS} \
+        -e PSK="${PSK}" \
+        -e USERNAME="${USER}" -e PASSWORD="${PASS}" \
         -p 500:500/udp \
         -p 4500:4500/udp \
         -p 1701:1701/tcp \
