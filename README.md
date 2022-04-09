@@ -20,9 +20,9 @@
     - [3.1 设置Docker服务](#31-设置docker服务)
     - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
     - [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
-    - [3.4 设置Shadowsocks服务](#34-设置shadowsocks服务)
+    - [3.4 设置 ShadowSocks 服务](#34-设置-shadowsocks-服务)
     - [3.5 设置L2TP/IPSec服务](#35-设置l2tpipsec服务)
-    - [3.6 设置PPTP服务](#36-设置pptp服务)
+    - [3.6 设置 PPTP 服务](#36-设置-pptp-服务)
   - [4. 客户端设置](#4-客户端设置)
     - [4.1 gost 客户端](#41-gost-客户端)
     - [4.2 Shadowsocks 客户端](#42-shadowsocks-客户端)
@@ -56,7 +56,7 @@
 
 - Youtube 和 Vimeo 上的各种大会和教学视频，除了我自己要学，我的孩子也要学。
 - Wikipedia 维基百科是我目前唯一信得过的百科全书，我在上面可以比较系统地翻阅各种词条。
-- Slideshare 上有很多的技术文档和资料的PPT，是我的知识学习的地方。
+- SlideShare 上有很多的技术文档和资料的PPT，是我的知识学习的地方。
 - Quora 问答网站，在上面有很多有趣的问答。
 - 博客和论文，很多博客和论文站点都被墙了，比如：Blogspot 和 Medium。
 - Google 的各种服务，比如：Gmail, Map, Docs，Driver，照片，图片搜索，Voices，论文搜索……包括Google官方的各种技术文档……
@@ -109,9 +109,9 @@
 > 
 > - 香港网速应该是比较好的，但是香港的成本也是比较高的。台湾的网速也是不错的，日本的网速其次，新加坡再次之，然后是美国的东海岸（这里是基于北京和上海的情况）
 >
-> - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
+> - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是 Linode，最后是 Conoha 和 Vultr（如果你有更好的，请推荐）
 >
-> - Google Cloud Platform - GCP 的香港和台湾节点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用Vultr（按时付费）翻墙，然后再到GCP上购买。
+> - Google Cloud Platform - GCP 的香港和台湾节点也是很快的。但是你要能买GCP的主机，你还得先翻墙，所以，感觉有点死锁了。所以，你可能先用 Vultr（按时付费）翻墙，然后再到GCP上购买。
 
 ### 2.2 CN2 线路
 
@@ -173,21 +173,21 @@ BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
 [gost](https://github.com/ginuerzh/gost) 是一个非常强的代理服务，它可以设置成 HTTPS 代理，然后把你的服务伪装成一个Web服务器，**我感觉这比其它的流量伪装更好，也更隐蔽。这也是这里强烈推荐的一个方式**。
 
-为了更为的隐蔽，你需要一个域名（可以上 Godaddy，但一定要使用美国版），然后使用 [Let's Encrypt](https://letsencrypt.org) 来签 一个证书。使用 Let's Encrypt 证书你需要在服务器上安装一个 [certbot](https://certbot.eff.org/instructions)，点击 [certbot](https://certbot.eff.org/instructions) 这个链接，你可以选择你的服务器，操作系统，然后就跟着指令走吧。
+为了更为的隐蔽，你需要一个域名（可以上 GoDaddy，但一定要使用美国版），然后使用 [Let's Encrypt](https://letsencrypt.org) 来签 一个证书。使用 Let's Encrypt 证书你需要在服务器上安装一个 [certbot](https://certbot.eff.org/instructions)，点击 [certbot](https://certbot.eff.org/instructions) 这个链接，你可以选择你的服务器，操作系统，然后就跟着指令走吧。
 
 接下来，你需要申请一个证书（我们使用standalone的方式，然后，你需要输入你的电子邮件和你的域名）：
 
-```
+```shell
 $ sudo certbot certonly --standalone
 ```
 
 证书默认生成在 `/etc/letsencrypt/live/<YOUR.DOMAIN.COM/>` 目录下，这个证书90天后就过期了，所以，需要使用一个 cron job 来定期更新（稍后给出）
 
 接下来就是启动 gost 服务了，我们这里还是使用 Docker 的方式建立 gost 服务器。
-```
+```shell
 #!/bin/bash
 
-## 下面的四个参数需要改成你的
+# 下面的四个参数需要改成你的
 DOMAIN="YOU.DOMAIN.NAME"
 USER="username"
 PASS="password"
@@ -211,7 +211,7 @@ sudo docker run -d --name gost \
 
 如无意外，你的服务就启起来了。你可以使用下面的命令验证你的 gost 服务是否正常。
 
-```
+```shell
 curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
 ```
 
@@ -224,17 +224,17 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 0 0 1 * * /usr/bin/certbot renew --force-renewal
 5 0 1 * * /usr/bin/docker restart gost
 ```
-
+S
 这样，服务器就配置完成了。客户端请移动后面的客户端章节。
 
-### 3.4 设置Shadowsocks服务
+### 3.4 设置 ShadowSocks 服务
 
-**（注：Shadowsocks被查的机率非常大，不推荐使用）**
+**（注：ShadowSocks 被查的机率非常大，不推荐使用）**
 
-Shadowsocks 的 Docker 启动脚本 （其中的 `SS_PORT` 和 `SS_PASSWD` 需要重新定义一下）
+ShadowSocks 的 Docker 启动脚本 （其中的 `SS_PORT` 和 `SS_PASSWD` 需要重新定义一下）
 
 
-```
+```shell
 #!/bin/bash
 
 SS_PORT=1984
@@ -252,7 +252,7 @@ sudo docker run -dt --name ss \
 
 L2TP/IPSec 的启动脚本，其中的三个环境变量 `USER`， `PASS` 和 `PSK` 需要替换一下。
 
-```
+```shell
 #!/bin/bash
 
 USER=someone
@@ -269,18 +269,18 @@ sudo docker run -d  --privileged \
     siomiz/softethervpn
 ```
 
-### 3.6 设置PPTP服务
+### 3.6 设置 PPTP 服务
 
-**（注：PPTP不安全，请不要使用）**
+**（注：PPTP 不安全，请不要使用）**
 
-```
+```shell
 sudo docker run -d --privileged --net=host 
                 -v {/path_to_file/chap-secrets}:/etc/ppp/chap-secrets \
                 mobtitude/vpn-pptp
 ```
 PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你需要给docker容器提供这个文件，下面是这个文件的示例：
 
-```
+```conf
 # Secrets for authentication using PAP
 # client    server      secret           acceptable local IP addresses
   fuckgfw   *           whosyourdaddy    *
@@ -291,14 +291,14 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 
 ### 4.1 gost 客户端
 
-大多数的代理服务都支持 https 的代理，但是我们需要智能代理（也就是该翻的时候翻，不用翻的时候不翻），那么我们可以重用 Shadowsocks 的客户端。
+大多数的代理服务都支持 https 的代理，但是我们需要智能代理（也就是该翻的时候翻，不用翻的时候不翻），那么我们可以重用 ShadowSocks 的客户端。
 
 对于电脑来说，你同样可以 [下载 gost 程序](https://github.com/ginuerzh/gost/releases)，然后使用下面的命令行：
 
 ```
 gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 ```
-这样用 gost 在你的本机启动了一个 `Shadowsocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
+这样用 gost 在你的本机启动了一个 `ShadowSocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
 
 ```
 ┌─────────────┐  ┌─────────────┐            ┌─────────────┐
@@ -318,7 +318,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 
 **注明**：如果你之前使用了Chrome插件 SwitchyOmega，如果无法直接配置HTTPS代理，具体原因可能是因为你设置了`probe_resist`以开启探测防御功能。这里，你需要在服务器端设置 `knock` 参数（参看 [用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务) 中的“注意”一节 ）
 
-或是，干脆使用gost客户端在本机启动一个 SOCKS5的代理服务用来代替（`gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'`），然后在SwitchyOmega配置代理为'127.0.0.1:1080'即可。比如:
+或是，干脆使用gost客户端在本机启动一个 SOCKS5的代理服务用来代替（`gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'`），然后在 SwitchyOmega 配置代理为'127.0.0.1:1080'即可。比如:
 
 
 ### 4.2 Shadowsocks 客户端
@@ -361,7 +361,7 @@ V2Ray 可以配置成一个非常隐蔽的代理软件。
  - V2Ray 用户手册：[https://www.v2fly.org](https://www.v2fly.org)
  - V2Ray 项目地址：[https://github.com/v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
 
-一般来说，祼用 V2Ray 不是一个很好的方式，现在比较流行的是使用nginx来代理，也就是 V2Ray + Websocket + TLS + Nginx，可以参看这篇文章《[V2Ray+WebSocket+TLS+Nginx配置与使用教程](https://guide.v2fly.org/advanced/wss_and_web.html)》（需要翻墙）。
+一般来说，祼用 V2Ray 不是一个很好的方式，现在比较流行的是使用nginx来代理，也就是 V2Ray + WebSocket + TLS + Nginx，可以参看这篇文章《[V2Ray+WebSocket+TLS+Nginx配置与使用教程](https://guide.v2fly.org/advanced/wss_and_web.html)》（需要翻墙）。
 
 我个人觉得，配置起来比较复杂，而且环节太多，不如直接用 `gost` 的 https/http2 的方式配置起来简单，所以，没有放在前面。
 
@@ -385,7 +385,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 > 注意: 如果运行出现下载错误，可能是因为brook的下载文件名问题，你需要自己修改一下脚本：
 >
-> ```
+> ```shell
 > Download_brook(){
 >  	[[ ! -e ${file} ]] && mkdir ${file}
 >  	cd ${file}
@@ -527,7 +527,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 Clash 的 Github项目是：[Dreamacro/clash](https://github.com/Dreamacro/clash) ，在它的 Release 页面上，你可以找到相关的下载。（注：在本文更新的时候，如果你需要支持 Tun，你需要下载 Clash 的 [Premium 版本](https://github.com/Dreamacro/clash/releases/tag/premium)
 
-Clash支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell，Trojan。
+Clash 支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell，Trojan。
 
 在你的 OpenWRT 或 树莓派 下用 `uname -m` 查看一下你的硬件架构是什么的，比如，我的是华硕和树莓派都是 `armv7l` 的，所以，需要下载 `clash-linux-armv7-....`的版本（注：根据 clash 官方仓库 [Dreamacro/clash#189](https://github.com/Dreamacro/clash/issues/189) 系列固件不适用 armv7l 架构的 AC68U，需选择 armv5）。 下载完解压后，加个可执行权限 `chmod +x clash` 就可以运行了，不过，还差一个界面和两个配置文件，它们的目录关系如下：
 
@@ -550,7 +550,7 @@ Clash支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell�
 
 下面是个示例：
 
-```
+```yaml
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -652,7 +652,7 @@ rules:
 
 这个时候你就可以启动 clash 了：
 
-```
+```shell
 /path/to/clash/cash -d /path/to/clash &
 ```
 
@@ -660,7 +660,7 @@ rules:
 
 ### 7.4 设置 iptables 转发
 
-```
+```shell
 iptables -t nat -N CLASH
 iptables -t nat -A CLASH -d 10.0.0.0/8 -j RETURN
 iptables -t nat -A CLASH -d 127.0.0.0/8 -j RETURN
@@ -671,14 +671,14 @@ iptables -t nat -A CLASH -d 224.0.0.0/4 -j RETURN
 iptables -t nat -A CLASH -d 240.0.0.0/4 -j RETURN
 iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ```
-然后，你可以保存一下这些iptables的规则
+然后，你可以保存一下这些 iptables 的规则
 
-```
+```shell
  iptables-save > /etc/iptables.up.rules
 ```
 编辑  `//etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
 
-```
+```shell
 #!/bin/sh
 /sbin/iptables-restore < /etc/iptables.up.rules
 ```
