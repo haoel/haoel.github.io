@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2022-04-01
+更新时间：2022-04-09
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -301,10 +301,13 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 这样用 gost 在你的本机启动了一个 `Shadowsocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
 
 ```
-  +-------------------+       +-------------+       +-------------+
-  | ShadowSocks Client|------>| Gost Client |------>| Gost Server |
-  +-------------------+       +-------------+       +-------------+
+┌─────────────┐  ┌─────────────┐            ┌─────────────┐
+│ ShadowSocks │  │             │            │             │
+│    Client   ├──► Gost Client ├────────────► Gost Server │
+│ (PAC Auto)  │  │             │            │             │
+└─────────────┘  └─────────────┘            └─────────────┘
 ```
+**ShadowSocks Client 主要完成：自动设置操作系统代理服务器的 pac （自动设置翻墙或是不翻墙的路由）**
 
 这样，你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
@@ -431,7 +434,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 所谓透明网关的意思是，一切都交给网关来做。最好的方式是你需要一个 OpenWRT 的路由器，推荐使用华硕的路由器，贵是贵一些，但是这几年用下来，非常不错。我用的是  **华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路** 。
 
-路由器买来后，要刷一下固件。首先Asuswrt是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：[https://github.com/RMerl/asuswrt-merlin](https://github.com/RMerl/asuswrt-merlin)
+路由器买来后，要刷一下固件。首先 Asuswrt 是华硕公司为他的路由器所开发的固件。Asuswrt-merlin是一个对Asuswrt固件二次开发进行各种改进和修正的项目。源代码在这里：[https://github.com/RMerl/asuswrt-merlin](https://github.com/RMerl/asuswrt-merlin)
 
 不必担心把路由器刷废了，华硕的路由器可以让你一键重置回来
 
@@ -449,9 +452,41 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 - `Allow SSH password login` - `是`
 
+
+接下来，在 WiFi 路由器上安装 Clash，就可以了。
+
+大概的示意图如下所示。
+
+```
+        Phone/PC/Pad （无需设置）
+             │
+             │
+             │ 1
+             │                    
+    ┌────────▼──────┐  
+    │               │
+    │  WiFi Router  │ （安装 Clash 网关）
+    │               │
+    └─────┬────┬────┘ 
+          │    │
+          │    │ 2
+          │    └────────► 墙内 - China LAN
+       3  │ 
+    ┌─────▼──────┐
+    │    VPS     │
+    │   Proxy    │
+    └─────┬──────┘
+          │
+          │
+          ▼
+        墙外 - Internet WAN
+
+```
+
+
 ### 7.2 通过树莓派做旁路网关
 
-如果你的路由器不能刷OpenWRT，也就是没发通过SSH登录上去装软件，你就用一个别的设备。比如用一个树莓派。我正好有一个很老旧的树莓派，刷了一个老旧的Debain 7.5的操作系统。
+如果你的路由器不能刷 OpenWRT，也就是没发通过SSH登录上去装软件，你就用一个别的设备。比如用一个树莓派。我正好有一个很老旧的树莓派，刷了一个老旧的 Debian 7.5的操作系统。
 
 把它连上你的路由器上，然后，
 - 你需要把你设备上的IP地址、网关和DNS服务器都要手动设置到这个树莓派上。
@@ -463,26 +498,28 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 - 3 --> 3.1 或 3.2 是由树莓派来决走是否翻墙。
 
 ```
-              Phone/PC/Pad
-                    +
-                    |  1
-                    |
-            +-------v-------+      2      +--------+
-            |               |------------->        |
-            |  WiFi 路由器   |             |  树莓派 |
-            |               <-------------|        |
-            +------+--+-----+      3      +--------+
-                   |  |
-                3.1|  | 3.2
-                   |  +---------->  China LAN
-                   v
-               +---+---+
-               | Proxy |
-               +---+---+
-                   |
-                   |
-                   v
-             Internet WAN
+        Phone/PC/Pad （设置"网关"和"DNS"为树莓派）
+             │
+             │
+             │ 1
+             │                    （安装 Clash 网关）
+    ┌────────▼──────┐      2       ┌───────────┐
+    │               ├──────────────►           │
+    │  WiFi Router  │              │   树莓派   │
+    │               ◄──────────────┤           │
+    └─────┬────┬────┘      3       └───────────┘
+          │    │
+          │    │ 3.2
+          │    └────────► 墙内 - China LAN
+      3.1 │ 
+    ┌─────▼──────┐
+    │    VPS     │
+    │   Proxy    │
+    └─────┬──────┘
+          │
+          │
+          ▼
+        墙外 - Internet WAN
 
 ```
 
@@ -492,7 +529,7 @@ Clash 的 Github项目是：[Dreamacro/clash](https://github.com/Dreamacro/clash
 
 Clash支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell，Trojan。
 
-在你的 OpenWRT 或 树莓派 下用 `uname -m` 查看一下你的硬件架构是什么的，比如，我的是华硕和树莓派都是 `armv7l` 的，所以，需要下载 `clash-linux-armv7-....`的版本。 下载完解压后，加个可执行权限 `chmod +x clash` 就可以运行了，不过，还差一个界面和两个配置文件，它们的目录关系如下：
+在你的 OpenWRT 或 树莓派 下用 `uname -m` 查看一下你的硬件架构是什么的，比如，我的是华硕和树莓派都是 `armv7l` 的，所以，需要下载 `clash-linux-armv7-....`的版本（注：根据 clash 官方仓库 [Dreamacro/clash#189](https://github.com/Dreamacro/clash/issues/189) 系列固件不适用 armv7l 架构的 AC68U，需选择 armv5）。 下载完解压后，加个可执行权限 `chmod +x clash` 就可以运行了，不过，还差一个界面和两个配置文件，它们的目录关系如下：
 
 ```
 ├── clash                <- 建一个 clash 的目录
