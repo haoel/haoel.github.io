@@ -735,6 +735,21 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
                                    172.20.0.0/16
 ```
 
+注：你需要认真的按照 [EC2 NAT Instance](https://docs.aws.amazon.com/zh_cn/vpc/latest/userguide/VPC_NAT_Instance.html) 的文档进行设置这个NAT实例。尤其需要设置下面几项：
+
+```shell
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -A FORWARD -i eth0 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+```
+ 
+顺便科普一下：
+
+- `net.ipv4.ip_forward` 是内核参数，主要是用来把Linux当成路由器来用的参数。一般来说，一个路由器至少要有两个网络接口，一个是WAN，的一个是LAN的，为了让LAN和WAN的流量相通，需要进行内核上路由。
+- `iptables -A FORWARD -i eth0 -j ACCEPT` 通行所有需要转发的包，只有机器成为一个路由器时，需要在两个网卡间进行网络包转发时，才需要配置这条规则。
+- `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`  关键字 `MASQUERADE` 意思是“伪装“，NAT的工作原理是就像是一个宿舍收发室对学生宿舍一样，学生宿舍的地址外部不可见，邮递员只看得见整栋宿舍收发室的地址，邮递员把快递交给收发室，收发室再把快递转给学习宿舍（反之，如果学生要对外寄邮件，也是先到收发室，收发室传给邮局）。现在的问题是，所有的学生宿舍如何才能参与到任何快递的通信中，如果把学生宿舍地址发到外部，则没人能把信送回来。如果这个收发室是个自动化的机器人，他要干的事就是，把学生宿舍的地址换成收发室地址。这就是 `MASQUERADE` 的意思——**来自具有接收方 IP 地址的本地网络到达 Internet 某处的数据包必须进行修改，也就是让发送方的地址等于路由器的地**址。
+
+
 ### 8.2 安装 Clash
 
 在 EC2 NAT Instance 上安装 clash 透明网关，安装配置参看 [7.3 安装 Clash](#73-安装-clash) ，基本一致。
