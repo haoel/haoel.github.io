@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2022-04-09
+更新时间：2022-04-23
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -410,6 +410,12 @@ Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可�
 注册 Cloudflare 帐号，并有一个空闲域名（三级域名即可），交给 Cloudflare 托管并将域名指向被封的 VPS IP，注意开启 Proxied 并且 SSL-TLS 使用 Flexible 选项。
 
 Cloudflare 只需免费方案足以，不必花钱。
+
+> **注**：如果你要用Cloudflare来代理 gost 服务的话，你得使用 Websocket协议
+> 
+> - **server**:  `gost -L=mwss://user:password@:443`
+> - **client**:  `gost -L socks5://:1080 -F mwss://user:password@yourdomain:443`
+> - **cloudflare**:  `ssl/tls:full`
 
 ### 6.2 V2Ray
 
