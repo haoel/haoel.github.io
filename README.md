@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2022-04-23
+更新时间：2022-08-22
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -48,8 +48,8 @@
     - [9.1 其它方式](#91-其它方式)
     - [8.2 搭建脚本](#82-搭建脚本)
   - [10. 代理技巧](#10-代理技巧)
-    - [10.1 HTTP隧道](#101-http隧道)
-    - [10.2 SSH隧道](#102-ssh隧道)
+    - [10.1 HTTP 隧道](#101-http-隧道)
+    - [10.2 SSH 隧道](#102-ssh-隧道)
 
 ## 0. 序
 
@@ -109,7 +109,7 @@
 
 > **注意**
 > - 在中国，因为有太多的网络提供商，所以，国内的网络也是很奇葩的，可以看到的是，不同的地方，不同的网络，到不同的国家完全不一样，而且还经常性地调整路由，所以，经常性地有时候快有时候慢，简直就是随机的。所以，像我这样要求比较高的人，一般会备3-5个不同国家地区的VPS，以保障上网的速度。
-> 
+>
 > - 香港网速应该是比较好的，但是香港的成本也是比较高的。台湾的网速也是不错的，日本的网速其次，新加坡再次之，然后是美国的东海岸（这里是基于北京和上海的情况）
 >
 > - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是 Linode，最后是 Conoha 和 Vultr（如果你有更好的，请推荐）
@@ -127,7 +127,7 @@
 - **CN2 GT**: CN2 里属于Global Transit的产品(又名GIS-Global Internet Service)，在CN2里等级低，省级/出国节点为 `202.97` 开头，国际骨干节点有2～4个 `59.43` 开头的CN2节点。在出国线路上拥堵程度一般，相对于163骨干网的稍强，相比CN2 GIA，性价比也较高。
 
 - **CN2 GIA**: CN2 里属于Global Internet Access的产品，等级最高，省级/出国/国际骨干节点都以`59.43`开头，全程没有`202.97`开头的节点。在出国线路上表现最好，很少拥堵，理论上速度最快最稳定，当然，价格也相对 CN2 GT 偏高。
- 
+
 关于 `CN2` 线路的主机提供商，下面罗列几个
 
 - [搬瓦工](https://bwh8.net/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。买完后，你可能需要重装一下操作系统，装成64位带BBR的 ）
@@ -284,7 +284,7 @@ sudo docker run -d  --privileged \
 **（注：PPTP 不安全，请不要使用）**
 
 ```shell
-sudo docker run -d --privileged --net=host 
+sudo docker run -d --privileged --net=host
                 -v {/path_to_file/chap-secrets}:/etc/ppp/chap-secrets \
                 mobtitude/vpn-pptp
 ```
@@ -324,7 +324,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 对于手机端
 
  - iPhone，可以考虑使用 `ShadowRocket` （需要付费），其中使用 HTTPS 的代理，配置上就好了。
- - Android，可以考虑使用这个Plugin - [ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin) 
+ - Android，可以考虑使用这个Plugin - [ShadowsocksGostPlugin](https://github.com/xausky/ShadowsocksGostPlugin)
 
 **注明**：如果你之前使用了Chrome插件 SwitchyOmega，如果无法直接配置HTTPS代理，具体原因可能是因为你设置了`probe_resist`以开启探测防御功能。这里，你需要在服务器端设置 `knock` 参数（参看 [用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务) 中的“注意”一节 ）
 
@@ -422,7 +422,7 @@ Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可�
 Cloudflare 只需免费方案足以，不必花钱。
 
 > **注**：如果你要用Cloudflare来代理 gost 服务的话，你得使用 Websocket协议
-> 
+>
 > - **server**:  `gost -L=mwss://user:password@:443`
 > - **client**:  `gost -L socks5://:1080 -F mwss://user:password@yourdomain:443`
 > - **cloudflare**:  `ssl/tls:full`
@@ -464,7 +464,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 - `Enable JFFS custom scripts and configs` - `是`
 
 
-**4）打开 ssh 登录**。 `系统管理` -> `系统设置` -> `SSH Daemon` 
+**4）打开 ssh 登录**。 `系统管理` -> `系统设置` -> `SSH Daemon`
 
 - `Allow SSH password login` - `是`
 
@@ -478,16 +478,16 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
              │
              │
              │ 1
-             │                    
-    ┌────────▼──────┐  
+             │
+    ┌────────▼──────┐
     │               │
     │  WiFi Router  │ （安装 Clash 网关）
     │               │
-    └─────┬────┬────┘ 
+    └─────┬────┬────┘
           │    │
           │    │ 2
           │    └────────► 墙内 - China LAN
-       3  │ 
+       3  │
     ┌─────▼──────┐
     │    VPS     │
     │   Proxy    │
@@ -527,7 +527,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
           │    │
           │    │ 3.2
           │    └────────► 墙内 - China LAN
-      3.1 │ 
+      3.1 │
     ┌─────▼──────┐
     │    VPS     │
     │   Proxy    │
@@ -549,8 +549,8 @@ Clash 支持很多翻墙协议：ShadowSocks(R), Vmess, Socks5, HTTP(s)，Snell�
 
 ```
 ├── clash                <- 建一个 clash 的目录
-│   ├── clash            <- 运行文件 
-│   ├── config.yaml      <- 配置文件 
+│   ├── clash            <- 运行文件
+│   ├── config.yaml      <- 配置文件
 │   ├── Country.mmdb     <- IP地址库
 │   └── ui               <- Clash 的 UI
 │       ├── index.html
@@ -660,7 +660,7 @@ rules:
   - DOMAIN-SUFFIX,nflxvideo.net,netflix
 
 # 最终规则（除了中国区的IP之外的，全部翻墙）
-  - GEOIP,CN,DIRECT 
+  - GEOIP,CN,DIRECT
   - MATCH,auto
 
 ```
@@ -707,7 +707,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ### 8.1 AWS 网络构建
 
 1. 构建一个 `172.20.0.0/16` 的 VPC，分成两个子网：
-   - 有公网IP的公有子网 - `172.20.1.0/24` 
+   - 有公网IP的公有子网 - `172.20.1.0/24`
    - 无公网IP的私有子网 - `172.20.2.0/24`
 
 2. 在公有子网里创建 [EC2 NAT Instance](https://docs.aws.amazon.com/zh_cn/vpc/latest/userguide/VPC_NAT_Instance.html)
@@ -758,7 +758,7 @@ sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -A FORWARD -i eth0 -j ACCEPT
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 ```
- 
+
 顺便科普一下：
 
 - `net.ipv4.ip_forward` 是内核参数，主要是用来把Linux当成路由器来用的参数。一般来说，一个路由器至少要有两个网络接口，一个是WAN，的一个是LAN的，为了让LAN和WAN的流量相通，需要进行内核上路由。
@@ -773,7 +773,7 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 > 注：在实际操作中，没有设置 `iptables` 转发规则
 
 
-### 8.3 配置私有子网中的 EC2 
+### 8.3 配置私有子网中的 EC2
 
 只需要配置 `/etc/resolv.conf` 文件，把 EC2 NAT Instance 加入其中。如：
 
@@ -788,7 +788,7 @@ search [zone].compute.internal
 
 K8s 里有两组 CoreDNS 部署和配置，一组是边缘的（或是叫本地的），一组是中心的。
 
-- 边缘的 Pod 名叫 `nodelocaldns`，侦听在本机。如：`169.254.25.10:53` 
+- 边缘的 Pod 名叫 `nodelocaldns`，侦听在本机。如：`169.254.25.10:53`
 - 中心的 Pod 名叫 `coredns`，侦听在 cluster IP 上，如：`10.233.0.3:53`
 
 边缘的规则会把k8s的域名 `cluster.local`, `in-addr.arp` `ip6.arpa` 转给中心的 CoreDNS 处理，其它的交给本地的 `/etc/resolv.conf` 处理。
@@ -857,7 +857,7 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 退出保存后，等大约30秒左右配置就会生效。
 
-## 9. 其它 
+## 9. 其它
 
 ### 9.1 其它方式
 
@@ -869,22 +869,23 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
--  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) 
+-  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh)
 
 ## 10. 代理技巧
 看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
 
-1. [SOCKS协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
-2. [HTTP隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
+1. [SOCKS 协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
+2. [HTTP 隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
 
-### 10.1 HTTP隧道
+### 10.1 HTTP 隧道
+
 常见的软件 curl , git, wget 都能通过设置 `HTTP_PROXY`,`HTTPS_PROXY`，`NO_PROXY` 来配置一个网络代理，`NO_PROXY`用来配置不需要代理的主机(多个用逗号隔开), 那么我们就可以编写一个 `bash ` 函数来运行需要走代理的命令:
-```
+```shell
 with_proxy(){
    HTTPS_PROXY=http://127.0.0.1:7890 HTTP_PROXY=http://127.0.0.1:7890 "$@"
 }
 ```
-把上面的 `127.0.0.1:7890` 改成你自己的网络代理, 将上面脚本写入到 ~/.bashrc 中， `source ~/.bashrc` 后就能使用 `with_proxy` 这个函数了，比如我想要使用代理网络下载一个文件 `with_proxy wget https://....`, 想要使用代理网络从 `github` clone 一个项目 `with_proxy git clone https://...`, 当我们不用 `with_proxy` 这个函数的时候命令是不会走代理的，如果在 `windows` 上你也想要使用这样的功能，可以使用这个项目[with-env](https://github.com/hellojukay/with-env)。
+把上面的 `127.0.0.1:7890` 改成你自己的网络代理, 将上面脚本写入到 `~/.bashrc` 中， `source ~/.bashrc` 后就能使用 `with_proxy` 这个函数了，比如我想要使用代理网络下载一个文件 `with_proxy wget https://....`, 想要使用代理网络从 `github` clone 一个项目 `with_proxy git clone https://...`, 当我们不用 `with_proxy` 这个函数的时候命令是不会走代理的，如果在 `windows` 上你也想要使用这样的功能，可以使用这个项目[with-env](https://github.com/hellojukay/with-env)。
 
 另外，你也可以使用如下的两个 alias:
 ```shell
@@ -892,14 +893,24 @@ SOCKS="socks5://127.0.0.1:1085"
 alias proxy="export http_proxy=${SOCKS} https_proxy=${SOCKS} all_proxy=${SOCKS}"
 alias unproxy='unset all_proxy http_proxy https_proxy'
 ```
-这样，你就可以在需要代理的时候输入 proxy，不需要的时候输入 unproxy。
+这样，你就可以在需要代理的时候输入 `proxy`，不需要的时候输入 `unproxy`。
 
-### 10.2 SSH隧道
+### 10.2 SSH 隧道
 另外，我们可以使用 SSH Tunnel 来建立 SOCKS5 的代理（假设本地电脑无法访问，但是某台可以 SSH 的服务器能够访问外网，那么我们就可以使用如下的命令来建议翻墙代理：
+
 ```shell
 ssh -D 1080 -qCN username@server:port
 ```
-```
+解释：
+
+- `-D`：本机SOCKS 服务端口
+- `-q` : quiet 模式，没有输出
+- `-C` : 数据压缩，可以节约一些带宽
+- `-N` : 不运行远程命令，只做端口转发
+
+登录成功以后,本地 `1080`端口会开启一个 `SOCKS5` 协议的代理，只要配置好代理就能使用这个端口上网。
+
+```shell
 with_proxy(){
    HTTPS_PROXY=socks5://127.0.0.1:1080 HTTP_PROXY=socks5://127.0.0.1:1080 "$@"
 }
