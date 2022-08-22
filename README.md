@@ -884,9 +884,21 @@ with_proxy(){
    HTTPS_PROXY=http://127.0.0.1:7890 HTTP_PROXY=http://127.0.0.1:7890 "$@"
 }
 ```
-把上面的 '127.0.0.1:7890' 改成你自己的网络代理, 将上面脚本写入到 ~/.bashrc 中， `source ~/.bashrc` 后就能使用 `with_proxy` 这个函数了，比如我想要使用代理网络下载一个文件 `with_proxy wget https://....`, 想要使用代理网络从 `github` clone 一个项目 `with_proxy git clone https://...`, 当我们不用 `with_proxy` 这个函数的时候命令是不会走代理的，如果在 `windows` 上你也想要使用这样的功能，可以使用这个项目[with-env](https://github.com/hellojukay/with-env)。
+把上面的 `127.0.0.1:7890` 改成你自己的网络代理, 将上面脚本写入到 ~/.bashrc 中， `source ~/.bashrc` 后就能使用 `with_proxy` 这个函数了，比如我想要使用代理网络下载一个文件 `with_proxy wget https://....`, 想要使用代理网络从 `github` clone 一个项目 `with_proxy git clone https://...`, 当我们不用 `with_proxy` 这个函数的时候命令是不会走代理的，如果在 `windows` 上你也想要使用这样的功能，可以使用这个项目[with-env](https://github.com/hellojukay/with-env)。
+
+另外，你也可以使用如下的两个 alias:
+```shell
+SOCKS="socks5://127.0.0.1:1085"
+alias proxy="export http_proxy=${SOCKS} https_proxy=${SOCKS} all_proxy=${SOCKS}"
+alias unproxy='unset all_proxy http_proxy https_proxy'
+```
+这样，你就可以在需要代理的时候输入 proxy，不需要的时候输入 unproxy。
+
 ### 10.2 SSH隧道
-假设本地电脑无法访问，但是 ssh 能访问局域网中某台设备,此设备可以访问外网，那么就可以利用这台设备在不安装任何代理软件的情况下实现访问外网,假设设备 IP 是: 192.168.1.111 ， 我们可以本地使用 `ssh` 登录此设备 `ssh -D 1080 username@192.168.1.111` , 登录成功以后本地 `1080`端口会开启一个 `SOCKS5` 协议的代理，只要配置好代理就能使用这个端口上网
+另外，我们可以使用 SSH Tunnel 来建立 SOCKS5 的代理（假设本地电脑无法访问，但是某台可以 SSH 的服务器能够访问外网，那么我们就可以使用如下的命令来建议翻墙代理：
+```shell
+ssh -D 1080 -qCN username@server:port
+```
 ```
 with_proxy(){
    HTTPS_PROXY=socks5://127.0.0.1:1080 HTTP_PROXY=socks5://127.0.0.1:1080 "$@"
