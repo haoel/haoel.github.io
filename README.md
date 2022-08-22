@@ -47,6 +47,9 @@
   - [9. 其它](#9-其它)
     - [9.1 其它方式](#91-其它方式)
     - [8.2 搭建脚本](#82-搭建脚本)
+  - [10. 代理技巧](#10-代理技巧)
+    - [10.1 HTTP隧道](#101-http隧道)
+    - [10.2 SSH隧道](#102-ssh隧道)
 
 ## 0. 序
 
@@ -867,6 +870,43 @@ $ kubectl edit cm nodelocaldns -n kube-system
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
 -  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) 
+
+## 10. 代理技巧
+看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
+
+1. [SOCKS协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
+2. [HTTP隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
+
+### 10.1 HTTP隧道
+常见的软件 curl , git, wget 都能通过设置 `HTTP_PROXY`,`HTTPS_PROXY`，`NO_PROXY` 来配置一个网络代理，`NO_PROXY`用来配置不需要代理的主机(多个用逗号隔开), 那么我们就可以编写一个 `bash ` 函数来运行需要走代理的命令:
+```
+with_proxy(){
+   HTTPS_PROXY=http://127.0.0.1:7890 HTTP_PROXY=http://127.0.0.1:7890 "$@"
+}
+```
+把上面的 `127.0.0.1:7890` 改成你自己的网络代理, 将上面脚本写入到 ~/.bashrc 中， `source ~/.bashrc` 后就能使用 `with_proxy` 这个函数了，比如我想要使用代理网络下载一个文件 `with_proxy wget https://....`, 想要使用代理网络从 `github` clone 一个项目 `with_proxy git clone https://...`, 当我们不用 `with_proxy` 这个函数的时候命令是不会走代理的，如果在 `windows` 上你也想要使用这样的功能，可以使用这个项目[with-env](https://github.com/hellojukay/with-env)。
+
+另外，你也可以使用如下的两个 alias:
+```shell
+SOCKS="socks5://127.0.0.1:1085"
+alias proxy="export http_proxy=${SOCKS} https_proxy=${SOCKS} all_proxy=${SOCKS}"
+alias unproxy='unset all_proxy http_proxy https_proxy'
+```
+这样，你就可以在需要代理的时候输入 proxy，不需要的时候输入 unproxy。
+
+### 10.2 SSH隧道
+另外，我们可以使用 SSH Tunnel 来建立 SOCKS5 的代理（假设本地电脑无法访问，但是某台可以 SSH 的服务器能够访问外网，那么我们就可以使用如下的命令来建议翻墙代理：
+```shell
+ssh -D 1080 -qCN username@server:port
+```
+```
+with_proxy(){
+   HTTPS_PROXY=socks5://127.0.0.1:1080 HTTP_PROXY=socks5://127.0.0.1:1080 "$@"
+}
+```
+如果是浏览器，配置好`SwitchyOmega`插件也能实现上外网。
+
+
 
 欢迎补充和改善！
 
