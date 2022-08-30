@@ -692,7 +692,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ```shell
  iptables-save > /etc/iptables.up.rules
 ```
-编辑  `//etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
+编辑  `/etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
 
 ```shell
 #!/bin/sh
