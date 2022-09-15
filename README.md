@@ -234,7 +234,7 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 0 0 1 * * /usr/bin/certbot renew --force-renewal
 5 0 1 * * /usr/bin/docker restart gost
 ```
-S
+
 这样，服务器就配置完成了。客户端请移动后面的客户端章节。
 
 ### 3.4 设置 ShadowSocks 服务
@@ -692,7 +692,7 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ```shell
  iptables-save > /etc/iptables.up.rules
 ```
-编辑  `//etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
+编辑  `/etc/network/if-pre-up.d/iptables`，在网卡启动的时候加载这些规则
 
 ```shell
 #!/bin/sh
@@ -865,7 +865,7 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
 
-### 8.2 搭建脚本
+### 9.2 搭建脚本
 
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
