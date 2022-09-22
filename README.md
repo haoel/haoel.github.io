@@ -239,7 +239,7 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 
 服务器端：
 ```
-gost -L=mwss://username:password@:443?probe_resist=code:404?cert=/path/to/your/cert/file&key=/path/to/your/key/file
+gost -L=mwss://username:password@:443?cert=/path/to/your/cert/file\&key=/path/to/your/key/file
 ```
 
 CloudFlare：将TLS/SSL设置为**完全**
