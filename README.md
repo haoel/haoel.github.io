@@ -19,7 +19,8 @@
   - [3. 搭建相关代理服务](#3-搭建相关代理服务)
     - [3.1 设置Docker服务](#31-设置docker服务)
     - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
-    - [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
+    - [3.3.1 用 Gost 设置 HTTPS 服务](#331-用-gost-设置-https-服务)
+    - [3.3.2用Gost设置Websocket Over Tls服务(支持CDN)](#332用gost设置websocket-over-tls服务支持cdn)
     - [3.4 设置 ShadowSocks 服务](#34-设置-shadowsocks-服务)
     - [3.5 设置L2TP/IPSec服务](#35-设置l2tpipsec服务)
     - [3.6 设置 PPTP 服务](#36-设置-pptp-服务)
@@ -46,7 +47,7 @@
     - [8.4 私有子网中的 Kubernetes](#84-私有子网中的-kubernetes)
   - [9. 其它](#9-其它)
     - [9.1 其它方式](#91-其它方式)
-    - [8.2 搭建脚本](#82-搭建脚本)
+    - [9.2 搭建脚本](#92-搭建脚本)
   - [10. 代理技巧](#10-代理技巧)
     - [10.1 HTTP 隧道](#101-http-隧道)
     - [10.2 SSH 隧道](#102-ssh-隧道)
@@ -212,19 +213,30 @@ sudo docker run -d --name gost \
 
 **注意**：开启了探测防御功能后，当认证失败时服务器默认不会响应 `407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的 SwitchyOmega 插件)。通过knock参数设置服务器才会发送407响应。对于上面的例子，我们的`knock`参数配置的是`www.google.com`，所以，你需要先访问一下 `https://www.google.com` 让服务端返回一个 `407` 后，SwitchyOmega 才能正常工作。
 
-**注意**：如果认证信息（也就是用户名和密码）中包含特殊字符，则可以（应该是必须！否则客户端一侧会有很多不兼容）通过auth参数来设置：
-```
-gost -L :8080?auth=YWRtaW46MTIzNDU2 -F ss://:8338?auth=Y2hhY2hhMjA6QWEjJiEkMTIzNEA1Njc4
-```
-auth的值为user:passbase64编码值
+**注意**：如果认证信息（也就是用户名和密码）中包含特殊字符，则可以（应该是必须！否则客户端一侧会有很多不兼容）通过auth参数来设置，下面是使用 `auth` 参数的例子（注意，需要 gost 在 2.9.2+ 以上版本）：
 
+```shell
+DOMAIN="YOU.DOMAIN.NAME"
+USER="username"
+PASS="password"
+PORT=443
+AUTH=$(echo -n ${USER}:${PASS} | base64)
+
+BIND_IP=0.0.0.0
+CERT_DIR=/etc/letsencrypt
+CERT=${CERT_DIR}/live/${DOMAIN}/fullchain.pem
+KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
+sudo docker run -d --name gost \
+    -v ${CERT_DIR}:${CERT_DIR}:ro \
+    --net=host ginuerzh/gost \
+    -L "http2://${BIND_IP}:${PORT}?auth=${AUTH}&cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com"
+```
 
 如无意外，你的服务就启起来了。你可以使用下面的命令验证你的 gost 服务是否正常。
 
 ```shell
 curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
 ```
-
 
 接下来就是证书的自动化更新。
 
@@ -235,7 +247,7 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 5 0 1 * * /usr/bin/docker restart gost
 ```
 
-### 3.3.2用Gost设置Websocket Over Tls服务(支持CDN) 
+### 3.3.2用Gost设置Websocket Over Tls服务(支持CDN)
 
 服务器端：
 ```
