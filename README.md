@@ -19,8 +19,7 @@
   - [3. 搭建相关代理服务](#3-搭建相关代理服务)
     - [3.1 设置Docker服务](#31-设置docker服务)
     - [3.2 开启 TCP BBR 拥塞控制算法](#32-开启-tcp-bbr-拥塞控制算法)
-    - [3.3.1 用 Gost 设置 HTTPS 服务](#331-用-gost-设置-https-服务)
-    - [3.3.2用Gost设置Websocket Over Tls服务(支持CDN)](#332用gost设置websocket-over-tls服务支持cdn)
+    - [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)
     - [3.4 设置 ShadowSocks 服务](#34-设置-shadowsocks-服务)
     - [3.5 设置L2TP/IPSec服务](#35-设置l2tpipsec服务)
     - [3.6 设置 PPTP 服务](#36-设置-pptp-服务)
@@ -173,7 +172,7 @@ BBR之后移植入Linux内核4.9版本，并且对于QUIC可用。
 
 如果开启，请参看 《[开启TCP BBR拥塞控制算法](https://github.com/iMeiji/shadowsocks_install/wiki/开启-TCP-BBR-拥塞控制算法) 》
 
-### 3.3.1 用 Gost 设置 HTTPS 服务
+### 3.3 用 Gost 设置 HTTPS 服务
 
 [gost](https://github.com/ginuerzh/gost) 是一个非常强的代理服务，它可以设置成 HTTPS 代理，然后把你的服务伪装成一个Web服务器，**我感觉这比其它的流量伪装更好，也更隐蔽。这也是这里强烈推荐的一个方式**。
 
@@ -246,23 +245,24 @@ curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PAS
 0 0 1 * * /usr/bin/certbot renew --force-renewal
 5 0 1 * * /usr/bin/docker restart gost
 ```
-
-### 3.3.2用Gost设置Websocket Over Tls服务(支持CDN)
-
-服务器端：
-```
-gost -L=mwss://username:password@:443?cert=/path/to/your/cert/file\&key=/path/to/your/key/file
-```
-
-CloudFlare：将TLS/SSL设置为**完全**
-
-客户端：
-```
-gost -L socks://:YourLocalPort -F mwss://username:password@example.com:443
-```
-然后在其他软件中设置socks5代理即可
-
 这样，服务器就配置完成了。客户端请移动后面的客户端章节。
+
+>  **使用 Cloudflare 的注意事项**
+>
+> 上述的方法并不支持 Cloudflare CDN，如果你想使用了 Cloudflare CDN，你需要使用 WebSocket 协议，如下所示，你需要使用 `mwss` 协议。
+>
+> ```shell
+> gost -L=mwss://username:password@:443?cert=/path/to/your/cert/file\&key=/path/to/your/key/file
+> ```
+> 在 CloudFlare 上，请将TLS/SSL设置为 **完全**
+>
+> 如果你的客户端只能使用 socks 协议，你还要在客户端这边转一下：
+>
+>```shell
+>gost -L socks://:YourLocalPort -F mwss://username:password@example.com:443
+> ```
+> 然后在其他软件中设置socks5代理即可
+
 
 ### 3.4 设置 ShadowSocks 服务
 
