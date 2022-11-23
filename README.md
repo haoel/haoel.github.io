@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2022-11-15
+更新时间：2022-11-23
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -98,7 +98,7 @@
 
 对于 VPS，下面是一些常规选项。
 
-- [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，流量不限，目前的Zone不多，推荐使用日本，新加坡或美国俄勒冈（支持银联卡）
+- [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，流量不限，目前的Zone不多，推荐使用日本，新加坡或美国俄勒冈（支持银联卡）。现对 2021/8/7 之后使用 Lightsail 的用户提供3个月的免费试用。
 - [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （支持银联卡）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD5刀的VPS
