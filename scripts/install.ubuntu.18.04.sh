@@ -108,7 +108,7 @@ create_cert() {
 
 install_gost() {
     if ! [ -x "$(command -v docker)" ]; then
-        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}"
         return
     fi
 
@@ -121,7 +121,7 @@ install_gost() {
     read -r -p "请输入你要使用的域名：" DOMAIN
     read -r -p "请输入你要使用的用户名:" USER
     read -r -p "请输入你要使用的密码:" PASS
-    read -r -p "请输入HTTP/2需要侦听的端口号(443)：" PORT 
+    read -r -p "请输入HTTP/2需要侦听的端口号(443)：" PORT
 
     if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 ] && [ "$PORT" -le 655535 ]; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 443 !${COLOR_NONE}"
@@ -152,7 +152,7 @@ create_cron_job(){
         echo "${COLOR_SUCC}证书renew定时作业已经安装过！${COLOR_NONE}"
     fi
 
-    if ! crontab_exists "docker restart gost"; then 
+    if ! crontab_exists "docker restart gost"; then
         echo "5 0 1 * * /usr/bin/docker restart gost" >> /var/spool/cron/crontabs/root
         echo "${COLOR_SUCC}成功安装gost更新证书定时作业！${COLOR_NONE}"
     else
@@ -162,7 +162,7 @@ create_cron_job(){
 
 install_shadowsocks(){
     if ! [ -x "$(command -v docker)" ]; then
-        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}"
         return
     fi
 
@@ -173,23 +173,23 @@ install_shadowsocks(){
 
     echo "准备启动 ShadowSocks 代理程序,为了安全,需要使用用户名与密码进行认证."
     read -r -p "请输入你要使用的密码:" PASS
-    read -r -p "请输入ShadowSocks需要侦听的端口号(1984)：" PORT 
+    read -r -p "请输入ShadowSocks需要侦听的端口号(1984)：" PORT
 
     BIND_IP=0.0.0.0
 
     if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! [ "$PORT" -ge 1 ] && [  "$PORT" -le 655535 ]; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 1984 !${COLOR_NONE}"
         PORT=1984
-    fi 
+    fi
 
     sudo docker run -dt --name ss \
-        -p ${PORT}:${PORT} mritd/shadowsocks \
+        -p "${PORT}:${PORT}" mritd/shadowsocks \
         -s "-s ${BIND_IP} -p ${PORT} -m aes-256-cfb -k ${PASS} --fast-open"
 }
 
 install_vpn(){
     if ! [ -x "$(command -v docker)" ]; then
-        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}" 
+        echo -e "${COLOR_ERROR}未发现Docker，请求安装 Docker ! ${COLOR_NONE}"
         return
     fi
 
@@ -232,7 +232,7 @@ init(){
     COLUMNS=50
     echo -e "\n菜单选项\n"
 
-    while true 
+    while true
     do
         PS3="Please select a option:"
         re='^[0-9]+$'
@@ -254,7 +254,7 @@ init(){
                 break;
             elif (( REPLY == 2 )) ; then
                 install_docker
-                break 
+                break
             elif (( REPLY == 3 )) ; then
                 create_cert
                 #loop=1
