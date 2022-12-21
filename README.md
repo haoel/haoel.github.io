@@ -50,6 +50,7 @@
   - [10. 代理技巧](#10-代理技巧)
     - [10.1 HTTP 隧道](#101-http-隧道)
     - [10.2 SSH 隧道](#102-ssh-隧道)
+    - [10.3 Github / Git SSH 代理](#103-github--git-ssh-代理)
 
 ## 0. 序
 
@@ -942,6 +943,18 @@ with_proxy(){
 ```
 如果是浏览器，配置好`SwitchyOmega`插件也能实现上外网。
 
+### 10.3 Github / Git SSH 代理
+
+现在访问 Github 速度很慢甚至不通，我们可以使用代理来加速，首先我们需要配置好代理，然后配置好 `git` 的代理，这样就能加速 `git clone` 和 `git push` 了。
+
+当你使用  `git clone ssh://[user@]server/project.git` 或是 `git clone [user@]server:project.git` 的时候，你是在使用 SSH 协议。你需要配置  `~/.ssh/config` 来使用代理，比如我的本地有一个Sock5代理，端口是 1085，那么我可以这样配置：
+
+```s
+### github.com
+Host github.com
+    Hostname github.com
+    ProxyCommand nc -x localhost:1085 %h %p
+```
 
 
 欢迎补充和改善！
