@@ -954,6 +954,8 @@ with_proxy(){
 Host github.com
     Hostname github.com
     ProxyCommand nc -x localhost:1085 %h %p
+    # git-for-windows 下可以用 connect 代替 nc
+    # ProxyCommand connect -S localhost:1085 %h %p
 ```
 
 
