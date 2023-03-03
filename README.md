@@ -384,7 +384,7 @@ gost -L ss://aes-128-cfb:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 
 对于L2TP/IPSec，几乎所有的客户端操作系统（无论是Windows/Mac/Linux的电脑，还是iPhone/Android）都支持，你可以自行Google。
 
-- [Mac OS X PPTP/L2TP设置教程](https://www.jianshu.com/p/24e48cfb574f)
+- [Mac OS X PPTP/L2TP设置教程](http://www.it-shit.com/74.html)
 - [Windows 7操作系统配置L2TP VPN方法](http://nic.upc.edu.cn/2016/0928/c7809a132077/page.htm)
 
 ## 5. 流量伪装和其它方式
