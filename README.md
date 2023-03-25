@@ -49,6 +49,8 @@
     - [9.2 SSH 隧道](#92-ssh-隧道)
     - [9.3 Github / Git SSH 代理](#93-github--git-ssh-代理)
     - [9.4 Cloudflare Warp 原生 IP](#94-cloudflare-warp-原生-ip)
+      - [9.4.1 脚本安装](#941-脚本安装)
+      - [9.4.2 手动安装](#942-手动安装)
   - [10. 其它](#10-其它)
     - [10.1 其它方式](#101-其它方式)
     - [10.2 搭建脚本](#102-搭建脚本)
@@ -965,11 +967,44 @@ Host github.com
 
 所谓“原生 IP”就是指该网站的 IP 地址和其机房的 IP 地址是一致的，但是，很多 IDC 提供商的 IP 都是从其它国家调配来的，这导致我们就算是翻墙了，也是使用了美国的 VPS，但是还是访问不了相关的服务。所以，我们需要使用 Cloudflare Warp 来访问这些网站。
 
-下面是一个在 Ubuntu 20.10 上安装 Cloudflare Warp 的教程。
 
-> **Note**:
->
-> 你也可以使用这个一键安装的脚本来完成 https://github.com/P3TERX/warp.sh
+#### 9.4.1 脚本安装
+
+你可以使用这个一键安装的脚本来快速完成安装 https://github.com/P3TERX/warp.sh
+
+下载脚本
+```shell
+wget git.io/warp.sh
+chmod +x warp.sh
+```
+运行脚本 中文菜单
+```shell
+./wrap.sh menu
+```
+先后执行如下安装：
+ - 1 - 安装 Cloudflare WARP 官方客户端
+ - 4 - 安装 WireGuard 相关组件
+ - 7 - 自动配置 WARP WireGuard 双栈全局网络
+
+
+使用 `curl ipinfo.io` 命令来检查你的 IP 地址，如果显示的是 Cloudflare 的 IP 地址，那么恭喜你，你已经成功了。如：
+
+```json
+{
+  "ip": "104.28.227.191",
+  "city": "Los Angeles",
+  "region": "California",
+  "country": "US",
+  "loc": "34.0522,-118.2437",
+  "org": "AS13335 Cloudflare, Inc.",
+  "postal": "90009",
+  "timezone": "America/Los_Angeles",
+  "readme": "https://ipinfo.io/missingauth"
+}
+```
+
+
+#### 9.4.2 手动安装
 
 **1） 安装软件包**
 
@@ -1047,28 +1082,18 @@ Endpoint = 162.159.192.1:2408
 -  `162.159.192.1` 是域名的 `engage.cloudflareclient.com` 的 IP 地址，你可以使用 `nslookup engage.cloudflareclient.com` 获得。
 -  配置文件中默认的 DNS 是 `1.1.1.1` 这里使用了 Google 的 DNS，因为会快一些。
 
-**7）启动 WireGuard**
+**7）启停 WireGuard**
 
-临时启用网络接口（命令中的 `wgcf` 对应的是配置文件 `/etc/wireguard/wgcf.conf` 的文件名前缀）
+启用网络接口（命令中的 `wgcf` 对应的是配置文件 `/etc/wireguard/wgcf.conf` 的文件名前缀）
 
 ```shell
 sudo wg-quick up wgcf
 ```
 
-使用 `curl ipinfo.io` 命令来检查你的 IP 地址，如果显示的是 Cloudflare 的 IP 地址，那么恭喜你，你已经成功了。如：
+停止网络接口如下：
 
-```json
-{
-  "ip": "104.28.227.191",
-  "city": "Los Angeles",
-  "region": "California",
-  "country": "US",
-  "loc": "34.0522,-118.2437",
-  "org": "AS13335 Cloudflare, Inc.",
-  "postal": "90009",
-  "timezone": "America/Los_Angeles",
-  "readme": "https://ipinfo.io/missingauth"
-}
+```shell
+sudo wg-quick down wgcf
 ```
 
 **8）设置开机自启动**
