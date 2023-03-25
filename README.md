@@ -967,7 +967,9 @@ Host github.com
 
 下面是一个在 Ubuntu 20.10 上安装 Cloudflare Warp 的教程。
 
-注： 你也可以使用这个一键安装的脚本来完成 https://github.com/P3TERX/warp.sh
+> **Note**:
+>
+> 你也可以使用这个一键安装的脚本来完成 https://github.com/P3TERX/warp.sh
 
 **1） 安装软件包**
 
@@ -1016,7 +1018,7 @@ sudo cp wgcf-profile.conf /etc/wireguard/wgcf.conf
 
 **6） 修改 WireGuard 配置文件**
 
-你一定要修改 `wgcf-profile.conf` 文件，你把你的 VPS 的公网 IP 加进去，否则，你的 VPS 会失连。
+**你一定要修改 `wgcf-profile.conf` 文件，你把你的 VPS 的公网 IP 加进去，否则，你的 VPS 会失连。**
 
 ```
 PostUp = ip rule add from <服务器 Public IP> lookup main
@@ -1040,7 +1042,7 @@ AllowedIPs = 0.0.0.0/0,::/0
 Endpoint = 162.159.192.1:2408
 ```
 
-注意：
+注：
 - `10.10.10.10` 只是一个示例，你要把它替换成你的 VPS 的公网 IP
 -  `162.159.192.1` 是域名的 `engage.cloudflareclient.com` 的 IP 地址，你可以使用 `nslookup engage.cloudflareclient.com` 获得。
 -  配置文件中默认的 DNS 是 `1.1.1.1` 这里使用了 Google 的 DNS，因为会快一些。
