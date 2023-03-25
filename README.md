@@ -986,6 +986,21 @@ chmod +x warp.sh
  - 4 - 安装 WireGuard 相关组件
  - 7 - 自动配置 WARP WireGuard 双栈全局网络
 
+>**Note:**
+> 1. 如果没有 ipv6 网络，那么第 7 步可以换成第 5 步 自动配置 WARP WireGuard IPv4 网络，或是执行 `./warp.sh 4`。
+>
+> 2. 你需要备份一下你的帐号和配置文件，在 `/etc/warp/` 目录下，主要是两个文件，一个是 `wgcf-account.toml`，一个是 `wgcf-profile.conf`
+>
+> 3. 这个脚本会启动两个 Systemd 服务，一个是 `warp-svc`，另一个是 `wg-quick@wgcf`。第一个是 Cloudflare Warp 的服务，第二个是 WireGuard 的服务。
+>
+> 4. 你可以使用 `./warp.sh status` 来查看服务的状态，如果正常的话，会显示如下的信息。如果你的服务没有正常启动，那么会自动 `disable wg-quick@wgcf`，如果这样的话，你可以使用 `./warp.sh d`（ipv4 + ipv6 双栈网格）或是 `./warp.sh 4`（ipv4 网络） 来重头走一遍所有的安装过程。
+>       ```
+>       WireGuard	: Running
+>       IPv4 Network	: WARP
+>       IPv6 Network	: WARP
+>       ```
+>
+
 
 使用 `curl ipinfo.io` 命令来检查你的 IP 地址，如果显示的是 Cloudflare 的 IP 地址，那么恭喜你，你已经成功了。如：
 
@@ -1005,6 +1020,10 @@ chmod +x warp.sh
 
 
 #### 9.4.2 手动安装
+
+> **Note:**
+>
+> 最好还是通过上面的脚本来安装，但是如果你想手动安装，那么你可以参考下面的步骤。
 
 **1） 安装软件包**
 
