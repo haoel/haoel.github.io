@@ -44,13 +44,14 @@
     - [8.2 安装 Clash](#82-安装-clash)
     - [8.3 配置私有子网中的 EC2](#83-配置私有子网中的-ec2)
     - [8.4 私有子网中的 Kubernetes](#84-私有子网中的-kubernetes)
-  - [9. 其它](#9-其它)
-    - [9.1 其它方式](#91-其它方式)
-    - [9.2 搭建脚本](#92-搭建脚本)
-  - [10. 代理技巧](#10-代理技巧)
-    - [10.1 HTTP 隧道](#101-http-隧道)
-    - [10.2 SSH 隧道](#102-ssh-隧道)
-    - [10.3 Github / Git SSH 代理](#103-github--git-ssh-代理)
+  - [9. 代理技巧](#9-代理技巧)
+    - [9.1 HTTP 隧道](#91-http-隧道)
+    - [9.2 SSH 隧道](#92-ssh-隧道)
+    - [9.3 Github / Git SSH 代理](#93-github--git-ssh-代理)
+    - [9.4 Cloudflare Warp 原生 IP](#94-cloudflare-warp-原生-ip)
+  - [10. 其它](#10-其它)
+    - [10.1 其它方式](#101-其它方式)
+    - [10.2 搭建脚本](#102-搭建脚本)
 
 ## 0. 序
 
@@ -896,27 +897,15 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 退出保存后，等大约30秒左右配置就会生效。
 
-## 9. 其它
 
-### 9.1 其它方式
 
-如下还有一些其它的方式（注：均由网友提供，我没有验证过）
-
-[Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
-
-### 9.2 搭建脚本
-
-上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
-
--  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh)
-
-## 10. 代理技巧
+## 9. 代理技巧
 看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
 
 1. [SOCKS 协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
 2. [HTTP 隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
 
-### 10.1 HTTP 隧道
+### 9.1 HTTP 隧道
 
 常见的软件 curl , git, wget 都能通过设置 `HTTP_PROXY`,`HTTPS_PROXY`，`NO_PROXY` 来配置一个网络代理，`NO_PROXY`用来配置不需要代理的主机(多个用逗号隔开), 那么我们就可以编写一个 `bash ` 函数来运行需要走代理的命令:
 ```shell
@@ -934,7 +923,7 @@ alias unproxy='unset all_proxy http_proxy https_proxy'
 ```
 这样，你就可以在需要代理的时候输入 `proxy`，不需要的时候输入 `unproxy`。
 
-### 10.2 SSH 隧道
+### 9.2 SSH 隧道
 另外，我们可以使用 SSH Tunnel 来建立 SOCKS5 的代理（假设本地电脑无法访问，但是某台可以 SSH 的服务器能够访问外网，那么我们就可以使用如下的命令来建议翻墙代理：
 
 ```shell
@@ -956,7 +945,7 @@ with_proxy(){
 ```
 如果是浏览器，配置好`SwitchyOmega`插件也能实现上外网。
 
-### 10.3 Github / Git SSH 代理
+### 9.3 Github / Git SSH 代理
 
 现在访问 Github 速度很慢甚至不通，我们可以使用代理来加速，首先我们需要配置好代理，然后配置好 `git` 的代理，这样就能加速 `git clone` 和 `git push` 了。
 
@@ -970,7 +959,137 @@ Host github.com
     # git-for-windows 下可以用 connect 代替 nc
     # ProxyCommand connect -S localhost:1085 %h %p
 ```
+### 9.4 Cloudflare Warp 原生 IP
 
+很多我们需要访问的网站都需要使用“原生 IP”，比如：[Disney+](https://www.disneyplus.com/)， [ChatGPT](https://chat.openai.com)，[New Bing](https://www.bing.com/) 等。
+
+所谓“原生 IP”就是指该网站的 IP 地址和其机房的 IP 地址是一致的，但是，很多 IDC 提供商的 IP 都是从其它国家调配来的，这导致我们就算是翻墙了，也是使用了美国的 VPS，但是还是访问不了相关的服务。所以，我们需要使用 Cloudflare Warp 来访问这些网站。
+
+下面是一个在 Ubuntu 20.10 上安装 Cloudflare Warp 的教程。
+
+注： 你也可以使用这个一键安装的脚本来完成 https://github.com/P3TERX/warp.sh
+
+**1） 安装软件包**
+
+```shell
+sudo  apt-get install net-tools openresolv wireguard
+```
+
+**2） 安装 Cloudflare Warp**
+
+[ViRb3/wgcf](https://github.com/ViRb3/wgcf) 是一个 Cloudflare Warp 的非官方客户端，它可以帮助我们生成 Cloudflare Warp 的配置文件。
+
+注意替换下面命令行的中 Github Release 的版本号，最新的版本号可以在 [ViRb3/wgcf Release](https://github.com/ViRb3/wgcf/releases) 里查找。
+
+```shell
+# create and enter the folder
+mkdir warp && cd warp
+
+# install wgcf
+wget -O wgcf https://github.com/ViRb3/wgcf/releases/download/v2.2.14/wgcf_2.2.14_linux_amd64
+
+# change permission
+chmod +x wgcf
+```
+
+**3）注册 Cloudflare Warp**
+
+```shell
+./wgcf register
+```
+
+**4）生成 wgcf 配置文件**
+
+```shell
+./wgcf generate
+```
+执行完当前目录会生成2个文件：
+
+- WARP注册文件：`wgcf-account.toml`；
+- WireGuard 配置文件：`wgcf-profile.conf`。
+
+**5）复制 WireGuard 配置文件到 `/etc/wireguard/` 目录**
+
+```shell
+sudo cp wgcf-profile.conf /etc/wireguard/wgcf.conf
+```
+
+**6） 修改 WireGuard 配置文件**
+
+你一定要修改 `wgcf-profile.conf` 文件，你把你的 VPS 的公网 IP 加进去，否则，你的 VPS 会失连。
+
+```
+PostUp = ip rule add from <服务器 Public IP> lookup main
+PostDown = ip rule delete from <服务器 Public IP> lookup main
+```
+
+下面是配置文件的示例：
+
+```ini
+[Interface]
+PrivateKey = XXXXXXXXXXXXXxxxxxxxxxxxxx=
+Address = 172.16.0.2/32,2606:4700:110:8d9b:bc8f:16f:668:d891/128
+DNS = 8.8.8.8,8.8.4.4,2001:4860:4860::8888,2001:4860:4860::8844
+MTU = 1420
+PostUp = ip -4 rule add from 10.10.10.10 lookup main prio 18
+PostDown = ip -4 rule delete from 10.10.10.10 lookup main prio 18
+
+[Peer]
+PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+AllowedIPs = 0.0.0.0/0,::/0
+Endpoint = 162.159.192.1:2408
+```
+
+注意：
+- `10.10.10.10` 只是一个示例，你要把它替换成你的 VPS 的公网 IP
+-  `162.159.192.1` 是域名的 `engage.cloudflareclient.com` 的 IP 地址，你可以使用 `nslookup engage.cloudflareclient.com` 获得。
+-  配置文件中默认的 DNS 是 `1.1.1.1` 这里使用了 Google 的 DNS，因为会快一些。
+
+**7）启动 WireGuard**
+
+临时启用网络接口（命令中的 `wgcf` 对应的是配置文件 `/etc/wireguard/wgcf.conf` 的文件名前缀）
+
+```shell
+sudo wg-quick up wgcf
+```
+
+使用 `curl ipinfo.io` 命令来检查你的 IP 地址，如果显示的是 Cloudflare 的 IP 地址，那么恭喜你，你已经成功了。如：
+
+```json
+{
+  "ip": "104.28.227.191",
+  "city": "Los Angeles",
+  "region": "California",
+  "country": "US",
+  "loc": "34.0522,-118.2437",
+  "org": "AS13335 Cloudflare, Inc.",
+  "postal": "90009",
+  "timezone": "America/Los_Angeles",
+  "readme": "https://ipinfo.io/missingauth"
+}
+```
+
+**8）设置开机自启动**
+
+```shell
+sudo systemctl enable wg-quick@wgcf
+sudo systemctl start wg-quick@wgcf
+```
+
+
+## 10. 其它
+
+### 10.1 其它方式
+
+如下还有一些其它的方式（注：均由网友提供，我没有验证过）
+
+[Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
+
+### 10.2 搭建脚本
+
+上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
+
+-  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh)
 
 欢迎补充和改善！
 
