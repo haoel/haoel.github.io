@@ -1119,9 +1119,68 @@ sudo wg-quick down wgcf
 
 ```shell
 sudo systemctl enable wg-quick@wgcf
-sudo systemctl start wg-quick@wgcf
+sudo systemctl start wg-quick@wgcf 
 ```
+### 9.5 Warp Socks5 模式下设置 v2ray 分流
 
+> 注意：本章节内容全部为服务端配置，不要按照此章内容修改 v2ray 本地客户端配置
+
+> 脚本来自 https://github.com/P3TERX/warp.sh
+
+运行
+
+```shell
+bash <(curl -fsSL git.io/warp.sh) s5
+```
+#### 9.5.1 在 v2ray 的 config.json 的 "outbounds" 模块下添加以下内容
+```
+{
+        "tag": "warp", //Cloudflare WARP 全局
+        "protocol": "socks",
+            "settings": {
+                "servers": [{
+                  "address": "127.0.0.1",
+                  "port": 40000,
+                  "users": []
+                }]}
+      }
+```
+注意(部分)完整的配置文件应该是以下格式
+
+```
+    "outbounds": [
+        "tag": "direct",  //直接使用服务器的公网IP
+        "protocol": "freedom",
+        "settings": {}
+      },
+      {
+        "tag": "block", //封锁
+        "protocol": "blackhole",
+        "settings": {}
+      },
+      {
+        "tag": "warp", //Cloudflare WARP 全局
+        "protocol": "socks",
+            "settings": {
+                "servers": [{
+                  "address": "127.0.0.1",
+                  "port": 40000,
+                  "users": []
+                }]}
+      }
+    ],
+```
+#### 9.5.2 在 config.json 的路由模块下添加以下内容
+```
+{
+            "type": "field", // 你对这条分流规则的备注
+            "outboundTag": "Warp",
+            "domain": ["geosite:twitter","geosite:instagram","geosite:facebook","geosite:facebook-dev"]
+        },
+```
+支持 geosite, geoip, domain 等多种记录形式
+
+完整配置文件参考 https://github.com/haoel/haoel.github.io/tree/master/scripts/v2ray_rules.md
 
 ## 10. 其它
 
