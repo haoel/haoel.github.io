@@ -979,7 +979,7 @@ chmod +x warp.sh
 ```
 运行脚本 中文菜单
 ```shell
-./wrap.sh menu
+./warp.sh menu
 ```
 先后执行如下安装：
  - 1 - 安装 Cloudflare WARP 官方客户端
