@@ -1132,7 +1132,7 @@ sudo docker run -d --name gost \
     -L "http2://${USER}:${PASS}@${BIND_IP}:8443?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com" -F "socks://localhost:40000
 ```
 
-**其它**
+**其它事宜**
 
 `warp-cli` 是 `warp-svc` 的客户端，真正的程序是 `warp-svc`，你可以使用如下命令来查看：
 
@@ -1153,6 +1153,10 @@ Status update: Unable to connect. Reason: Insufficient system resource: file des
 LimitNOFILE=65535
 LimitNOFILESoft=65535
 ```
+
+最后，如果你用 V2Ray，你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。你可以使用预定义域名列表 g`eolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
+
+
 
 ## 10. 其它
 
