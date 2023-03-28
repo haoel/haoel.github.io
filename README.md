@@ -1111,7 +1111,7 @@ gost -L "http://:8080" -F "socks5://127.0.0.1:4000"
 ```
 当然，上面的配置是不够好的，我们最好使用有证书的 HTTPS 代理。这里的内容参见于 前的面 [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)。下面是加上了Cloudflare WARP 转发的 Docker 启动：
 
-- 原来的 443 端口不转发到 Cloudflare WARP
+- 原来的 443 端口直接代理
 - 新增了 8443 端口转发到 Cloudflare WARP 的 Socks5 代理上
 
 ```shell
@@ -1148,7 +1148,7 @@ Status update: Unable to connect. Reason: Insufficient system resource: file des
 ```
 你需要修改文件描述符的限制，这类的文章比较多，你自行 Google，这里就不再赘述了。如果你想配置 Cloudflare WARP 文件描述符的限制，你可以编辑 `/lib/systemd/system/warp-svc.service`，在 `[Service]` 下面添加如下内容：
 
-```shell
+```ini
 [Service]
 LimitNOFILE=65535
 LimitNOFILESoft=65535
