@@ -1107,7 +1107,7 @@ curl -x "socks5://127.0.0.1:40000" ipinfo.io
 你可以使用如下命令来启动 gost 转发规则。下面的命行行意思是，把本地的 8080 端口转发到 Cloudflare WARP 的 Socks5 代理上。
 
 ```shell
-gost -L "http://:8080" -F "socks5://127.0.0.1:4000"
+gost -L "http://:8080" -F "socks5://127.0.0.1:40000"
 ```
 当然，上面的配置是不够好的，我们最好使用有证书的 HTTPS 代理。这里的内容参见于 前的面 [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)。下面是加上了Cloudflare WARP 转发的 Docker 启动：
 
