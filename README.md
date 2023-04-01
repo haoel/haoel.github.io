@@ -810,7 +810,7 @@ nameserver 172.20.1.1  #<--- 透明网关 EC2 NAT 实例
 nameserver 172.20.0.2  #<--- AWS 的 DNS 服务
 search [zone].compute.internal
 ```
-> Note
+> **Note**
 >
 > 新版的 Ubuntu 已经把 DNS Resolver 托管给了 systemd 的 `systemd-resolved` 服务，所以需要把 `/etc/resolv.conf` 文件改成软链接，指向 `systemd-resolved` 的配置文件，如：
 >
@@ -986,7 +986,7 @@ chmod +x warp.sh
  - 4 - 安装 WireGuard 相关组件
  - 7 - 自动配置 WARP WireGuard 双栈全局网络
 
->**Note:**
+>**Note**
 > 1. 如果没有 IPv6 网络，那么第 7 步可以换成第 5 步 自动配置 WARP WireGuard IPv4 网络，或是执行 `./warp.sh 4`。
 >
 > 2. 你需要备份一下你的帐号和配置文件，在 `/etc/warp/` 目录下，主要是两个文件，一个是 `wgcf-account.toml`，一个是 `wgcf-profile.conf`
@@ -1023,7 +1023,7 @@ chmod +x warp.sh
 
 如果 WARP 模式安装不能成功，那么你可以使用如下的代理模式。代理模式也就是通过一个代理来访问 Cloudflare WARP 的服务，这样就可以访问到原生 IP 了。
 
-> **Note:**
+> **Note**
 >
 > 下面的步骤主要使用 Cloudflare 的官方客户端，也许会随时间流逝导致过时，你可以参考 [Cloudflare WARP 的官方文档](https://developers.cloudflare.com/warp-client/get-started/linux/)
 
@@ -1136,9 +1136,9 @@ sudo docker run -d --name gost-warp \
     -L "http2://${USER}:${PASS}@${BIND_IP}:8443?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com" -F "socks://localhost:40000"
 ```
 
-> **Note:**
+> **Note**
 >
-> 你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。V2Ray的路由模式就比 gost 要强很多。你还可以通过使用预定义域名列表 g`eolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
+> 你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。V2Ray的路由模式就比 gost 要强很多。你还可以通过使用预定义域名列表 `geolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
 
 **其它事宜**
 
@@ -1161,9 +1161,6 @@ Status update: Unable to connect. Reason: Insufficient system resource: file des
 LimitNOFILE=65535
 LimitNOFILESoft=65535
 ```
-
-
-
 
 ## 10. 其它
 
