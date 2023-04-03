@@ -900,7 +900,7 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 
 ## 9. 代理技巧
-看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
+看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一些技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
 
 1. [SOCKS 协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
 2. [HTTP 隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
