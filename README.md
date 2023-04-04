@@ -51,6 +51,7 @@
     - [9.4 Cloudflare Warp 原生 IP](#94-cloudflare-warp-原生-ip)
       - [9.4.1 WARP 模式](#941-warp-模式)
       - [9.4.2 代理模式](#942-代理模式)
+      - [9.4.3 Docker 代理](#943-Docker代理)
   - [10. 其它](#10-其它)
     - [10.1 其它方式](#101-其它方式)
     - [10.2 搭建脚本](#102-搭建脚本)
@@ -1161,6 +1162,38 @@ Status update: Unable to connect. Reason: Insufficient system resource: file des
 LimitNOFILE=65535
 LimitNOFILESoft=65535
 ```
+
+#### 9.4.3 Docker 代理
+
+用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:
+
+```shell
+docker run -v $HOME/.warp:/var/lib/cloudflare-warp:rw --restart=always --name=cloudflare-warp e7h4n/cloudflare-warp
+```
+
+这条命令会在容器上的 40001 开启一个 socks5 代理，接下来查看这个容器的 ip:
+
+```shell
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cloudflare-warp
+```
+
+然后可以通过 curl 镜像来测试，例如，如果容器的 ip 是 `172.17.0.2`，则可以运行:
+
+```shell
+docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:40001" ipinfo.io
+```
+
+返回的结果中 `org` 字段应该能看到 Cloudflare 相关的信息。
+
+接下来我们给 Gost 增加一个条件转发规则，转发我们希望的域名、地址到 cloudflare 的 warp 网络:
+
+```
+-F=socks5://172.17.0.2:40001?notls=true&bypass=~*.openai.com,openai.com
+```
+
+`bypass=~` 的含义是，只有命中后面规则时才转发请求到 `172.17.0.2:40001` 这个 socks5 代理。
+
+接下来，通过这个 Gost 代理访问 openai.com 时，就会走 warp 网络了。
 
 ## 10. 其它
 
