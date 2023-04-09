@@ -337,6 +337,7 @@ PPTP 使用 `/etc/ppp/chap-secrets` 文件设置用户名和密码，所以你�
 对于电脑来说，你同样可以 [下载 gost 程序](https://github.com/ginuerzh/gost/releases)，然后使用下面的命令行：
 
 ```
+# 此处的ss服务端加密协议(eg: aes-128-gcm)必须是ss客户端支持的协议
 gost -L ss://aes-128-gcm:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 ```
 这样用 gost 在你的本机启动了一个 `ShadowSocks` 的服务，然后，把请求转到你在上面配置的 HTTPS服务器上，这样就完成转接。
@@ -380,7 +381,8 @@ gost -L ss://aes-128-gcm:passcode@:1984 -F 'https://USER:PASS@DOMAIN:443'
 >    - [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
 >    - [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
 >    - [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
-
+> - 关于ss客户端的配制
+>    - 加密协议必须是跟ss服务端相一致。可以自行约定在ss的服务端和客户端使用何种协议。eg：4.1章节示例中使用的是 aes-128-gcm 。
 
 ### 4.3 VPN 客户端
 
