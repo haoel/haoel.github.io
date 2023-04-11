@@ -1190,7 +1190,7 @@ docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:4000
 接下来我们给 Gost 增加一个条件转发规则，转发我们希望的域名、地址到 cloudflare 的 warp 网络:
 
 ```
--F=socks5://172.17.0.2:40001?notls=true&bypass=~*.openai.com,openai.com
+-F=socks5://172.17.0.2:40001?bypass=~*.openai.com,openai.com&notls=true
 ```
 
 `bypass=~` 的含义是，只有命中后面规则时才转发请求到 `172.17.0.2:40001` 这个 socks5 代理。
