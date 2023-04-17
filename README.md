@@ -52,7 +52,6 @@
       - [9.4.1 WARP 模式](#941-warp-模式)
       - [9.4.2 代理模式](#942-代理模式)
       - [9.4.3 Docker 代理](#943-docker-代理)
-- [用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:](#用-docker-可以更方便地部署起一个-cloudflare-warp-proxy只需要一行命令)
   - [10. 其它](#10-其它)
     - [10.1 其它方式](#101-其它方式)
     - [10.2 搭建脚本](#102-搭建脚本)
@@ -1116,7 +1115,7 @@ gost -L "http://:8080" -F "socks5://127.0.0.1:40000"
 ```
 当然，上面的配置是不够好的，我们最好使用有证书的 HTTPS 代理。这里的内容参见于 前的面 [3.3 用 Gost 设置 HTTPS 服务](#33-用-gost-设置-https-服务)。
 
-为了使用两种不同的代理，Gost需要启动两个服务：
+为了使用两种不同的代理，你可以启动两个 gost 服务：
 
 - 一个是通过 443 端口直接代理
 - 另一个是通过 8443 端口转发到 Cloudflare WARP 的 Socks5 代理上
@@ -1146,7 +1145,10 @@ sudo docker run -d --name gost-warp \
 
 > **Note**
 >
-> 你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。V2Ray的路由模式就比 gost 要强很多。你还可以通过使用预定义域名列表 `geolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
+> 1) 你也可以使用 gost 的 `bypass`参数来让相应的域名的流量转发到 Cloudflare WARP 的 Socks5 代理上。如：`
+-F=socks5://localhost:40000?bypass=~*.openai.com,openai.com&notls=true`
+>
+> 2) 你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。V2Ray的路由模式就比 gost 要强很多。你还可以通过使用预定义域名列表 `geolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
 
 **其它事宜**
 
@@ -1170,19 +1172,18 @@ LimitNOFILESoft=65535
 ```
 然后，重启服务：
 
-<<<<<<< HEAD
-#### 9.4.3 Docker 代理
-
-用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:
-=======
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl restart warp-svc.service
 ```
->>>>>>> 71a4636 (refine the doc)
+
+#### 9.4.3 Docker 代理
+
+用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:
 
 ```shell
-docker run -v $HOME/.warp:/var/lib/cloudflare-warp:rw --restart=always --name=cloudflare-warp e7h4n/cloudflare-warp
+docker run -v $HOME/.warp:/var/lib/cloudflare-warp:rw \
+  --restart=always --name=cloudflare-warp e7h4n/cloudflare-warp
 ```
 
 这条命令会在容器上的 40001 开启一个 socks5 代理，接下来查看这个容器的 ip:
@@ -1205,9 +1206,9 @@ docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:4000
 -F=socks5://172.17.0.2:40001?bypass=~*.openai.com,openai.com&notls=true
 ```
 
-`bypass=~` 的含义是，只有命中后面规则时才转发请求到 `172.17.0.2:40001` 这个 socks5 代理。
-
-接下来，通过这个 Gost 代理访问 openai.com 时，就会走 warp 网络了。
+> **Note**
+>
+> `bypass=~` 的含义是，只有命中后面规则时才转发请求到 `172.17.0.2:40001` 这个 socks5 代理。接下来，通过这个 Gost 代理访问 `openai.com` 时，就会走 warp 网络了。
 
 ## 10. 其它
 
