@@ -1050,6 +1050,19 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyr
 sudo apt update
 sudo apt install cloudflare-warp
 ```
+> **Note**
+>
+> 安装过程中，可能会出现如下错误：
+> ```
+> The following packages have unmet dependencies:
+> cloudflare-warp : Depends: nftables but it is not going to be installed
+>                   Depends: gnupg2 but it is not going to be installed
+>                   Depends: desktop-file-utils but it is not going to be installed
+>                   Depends: libnss3-tools but it is not going to be installed
+> linux-headers-aws : Depends: linux-headers-5.3.0-1028-aws but it is not going to be installed
+> E: Unmet dependencies. Try 'apt --fix-broken install' with no packages (or specify a solution).
+> ```
+> 你先执行 `sudo apt --fix-broken install`，然后再执行 `sudo apt install cloudflare-warp` 即可。
 
 **2） 配置 Cloudflare WARP**
 
@@ -1100,10 +1113,8 @@ curl -x "socks5://127.0.0.1:40000" ipinfo.io
 如果输出现如下的信息，那么恭喜你，你已经成功了
 
 ```json
-{
   "ip": "104.28.247.70",
   "org": "AS13335 Cloudflare, Inc."
-}
 ```
 
 **5）配置 Gost 路由转发**
@@ -1140,7 +1151,7 @@ sudo docker run -d --name gost-warp \
     -v ${CERT_DIR}:${CERT_DIR}:ro \
     --net=host ginuerzh/gost \
     -L "http2://${USER}:${PASS}@${BIND_IP}:8443?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com" \
-    -F "socks://localhost:40000
+    -F "socks://localhost:40000"
 ```
 
 > **Note**
