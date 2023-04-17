@@ -123,7 +123,7 @@ install_gost() {
     read -r -p "请输入你要使用的密码:" PASS
     read -r -p "请输入HTTP/2需要侦听的端口号(443)：" PORT
 
-    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! ([ "$PORT" -ge 1 ] && [ "$PORT" -le 65535 ]); then
+    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! { [ "$PORT" -ge 1 ] && [ "$PORT" -le 65535 ]; }; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 443 !${COLOR_NONE}"
         PORT=443
     fi
@@ -177,7 +177,7 @@ install_shadowsocks(){
 
     BIND_IP=0.0.0.0
 
-    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! ([ "$PORT" -ge 1 ] && [  "$PORT" -le 65535 ]); then
+    if [[ -z "${PORT// }" ]] || ! [[ "${PORT}" =~ ^[0-9]+$ ]] || ! { [ "$PORT" -ge 1 ] && [ "$PORT" -le 65535 ]; }; then
         echo -e "${COLOR_ERROR}非法端口,使用默认端口 1984 !${COLOR_NONE}"
         PORT=1984
     fi
