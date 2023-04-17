@@ -52,6 +52,7 @@
       - [9.4.1 WARP 模式](#941-warp-模式)
       - [9.4.2 代理模式](#942-代理模式)
       - [9.4.3 Docker 代理](#943-docker-代理)
+- [用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:](#用-docker-可以更方便地部署起一个-cloudflare-warp-proxy只需要一行命令)
   - [10. 其它](#10-其它)
     - [10.1 其它方式](#101-其它方式)
     - [10.2 搭建脚本](#102-搭建脚本)
@@ -968,6 +969,9 @@ Host github.com
 
 所谓“原生 IP”就是指该网站的 IP 地址和其机房的 IP 地址是一致的，但是，很多 IDC 提供商的 IP 都是从其它国家调配来的，这导致我们就算是翻墙了，也是使用了美国的 VPS，但是还是访问不了相关的服务。所以，我们需要使用 Cloudflare Warp 来访问这些网站。
 
+下面有几种安装方式：
+- 全局模式。这种模式下，所有流量都会通过 Cloudflare 的网络，相当于VPN。
+- 代理模式。通过在服务器本机启动一个 SOCKS5 代理，然后把需要的流量转发到这个代理上。
 
 #### 9.4.1 WARP 模式
 
@@ -1136,7 +1140,8 @@ sudo docker run -d --name gost \
 sudo docker run -d --name gost-warp \
     -v ${CERT_DIR}:${CERT_DIR}:ro \
     --net=host ginuerzh/gost \
-    -L "http2://${USER}:${PASS}@${BIND_IP}:8443?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com" -F "socks://localhost:40000"
+    -L "http2://${USER}:${PASS}@${BIND_IP}:8443?cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com" \
+    -F "socks://localhost:40000
 ```
 
 > **Note**
@@ -1160,14 +1165,21 @@ Status update: Unable to connect. Reason: Insufficient system resource: file des
 你需要修改文件描述符的限制，这类的文章比较多，你自行 Google，这里就不再赘述了。如果你想配置 Cloudflare WARP 文件描述符的限制，你可以编辑 `/lib/systemd/system/warp-svc.service`，在 `[Service]` 下面添加如下内容：
 
 ```ini
-[Service]
 LimitNOFILE=65535
 LimitNOFILESoft=65535
 ```
+然后，重启服务：
 
+<<<<<<< HEAD
 #### 9.4.3 Docker 代理
 
 用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:
+=======
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart warp-svc.service
+```
+>>>>>>> 71a4636 (refine the doc)
 
 ```shell
 docker run -v $HOME/.warp:/var/lib/cloudflare-warp:rw --restart=always --name=cloudflare-warp e7h4n/cloudflare-warp
