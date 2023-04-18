@@ -133,8 +133,9 @@
 
 关于 `CN2` 线路的主机提供商，好些都不靠谱，只推荐下面两个，首推搬瓦工。
 
-- [搬瓦工](https://bwh8.net/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。买完后，你可能需要重装一下操作系统，装成64位带BBR的 ）
-- [HostDare](https://bill.hostdare.com/aff.php?aff=3397) 的 CN2 GIA 产品也是三网直连。专门有两个分类针对中国的 CN2 GIA，一个是 Premium China Optimized NVMeKVM，一组是 Premium China Optimized KVM。支持支付宝和银联。
+- [搬瓦工](https://bwh8.net/aff.php?aff=39384)  这应该是美区最好的一个用来科学上网的VPS提供商了，实测飞快，无论在中国哪个地方都很快。购买时你需要注意VPS规格上的 `CN2` 和 `GIA` 的描述。（注：点击主页右上角的 `regisiter` 以后，你可以看到页面上方有两个导航条，在下面的导航条上点 `Services` -> `Order New Services` 就可以看到所有的列表了。买完后，你可能需要重装一下操作系统，装成64位带BBR的 ）
+
+- [HostDare](https://bill.hostdare.com/aff.php?aff=3397) 的 CN2 GIA 产品也是三网直连。专门有两个分类针对中国的 CN2 GIA，一个是 Premium China Optimized NVMeKVM，一组是 Premium China Optimized KVM。支持支付宝和银联。购买后要等一段时间（2-4个小时）才会创建好，IP 有可能会给你是一个已经被封了的，如果是这样，你要在3天内申请换IP，都是免费的。时间长了也可以换，就是时间比较长，而且还要花一定的费用（3美金）。线路质量还不错，不过没有搬瓦工快。
 
 更多的可以参考这篇文章《[CN2 GIA VPS主机收集整理汇总-电信,联通,移动三网CN2 GIA线路VPS主机](https://wzfou.com/cn2-gia-vps/)》（注：随时间推移，这篇文章的内容可能会失效）
 
