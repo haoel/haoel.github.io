@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2023-04-18
+更新时间：2023-04-19
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -103,9 +103,9 @@
 
 - [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，流量不限，目前的Zone不多，推荐使用日本，新加坡或美国俄勒冈（支持银联卡）。现对 2021/8/7 之后使用 Lightsail 的用户提供3个月的免费试用。
 - [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （支持银联卡）
+- [Microsoft Azure](https://azure.microsoft.com/zh-cn/)提供免费一年的服务（B1S实例），而且每个月有 100G 的免费流量，并赠送200刀赠金。（需要国际信用卡）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD5刀的VPS
-- [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
 - [Vultr](https://www.vultr.com)上买一个日本的VPS，一个月5刀 （可以支付宝）(注：据说被墙的IP太多）
 - [Oracle Cloud](https://www.oracle.com/cloud/free/)两台VPS无限期使用，可选美日韩等地（需要国际信用卡）
 
@@ -113,7 +113,7 @@
 > **注意**
 > - 在中国，因为有太多的网络提供商，所以，国内的网络也是很奇葩的，可以看到的是，不同的地方，不同的网络，到不同的国家完全不一样，而且还经常性地调整路由，所以，经常性地有时候快有时候慢，简直就是随机的。所以，像我这样要求比较高的人，一般会备3-5个不同国家地区的VPS，以保障上网的速度。
 >
-> - 香港网速应该是比较好的，但是香港的成本也是比较高的。台湾的网速也是不错的，日本的网速其次，新加坡再次之，然后是美国的东海岸。但是，因为线路的问题，如果没有为中国区优化的线路，丢包率是非常大的，日本区 ping 值虽然很低，但是经常性的丢包，好的线路的美国的 ping 值虽然大，但是也会飞快。
+> - 香港网速应该是比较好的，但是香港的成本也是比较高的（使用 Microsoft Azure 的 East Asia 可以把 VPS 买在香港区）。台湾的网速也是不错的，日本的网速其次，新加坡再次之，然后是美国的东海岸。但是，因为线路的问题，如果没有为中国区优化的线路，丢包率是非常大的，日本区 ping 值虽然很低，但是经常性的丢包，好的线路的美国的 ping 值虽然大，但是也会飞快。
 >
 > - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是 [Linode](https://www.linode.com/)，最后是 [Vultr](https://www.vultr.com/)（如果你有更好的，请推荐）
 >
