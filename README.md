@@ -485,7 +485,7 @@ VPS 上正常安装并配置好 V2Ray，注意两点:
 
 不必担心把路由器刷废了，华硕的路由器可以让你一键重置回来
 
-**1）下载固件**。先到 [https://asuswrt.lostrealm.ca/download](https://asuswrt.lostrealm.ca/download) 下载相应的固件，并解压。（我下载的是 `RT-AC68U_380.61_0.zip` ）
+**1）下载固件**。先到 [https://www.asuswrt-merlin.net/download](https://www.asuswrt-merlin.net/download) 下载相应的固件，并解压。（我下载的是 `RT-AC68U_380.61_0.zip` ）
 
 **2）升级固件**。登录到你的路由器后台 `http://192.168.1.1/` ，在 `系统管理` -> `固件升级` 中上传固件文件（我上传的是：`RT-AC68U_380.61_0.trx`）
 
