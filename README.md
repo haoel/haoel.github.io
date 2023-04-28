@@ -3,7 +3,7 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2023-04-19
+更新时间：2023-04-28
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
@@ -1162,32 +1162,38 @@ sudo docker run -d --name gost-warp \
 >
 > 2) 你也可以使用 V2Ray 的路由模式，参见 [V2Ray 的路由功能](https://www.v2ray.com/chapter_02/03_routing.html)。V2Ray的路由模式就比 gost 要强很多。你还可以通过使用预定义域名列表 `geolocation-cn` 把其的路由转发到 Cloudflare WARP 的 Socks5 代理上，以避免你的 VPS 的 IP 被暴露。
 
-**其它事宜**
+**6）其它事宜**
 
-`warp-cli` 是 `warp-svc` 的客户端，真正的程序是 `warp-svc`，你可以使用如下命令来查看：
+- **查看运行状态**。 `warp-cli` 是 `warp-svc` 的客户端，真正的程序是 `warp-svc`，你可以使用如下命令来查看：
 
-```shell
-systemctl status warp-svc
-```
+  ```shell
+  systemctl status warp-svc
+  ```
 
-另外，如果你的程序出现文件描述不足的情况：
+- **内存泄漏问题**。 目前，`warp-svc` 这个程序有内存泄漏的问题（参看 [#124](https://github.com/haoel/haoel.github.io/issues/124)），所以，你需要定期重启服务。你可以使用cronjob来重启服务。运行 `crontab -e`，然后添加如下内容：
 
-```shell
-warp-cli connect
-Status update: Unable to connect. Reason: Insufficient system resource: file descriptor
-```
-你需要修改文件描述符的限制，这类的文章比较多，你自行 Google，这里就不再赘述了。如果你想配置 Cloudflare WARP 文件描述符的限制，你可以编辑 `/lib/systemd/system/warp-svc.service`，在 `[Service]` 下面添加如下内容：
+  ```cron
+  0 * * * * /bin/systemctl resetart warp-svc
+  ```
 
-```ini
-LimitNOFILE=65535
-LimitNOFILESoft=65535
-```
-然后，重启服务：
+- **文件描述符不足**。另外，如果你的程序出现文件描述不足的情况：
 
-```shell
-sudo systemctl daemon-reload
-sudo systemctl restart warp-svc.service
-```
+  ```shell
+  warp-cli connect
+  Status update: Unable to connect. Reason: Insufficient system resource: file descriptor
+  ```
+  你需要修改文件描述符的限制，这类的文章比较多，你自行 Google，这里就不再赘述了。如果你想配置 Cloudflare WARP 文件描述符的限制，你可以编辑 `/lib/systemd/system/warp-svc.service`，在 `[Service]` 下面添加如下内容：
+
+  ```ini
+  LimitNOFILE=65535
+  LimitNOFILESoft=65535
+  ```
+  然后，重启服务：
+
+  ```shell
+  sudo systemctl daemon-reload
+  sudo systemctl restart warp-svc.service
+  ```
 
 #### 9.4.3 Docker 代理
 
