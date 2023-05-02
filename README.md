@@ -250,7 +250,13 @@ sudo docker run -d --name gost \
 >        -L "http2://${BIND_IP}:${PORT}?auth=${AUTH}&cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.go   ogle.> com"
 >    ```
 
-如无意外，你的服务就启起来了。你可以使用下面的命令验证你的 gost 服务是否正常。
+如无意外，你的服务就启起来了。 你可以使用如下命令在检查有没有启动成功：
+
+-  `sudo docker ps` 来查看 gost 是否在运行。
+-  `netstat -nolp | grep 443` 来查看 gost 是否在监听 443 端口。
+-  `sudo docker logs gost` 来查看 gost 的日志。
+
+你可以使用下面的命令验证你的 gost 服务是否正常。
 
 ```shell
 curl -v "https://www.google.com" --proxy "https://DOMAIN" --proxy-user 'USER:PASS'
