@@ -227,26 +227,28 @@ sudo docker run -d --name gost \
 
 关于 gost 的参数， 你可以参看其文档：[Gost Wiki](https://docs.ginuerzh.xyz/gost/)，上面我设置一个参数 `probe_resist=code:404` 意思是，如果服务器被探测，或是用浏览器来访问，返回404错误，也可以返回一个网页（如：`probe_resist=file:/path/to/file.txt` 或其它网站 `probe_resist=web:example.com/page.html`）
 
-**注意**：开启了探测防御功能后，当认证失败时服务器默认不会响应 `407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的 SwitchyOmega 插件)。通过knock参数设置服务器才会发送407响应。对于上面的例子，我们的`knock`参数配置的是`www.google.com`，所以，你需要先访问一下 `https://www.google.com` 让服务端返回一个 `407` 后，SwitchyOmega 才能正常工作。
-
-**注意**：如果认证信息（也就是用户名和密码）中包含特殊字符，则可以（应该是必须！否则客户端一侧会有很多不兼容）通过auth参数来设置，下面是使用 `auth` 参数的例子（注意，需要 gost 在 2.9.2+ 以上版本）：
-
-```shell
-DOMAIN="YOU.DOMAIN.NAME"
-USER="username"
-PASS="password"
-PORT=443
-AUTH=$(echo -n ${USER}:${PASS} | base64)
-
-BIND_IP=0.0.0.0
-CERT_DIR=/etc/letsencrypt
-CERT=${CERT_DIR}/live/${DOMAIN}/fullchain.pem
-KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
-sudo docker run -d --name gost \
-    -v ${CERT_DIR}:${CERT_DIR}:ro \
-    --net=host ginuerzh/gost \
-    -L "http2://${BIND_IP}:${PORT}?auth=${AUTH}&cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.google.com"
-```
+> **Note**
+>
+> 1. 开启了探测防御功能后，当认证失败时服务器默认不会响应 `407 Proxy Authentication Required`，但某些情况下客户端需要服务器告知代理是否需要认证(例如Chrome中的 SwitchyOmega 插件)。通过knock参数设置服务器才会发送407响应。对于上面的例子，我们的`knock`参数配置的是`www.google.com`，所以，你需要先访问一下 `https://www.google.com` 让服务端返回一个 `407` 后，SwitchyOmega 才能正常工作。
+>
+> 2. 如果认证信息（也就是用户名和密码）中包含特殊字符，则可以（应该是必须！否则客户端一侧会有很多不兼容）通过auth参数来设置，下面是使用 `auth` 参数的例子（注意，需要 gost 在 2.9.2+ 以上版本）：
+>
+>    ```shell
+>    DOMAIN="YOU.DOMAIN.NAME"
+>    USER="username"
+>    PASS="password"
+>    PORT=443
+>    AUTH=$(echo -n ${USER}:${PASS} | base64)
+>
+>    BIND_IP=0.0.0.0
+>    CERT_DIR=/etc/letsencrypt
+>    CERT=${CERT_DIR}/live/${DOMAIN}/fullchain.pem
+>    KEY=${CERT_DIR}/live/${DOMAIN}/privkey.pem
+>    sudo docker run -d --name gost \
+>        -v ${CERT_DIR}:${CERT_DIR}:ro \
+>        --net=host ginuerzh/gost \
+>        -L "http2://${BIND_IP}:${PORT}?auth=${AUTH}&cert=${CERT}&key=${KEY}&probe_resist=code:404&knock=www.go   ogle.> com"
+>    ```
 
 如无意外，你的服务就启起来了。你可以使用下面的命令验证你的 gost 服务是否正常。
 
@@ -323,7 +325,6 @@ sudo docker run -d  --privileged \
     -p 1194:1194/udp  \
     siomiz/softethervpn
 ```
-
 
 
 ## 4. 客户端设置
@@ -517,8 +518,6 @@ rules:
 >   这样，你的ShadowSocks客户端只需要简单的配置一个本机的 SS 配置就好了。
 
 
-
-
 ### 4.2 手机端设置
 
 对于手机端来说，在 Android 端可以安装 [Clash for Android](https://github.com/Kr328/ClashForAndroid)
@@ -533,12 +532,11 @@ rules:
 iPhone 上的客户端我推荐使用下面这两个（需要付费）,这两个客户端都支持很多协议，如：ShadowSocks, HTTP(s), VMess, Socks5,等。
 
 - [ShadowRocket](https://apps.apple.com/us/app/shadowrocket/id932747118)，又叫小火箭，其中使用 HTTPS 的代理，配置上就好了。
-- [Quantumult](https://apps.apple.com/us/app/quantumult/id1252015438)
+- [Quantumult](https://apps.apple.com/us/app/quantumult/id1252015438)。这个工具以前用的不多，最近 1-2 年都在有这个工具，感觉还是很好用的。对了，大家一定要不要跟 `Quantumult X` 搞混，我个人觉得 `Quantumult X` 非常难用。
 
 > **Note**
 >
 > [Potatso](https://apps.apple.com/us/app/potatso-lite/id1239860606) 作为 shadowsocks 的客户端也是可以的，而且免费，但是无法使用 Gost 的 HTTPS 代理，所以，我不推荐使用。
-
 
 
 ## 5. 流量伪装和其它方式
