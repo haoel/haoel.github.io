@@ -26,31 +26,32 @@
     - [4.1.1 Chrome 代理设置](#411-chrome-代理设置)
     - [4.1.2 全局 Clash 代理设置](#412-全局-clash-代理设置)
   - [4.2 手机端设置](#42-手机端设置)
-- [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
-  - [5.1 流量伪装](#51-流量伪装)
-  - [5.2 其它方式](#52-其它方式)
-- [6. 针对 IP 被封的解决方案](#6-针对-ip-被封的解决方案)
-- [7. 家用透明网关](#7-家用透明网关)
-  - [7.1 OpenWRT 路由器](#71-openwrt-路由器)
-  - [7.2 通过树莓派做旁路网关](#72-通过树莓派做旁路网关)
-  - [7.3 安装 Clash](#73-安装-clash)
-  - [7.4 设置 iptables 转发](#74-设置-iptables-转发)
-- [8. 数据中心透明网关](#8-数据中心透明网关)
-  - [8.1 AWS 网络构建](#81-aws-网络构建)
-  - [8.2 安装 Clash](#82-安装-clash)
-  - [8.3 配置私有子网中的 EC2](#83-配置私有子网中的-ec2)
-  - [8.4 私有子网中的 Kubernetes](#84-私有子网中的-kubernetes)
-- [9. 代理技巧](#9-代理技巧)
-  - [9.1 HTTP 隧道](#91-http-隧道)
-  - [9.2 SSH 隧道](#92-ssh-隧道)
-  - [9.3 Github / Git SSH 代理](#93-github--git-ssh-代理)
-  - [9.4 Cloudflare Warp 原生 IP](#94-cloudflare-warp-原生-ip)
-    - [9.4.1 WARP 模式](#941-warp-模式)
-    - [9.4.2 代理模式](#942-代理模式)
-    - [9.4.3 Docker 代理](#943-docker-代理)
-- [10. 其它](#10-其它)
-  - [10.1 其它方式](#101-其它方式)
-  - [10.2 搭建脚本](#102-搭建脚本)
+- [5. 美国手机和支付](#5-美国手机和支付)
+  - [5.1 美国手机](#51-美国手机)
+  - [5.2 美国支付](#52-美国支付)
+- [6. 流量伪装和防探测](#6-流量伪装和防探测)
+- [7. 针对 IP 被封的解决方案](#7-针对-ip-被封的解决方案)
+- [8. 家用透明网关](#8-家用透明网关)
+  - [8.1 OpenWRT 路由器](#81-openwrt-路由器)
+  - [8.2 通过树莓派做旁路网关](#82-通过树莓派做旁路网关)
+  - [8.3 安装 Clash](#83-安装-clash)
+  - [8.4 设置 `iptables` 转发](#84-设置-iptables-转发)
+- [9. 数据中心透明网关](#9-数据中心透明网关)
+  - [9.1 AWS 网络构建](#91-aws-网络构建)
+  - [9.2 安装 Clash](#92-安装-clash)
+  - [9.3 配置私有子网中的 EC2](#93-配置私有子网中的-ec2)
+  - [9.4 私有子网中的 Kubernetes](#94-私有子网中的-kubernetes)
+- [10. 代理技巧](#10-代理技巧)
+  - [10.1 HTTP 隧道](#101-http-隧道)
+  - [10.2 SSH 隧道](#102-ssh-隧道)
+  - [10.3 Github / Git SSH 代理](#103-github--git-ssh-代理)
+  - [10.4 Cloudflare Warp 原生 IP](#104-cloudflare-warp-原生-ip)
+    - [10.4.1 WARP 模式](#1041-warp-模式)
+    - [10.4.2 代理模式](#1042-代理模式)
+    - [10.4.3 Docker 代理](#1043-docker-代理)
+- [11. 其它](#11-其它)
+  - [11.1 其它方式](#111-其它方式)
+  - [11.2 搭建脚本](#112-搭建脚本)
 
 ## 0. 序
 
@@ -157,7 +158,7 @@
 
 ## 3. 搭建相关代理服务
 
-> 注：如下的搭建和安装脚本可参看本库的 scripts 目录下的脚本，如： [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) （感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
+> 注：如下的搭建和安装脚本可参看本库的 scripts 目录下的脚本，如： [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh) （感谢网友 [@gongzili456](https://github.com/gongzili456) 开发），另外，**这个脚本可能年久失修，不一定能用，但是可以参考，如果有问题，可以提交 PR**。
 
 ### 3.1 设置Docker服务
 
@@ -339,9 +340,17 @@ sudo docker run -d  --privileged \
 
 #### 4.1.1 Chrome 代理设置
 
-如果你之前使用了Chrome插件 SwitchyOmega，如果无法直接配置HTTPS代理，具体原因可能是因为你设置了`probe_resist`以开启探测防御功能。这里，你需要在服务器端设置 `knock` 参数（参看 [用 Gost 设置 HTTPS 服务](#34-用-gost-设置-https-服务) 中的“注意”一节 ）
+你可以使用 Chrome 插件 [SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)进行代理设置。在 SwitchyOmega 中，你需要设置一个代理服务器。
 
-或是，干脆使用gost客户端在本机启动一个 SOCKS5的代理服务用来代替（`gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'`），然后在 SwitchyOmega 配置代理为'127.0.0.1:1080'即可。比如:
+1. 打开 SwitchyOmega 的设置页面，点击左边导航栏上的“New Profile”，输入一个名字，比如“代理”。
+2. 然后在 `Protocol` 中选择 `HTTPS`, 填上你的 Gost 的 VPS 服务器和端口号。
+3. 点后面的 `🔒` 按钮，输入 Gost 服务器的用户名和密码。
+
+具体的教程可以参看官方教程 - 《[最新 SwitchyOmega 使用教程快速入门篇](https://switchyomega.org/)》
+
+如果无法直接配置 HTTPS 代理，具体原因可能是因为你设置了`probe_resist`以开启探测防御功能。这里，你需要在服务器端设置 `knock` 参数（参看 [用 Gost 设置 HTTPS 服务](#34-用-gost-设置-https-服务) 中的“注意”一节 ）
+
+或是，干脆使用 gost 客户端在本机启动一个 SOCKS 5的代理服务用来代替（`gost -L socks5://:1080 -F 'https://USER:PASS@DOMAIN:443'`），然后在 SwitchyOmega 配置代理为'127.0.0.1:1080'即可。
 
 #### 4.1.2 全局 Clash 代理设置
 
@@ -530,10 +539,14 @@ rules:
 
 对于 Apple 上的 iPhone/iPad，就比较麻烦了。因为相关的客户端在国内的 App Store 上全都被下架了。所以，你需要注册一个美国的苹果ID，然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）。
 
-关于如何注册美区Apple ID账号，你可以参看如下的这几篇文章（我不保证这些文章可不可用，但是你可以自行Google）。
-- [5分钟注册美国区Apple ID（18年亲测有效）](https://zhuanlan.zhihu.com/p/36574047)
-- [2018年6月亲测：注册美国地区苹果apple ID帐号终极教程](https://www.jianshu.com/p/b32da641e849)
-- [iOS开发之注册美国Apple Id不需要绑定信用卡，亲测可用](https://blog.csdn.net/ziyuzhiye/article/details/82769129)
+关于如何注册美区 Apple ID账号，你需要有两个前提条件：
+
+- 你需要有一个美国的手机号码。
+- 还需要有一个美国的 PayPal 账号。
+
+关于如何搞到美国的手机号以及美国的 PayPal 账号以及其必要性，可以参看[5. 美国手机和支付]((#5-美国手机和支付))
+
+然后，你就可以用电脑登录 https://appleid.apple.com/ 全新注册一个帐号，注册的时候，你需要选择美国的地区，然后，你需要用你的美国手机号码接收验证码，最后，你需要用你的美国 PayPal 账号来绑定你的信用卡。
 
 iPhone 上的客户端我推荐使用下面这两个（需要付费）,这两个客户端都支持很多协议，如：ShadowSocks, HTTP(s), VMess, Socks5,等。
 
@@ -544,12 +557,44 @@ iPhone 上的客户端我推荐使用下面这两个（需要付费）,这两个
 >
 > [Potatso](https://apps.apple.com/us/app/potatso-lite/id1239860606) 作为 shadowsocks 的客户端也是可以的，而且免费，但是无法使用 Gost 的 HTTPS 代理，所以，我不推荐使用。
 
+## 5. 美国手机和支付
 
-## 5. 流量伪装和其它方式
+现在越来越多 APP 需要使用海外的手机和支付，所以，你需要有一个美国的手机号码和美国的支付方式。
 
-### 5.1 流量伪装
+### 5.1 美国手机
 
-无论你用VPN，SS，SSR，都有可能被识别，**只有使用 HTTP over TLS 的样子，才会跟正常的流量混在一起，很难被识别**，所以，目前来说，使用Gost 的 HTTPS 的方式 再加上防探测，基本上来说，在网络四层上看到的都是TLS的包，很难被识别，我用了很多时间了，一直都很稳。（注：V2Ray客户端 + Nginx + V2Ray服务端的方式也是可以，不过配置起来比较复杂）
+美国的手机号目前最好的方式是购买 [Ultra Mobile 的 PayGo](https://www.ultramobile.com/zh/paygo/) 月租 3 美金，你可以上淘宝上购买。这个卡是真实的美国手机号码，在中国漫游时，短信和接听电脑会产生漫游费用，所以，你一定要[开启 WiFi Calling](https://www.ultramobile.com/zh/ufaqs/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%8A%E8%AE%BE%E7%BD%AEwifi%E9%80%9A%E8%AF%9D%E5%92%8C%E7%9F%AD%E4%BF%A1/)。有时候，你的网络可能无法让你开启 WiFi Calling，这个可能是运营上 block 了相关路由，你可能需要设置你的路由器，这里[有篇文章](https://zhuanlan.zhihu.com/p/411052451)你可以了解一下.
+
+这里不推荐使用 [Google Voice](https://voice.google.com)。 因为你注册 Google Voice 的时候也需要一个实体卡，如果你有朋友在美国的话，你可以借用朋友的手机帮你生成一个，但是就算是生成了，美国也有很多 APP 无法接收 Google Voice 的验证码，因为风控的问题不支持虚拟运营商。
+
+### 5.2 美国支付
+
+关于美国的支付，你可以注册一个美国的 PayPal，这个对于 iPhone/iPad 转美区 App Store 来说是很方便的。
+
+你可以使用你在国内的币种（支持 VISA/MasterCard）的信用卡来开国际 PayPal  帐号。开通国际 PayPal 帐号需要以下几个条件：
+
+- 身在美国（系统会自动检测IP地址）
+- 有效美国地址（最好是私人地址，必要时能提交地址证明）
+- 有效美国手机号码（必需是能接收短信）
+
+**注意：如果你没有美国的 SSN 或是美国的银行帐号，你是可以支付的，但是不能收款的。所以，千万不要用来收款！**
+
+但是，现在很多美国的公司都不使用 PayPal 做他们的支付网关，而是使用 [Stripe](https://stripe.com/)，这两家公司是竞争关系，所以，你是不能使用 PayPal 来支付的，而 Stripe 的风控比较严格，所以你需要有一个美国的信用卡。
+
+拥有一个美国的信用卡是一件极其麻烦的事，因为你首先需要有一个美国的银行帐户，而美国的银行帐户也分对公和对私，对公的帐户是需要有美国的公司才能开的，对私的帐户是需要你有美国的 SSN 才能开的。所以，这个事情就变得很复杂了。
+
+下面是一些可行的操作，你可以参考一下：
+
+- 找你美国的朋友，让他们帮你开一个虚拟信用卡。
+- 通过支付加密货币USDT到 [Depay](https://www.depay.one/?lang=zh-cn) 上开通虚拟信用卡，操作复杂。
+- 找淘宝店帮你支付可能会是一个比较好的选择，代价就是你需要把你的帐号和密码给他们，这个风险你需要自己承担。
+- 有美国B1/B2旅游签证就可以在美国的银行开户。
+
+如果大家有更好的方式，欢迎提交PR。
+
+## 6. 流量伪装和防探测
+
+无论你用VPN，SS，SSR，都有可以被识别， 我实践下来的结果是，**只有使用 HTTP over TLS 的样子，才会跟正常的流量混在一起，很难被识别**，所以，目前来说，使用Gost 的 HTTPS 的方式 再加上防探测的机制，基本上来说，在网络四层上看到的都是TLS的包，很难被识别。另外，用V2Ray客户端 + Nginx + V2Ray服务端的方式也是可以，不过配置起来比较复杂。 （注：关于流量识别和探测的细节，你可以看查看[这篇文章](https://gfw.report/publications/usenixsecurity23/zh/) ）
 
 也就是说，在启动 Gost 的时候，需要设置 `probe_resist` 参数，关于这个参数，我们在上面的章节中已经提到过了，这里再说一下。
 
@@ -606,55 +651,7 @@ sudo docker run -d --name gost \
     -L "http2://${USER}:${PASS}@${BIND_IP}:${PORT}?cert=${CERT}&key=${KEY}&probe_resist=file:/var/www/html/index.html&knock=www.google.com"
 ```
 
-
-### 5.2 其它方式
-
-**1）V2Ray**
-
-V2Ray 可以配置成一个非常隐蔽的代理软件。
-
- - V2Ray 用户手册：[https://www.v2fly.org](https://www.v2fly.org)
- - V2Ray 项目地址：[https://github.com/v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
-
-一般来说，祼用 V2Ray 不是一个很好的方式，现在比较流行的是使用nginx来代理，也就是 V2Ray + WebSocket + TLS + Nginx，可以参看这篇文章《[V2Ray+WebSocket+TLS+Nginx配置与使用教程](https://guide.v2fly.org/advanced/wss_and_web.html)》（需要翻墙）。
-
-我个人觉得，配置起来比较复杂，而且环节太多，不如直接用 `gost` 的 https/http2 的方式配置起来简单，所以，没有放在前面。
-
-
-**2）Brook**
-
-Brook是一个由 Go语言编写的跨平台代理软件，支持 Linux/MacOS/Windows/Android/iOS 各个平台。
-
-- Brook Github项目：[https://github.com/txthinking/brook](https://github.com/txthinking/brook)
-- Github Wiki教程：[https://github.com/txthinking/brook/wiki/使用说明(中文)](https://github.com/txthinking/brook/wiki/使用说明(中文))
-
-服务器一行命令安装：
-
-```
-wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/brook.sh && chmod +x brook.sh && bash brook.sh
-```
-
-运行 `brook.sh` 会出菜单项，你可以按菜单项来，主要就是设置端口号，密码。很简单的，我这里就不截图了，因为这个脚本运行起来中文菜单式的。
-
-然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
-
-> 注意: 如果运行出现下载错误，可能是因为brook的下载文件名问题，你需要自己修改一下脚本：
->
-> ```shell
-> Download_brook(){
->  	[[ ! -e ${file} ]] && mkdir ${file}
->  	cd ${file}
->  	if [[ ${bit} == "x86_64" ]]; then
-> -		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook"
-> +		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook_linux_amd64"
-> +		mv brook_linux_amd64 brook
->  	else
->  		wget --no-check-certificate -N "https://github.com/txthinking/brook/releases/download/${brook_new_ver}/brook_linux_386"
->  		mv brook_linux_386 brook
->  	fi
-> ```
-
-## 6. 针对 IP 被封的解决方案
+## 7. 针对 IP 被封的解决方案
 
 花钱购买的 VPS 即便做了流量伪装依然有很大的几率 IP 被封锁，大多 VPS 服务商并不提供更换 IP 的服务，使用 CDN 可以让被封锁的 VPS 继续发挥翻墙功能。
 
@@ -674,9 +671,9 @@ Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可�
 
 网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
 
-## 7. 家用透明网关
+## 8. 家用透明网关
 
-### 7.1 OpenWRT 路由器
+### 8.1 OpenWRT 路由器
 
 所谓透明网关的意思是，一切都交给网关来做。最好的方式是你需要一个 OpenWRT 的路由器，推荐使用华硕的路由器，贵是贵一些，但是这几年用下来，非常不错。我用的是  **华硕（ASUS） RT-AC68U 1900M AC 双频智能无线路由路** 。
 
@@ -730,7 +727,7 @@ Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可�
 ```
 
 
-### 7.2 通过树莓派做旁路网关
+### 8.2 通过树莓派做旁路网关
 
 如果你的路由器不能刷 OpenWRT，也就是没法通过SSH登录上去装软件，你就用一个别的设备。比如用一个树莓派。我正好有一个很老旧的树莓派，刷了一个老旧的 Debian 7.5的操作系统。
 
@@ -769,7 +766,7 @@ Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可�
 
 ```
 
-### 7.3 安装 Clash
+### 8.3 安装 Clash
 
 Clash 的 Github项目是：[Dreamacro/clash](https://github.com/Dreamacro/clash) ，在它的 Release 页面上，你可以找到相关的下载。（注：在本文更新的时候，如果你需要支持 Tun，你需要下载 Clash 的 [Premium 版本](https://github.com/Dreamacro/clash/releases/tag/premium)
 
@@ -904,7 +901,7 @@ rules:
 
 然后，你就可以把你的上网设备上的 路由网关 和 DNS 服务器都手动地配置成这个网关就好了（OpenWRT应该不用配置了，树莓派的方式需要手动配置一下）
 
-### 7.4 设置 iptables 转发
+### 8.4 设置 `iptables` 转发
 
 ```shell
 iptables -t nat -N CLASH
@@ -930,11 +927,11 @@ iptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892
 ```
 然后，再 `chmod +x /etc/network/if-pre-up.d/iptables` 加上可执行权限就好了。
 
-## 8. 数据中心透明网关
+## 9. 数据中心透明网关
 
 这里仅针对 AWS 进行说明，其它云平台应该大同小异，大家可以补充。
 
-### 8.1 AWS 网络构建
+### 9.1 AWS 网络构建
 
 1. 构建一个 `172.20.0.0/16` 的 VPC，分成两个子网：
    - 有公网IP的公有子网 - `172.20.1.0/24`
@@ -996,14 +993,14 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 - `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`  关键字 `MASQUERADE` 意思是“伪装“，NAT的工作原理是就像是一个宿舍收发室对学生宿舍一样，学生宿舍的地址外部不可见，邮递员只看得见整栋宿舍收发室的地址，邮递员把快递交给收发室，收发室再把快递转给学习宿舍（反之，如果学生要对外寄邮件，也是先到收发室，收发室传给邮局）。现在的问题是，所有的学生宿舍如何才能参与到任何快递的通信中，如果把学生宿舍地址发到外部，则没人能把信送回来。如果这个收发室是个自动化的机器人，他要干的事就是，把学生宿舍的地址换成收发室地址。这就是 `MASQUERADE` 的意思——**来自具有接收方 IP 地址的本地网络到达 Internet 某处的数据包必须进行修改，也就是让发送方的地址等于路由器的地**址。
 
 
-### 8.2 安装 Clash
+### 9.2 安装 Clash
 
-在 EC2 NAT Instance 上安装 clash 透明网关，安装配置参看 [7.3 安装 Clash](#73-安装-clash) ，基本一致。
+在 EC2 NAT Instance 上安装 clash 透明网关，安装配置参看 [8.3 安装 Clash](#83-安装-clash) ，基本一致。
 
 > 注：在实际操作中，没有设置 `iptables` 转发规则
 
 
-### 8.3 配置私有子网中的 EC2
+### 9.3 配置私有子网中的 EC2
 
 只需要配置 `/etc/resolv.conf` 文件，把 EC2 NAT Instance 加入其中。如：
 
@@ -1027,7 +1024,7 @@ search [zone].compute.internal
 >  DNS=172.20.0.2
 >  ```
 
-### 8.4 私有子网中的 Kubernetes
+### 9.4 私有子网中的 Kubernetes
 
 K8s 里有两组 CoreDNS 部署和配置，一组是边缘的（或是叫本地的），一组是中心的。
 
@@ -1102,14 +1099,14 @@ $ kubectl edit cm nodelocaldns -n kube-system
 
 
 
-## 9. 代理技巧
+## 10. 代理技巧
 
 看到这里，相信已经能够按照上面的教程搭建好自己的上网环境，但是灵活的应用网络，你还需要了解一些技巧，比如 SOCKS 协议, http 隧道 和 ssh 网络隧道等。
 
 1. [SOCKS 协议](https://zh.m.wikipedia.org/zh-hans/SOCKS)
 2. [HTTP 隧道](https://zh.m.wikipedia.org/zh-hans/HTTP%E9%9A%A7%E9%81%93)
 
-### 9.1 HTTP 隧道
+### 10.1 HTTP 隧道
 
 常见的软件 curl , git, wget 都能通过设置 `HTTP_PROXY`,`HTTPS_PROXY`，`NO_PROXY` 来配置一个网络代理，`NO_PROXY`用来配置不需要代理的主机(多个用逗号隔开), 那么我们就可以编写一个 `bash ` 函数来运行需要走代理的命令:
 ```shell
@@ -1127,7 +1124,7 @@ alias unproxy='unset all_proxy http_proxy https_proxy'
 ```
 这样，你就可以在需要代理的时候输入 `proxy`，不需要的时候输入 `unproxy`。
 
-### 9.2 SSH 隧道
+### 10.2 SSH 隧道
 另外，我们可以使用 SSH Tunnel 来建立 SOCKS5 的代理（假设本地电脑无法访问，但是某台可以 SSH 的服务器能够访问外网，那么我们就可以使用如下的命令来建议翻墙代理：
 
 ```shell
@@ -1149,7 +1146,7 @@ with_proxy(){
 ```
 如果是浏览器，配置好`SwitchyOmega`插件也能实现上外网。
 
-### 9.3 Github / Git SSH 代理
+### 10.3 Github / Git SSH 代理
 
 现在访问 Github 速度很慢甚至不通，我们可以使用代理来加速，首先我们需要配置好代理，然后配置好 `git` 的代理，这样就能加速 `git clone` 和 `git push` 了。
 
@@ -1163,7 +1160,7 @@ Host github.com
     # git-for-windows 下可以用 connect 代替 nc
     # ProxyCommand connect -S localhost:1085 %h %p
 ```
-### 9.4 Cloudflare Warp 原生 IP
+### 10.4 Cloudflare Warp 原生 IP
 
 很多我们需要访问的网站都需要使用“原生 IP”，比如：[Disney+](https://www.disneyplus.com/)， [ChatGPT](https://chat.openai.com)，[New Bing](https://www.bing.com/) 等。
 
@@ -1173,7 +1170,7 @@ Host github.com
 - 全局模式。这种模式下，所有流量都会通过 Cloudflare 的网络，相当于VPN。
 - 代理模式。通过在服务器本机启动一个 SOCKS5 代理，然后把需要的流量转发到这个代理上。
 
-#### 9.4.1 WARP 模式
+#### 10.4.1 WARP 模式
 
 WARP 模式是 Cloudflare 提供的一种全局代理模式，就是一个客户端的 VPN，它会将你的所有流量都通过 Cloudflare 的网络，这样就能访问到原生 IP 了。
 
@@ -1226,7 +1223,7 @@ chmod +x warp.sh
 ```
 
 
-#### 9.4.2 代理模式
+#### 10.4.2 代理模式
 
 如果 WARP 模式安装不能成功，那么你可以使用如下的代理模式。代理模式也就是通过一个代理来访问 Cloudflare WARP 的服务，这样就可以访问到原生 IP 了。
 
@@ -1395,7 +1392,7 @@ sudo docker run -d --name gost-warp \
   sudo systemctl restart warp-svc.service
   ```
 
-#### 9.4.3 Docker 代理
+#### 10.4.3 Docker 代理
 
 用 Docker 可以更方便地部署起一个 Cloudflare WARP Proxy，只需要一行命令:
 
@@ -1428,19 +1425,21 @@ docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:4000
 >
 > `bypass=~` 的含义是，只有命中后面规则时才转发请求到 `172.17.0.2:40001` 这个 socks5 代理。接下来，通过这个 Gost 代理访问 `openai.com` 时，就会走 warp 网络了。
 
-## 10. 其它
+## 11. 其它
 
-### 10.1 其它方式
+### 11.1 其它方式
 
 如下还有一些其它的方式（注：均由网友提供，我没有验证过）
 
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
 
-### 10.2 搭建脚本
+### 11.2 搭建脚本
 
 上述的搭建和安装脚本可参看本库的 scripts 目录下的脚本（感谢网友 [@gongzili456](https://github.com/gongzili456) 开发）
 
 -  [Ubuntu 18.04 Installation Script](https://github.com/haoel/haoel.github.io/blob/master/scripts/install.ubuntu.18.04.sh)
+
+**注意：这个脚本可能年久失修，不一定能用，但是可以参考，如果有问题，可以提交 PR**。
 
 欢迎补充和改善！
 
