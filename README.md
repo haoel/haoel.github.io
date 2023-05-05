@@ -557,6 +557,19 @@ iPhone 上的客户端我推荐使用下面这两个（需要付费）,这两个
 >
 > [Potatso](https://apps.apple.com/us/app/potatso-lite/id1239860606) 作为 shadowsocks 的客户端也是可以的，而且免费，但是无法使用 Gost 的 HTTPS 代理，所以，我不推荐使用。
 
+### 4.3 平板端设置 (服务端使用gost代理)
+
+#### 4.3.1 iPad
+
+- ShadowRocket：打开app，点击右上角`+`号添加服务器，配置如下几项即可（其余条目采用默认值即可）
+  - Type: `HTTPS`
+  - Address: `$DOMAIN`
+  - Port: `443`
+  - User: `$USER`
+  - Password: `$PASS`
+
+  其中，`$DOMAIN`为服务器的域名/子域名，`$USER`与`$PASS`分别为服务端启动gost代理时设定的用户名和密码
+
 ## 5. 美国手机和支付
 
 现在越来越多 APP 需要使用海外的手机和支付，所以，你需要有一个美国的手机号码和美国的支付方式。
@@ -1444,4 +1457,3 @@ docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:4000
 欢迎补充和改善！
 
 （全文完）
-
