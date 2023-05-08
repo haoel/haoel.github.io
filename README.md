@@ -26,6 +26,7 @@
     - [4.1.1 Chrome 代理设置](#411-chrome-代理设置)
     - [4.1.2 全局 Clash 代理设置](#412-全局-clash-代理设置)
   - [4.2 手机端设置](#42-手机端设置)
+  - [4.3 平板端设置](#43-平板端设置-服务端使用gost代理)
 - [5. 美国手机和支付](#5-美国手机和支付)
   - [5.1 美国手机](#51-美国手机)
   - [5.2 美国支付](#52-美国支付)
@@ -535,7 +536,24 @@ rules:
 
 ### 4.2 手机端设置
 
-对于手机端来说，在 Android 端可以安装 [Clash for Android](https://github.com/Kr328/ClashForAndroid)
+#### 4.2.1 Android
+
+- [Clash for Android](https://github.com/Kr328/ClashForAndroid)
+- Shadowsocks + ShadowsocksGostPlugin
+  - 安装Shadowsocks (Google Play Store或[github页面](https://github.com/shadowsocks/shadowsocks-android))
+  - 下载[ShadowsocksGostPlugin](https://github.com/segfault-bilibili/ShadowsocksGostPlugin)
+  - 配置
+    - Server: `$DOMAIN`
+    - Remote Port: `443`
+    - Password: `gost`
+    - Encrypt Method: `RC4-MD5`
+    - Plugin: 选择ShadowsocksGostPlugin
+    - Configure: `-F https://$USER:$PASS@#SS_HOST:#SS_PORT`
+
+    其中`$DOMAIN`, `$USER`, `$PASS`分别为服务端的域名/子域名, 用户名和密码。
+
+
+#### 4.2.2 iPhone
 
 对于 Apple 上的 iPhone/iPad，就比较麻烦了。因为相关的客户端在国内的 App Store 上全都被下架了。所以，你需要注册一个美国的苹果ID，然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）。
 
