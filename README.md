@@ -26,6 +26,10 @@
     - [4.1.1 Chrome 代理设置](#411-chrome-代理设置)
     - [4.1.2 全局 Clash 代理设置](#412-全局-clash-代理设置)
   - [4.2 手机端设置](#42-手机端设置)
+    - [4.2.1 Android](#421-android)
+    - [4.2.2 iPhone](#422-iphone)
+  - [4.3 平板端设置](#43-平板端设置-服务端使用gost代理)
+    - [4.3.1 iPad](#431-ipad)
 - [5. 美国手机和支付](#5-美国手机和支付)
   - [5.1 美国手机](#51-美国手机)
   - [5.2 美国支付](#52-美国支付)
@@ -535,7 +539,24 @@ rules:
 
 ### 4.2 手机端设置
 
-对于手机端来说，在 Android 端可以安装 [Clash for Android](https://github.com/Kr328/ClashForAndroid)
+#### 4.2.1 Android
+
+- [Clash for Android](https://github.com/Kr328/ClashForAndroid)
+- Shadowsocks + ShadowsocksGostPlugin
+  - 安装Shadowsocks (Google Play Store或[github页面](https://github.com/shadowsocks/shadowsocks-android))
+  - 下载[ShadowsocksGostPlugin](https://github.com/segfault-bilibili/ShadowsocksGostPlugin)
+  - 配置
+    - Server: `$DOMAIN`
+    - Remote Port: `443`
+    - Password: `gost`
+    - Encrypt Method: `RC4-MD5`
+    - Plugin: 选择ShadowsocksGostPlugin
+    - Configure: `-F https://$USER:$PASS@#SS_HOST:#SS_PORT`
+
+    其中`$DOMAIN`, `$USER`, `$PASS`分别为服务端的域名/子域名, 用户名和密码。
+
+
+#### 4.2.2 iPhone
 
 对于 Apple 上的 iPhone/iPad，就比较麻烦了。因为相关的客户端在国内的 App Store 上全都被下架了。所以，你需要注册一个美国的苹果ID，然后 iTunes/App Store 用这个美区的ID登录（不是退出iCloud ，而是退出App Store）。
 
@@ -556,6 +577,19 @@ iPhone 上的客户端我推荐使用下面这两个（需要付费）,这两个
 > **Note**
 >
 > [Potatso](https://apps.apple.com/us/app/potatso-lite/id1239860606) 作为 shadowsocks 的客户端也是可以的，而且免费，但是无法使用 Gost 的 HTTPS 代理，所以，我不推荐使用。
+
+### 4.3 平板端设置 (服务端使用gost代理)
+
+#### 4.3.1 iPad
+
+- ShadowRocket：打开app，点击右上角`+`号添加服务器，配置如下几项即可（其余条目采用默认值即可）
+  - Type: `HTTPS`
+  - Address: `$DOMAIN`
+  - Port: `443`
+  - User: `$USER`
+  - Password: `$PASS`
+
+  其中，`$DOMAIN`为服务器的域名/子域名，`$USER`与`$PASS`分别为服务端启动gost代理时设定的用户名和密码
 
 ## 5. 美国手机和支付
 
@@ -1444,4 +1478,3 @@ docker run --rm curlimages/curl --connect-timeout 2 -x "socks5://172.17.0.2:4000
 欢迎补充和改善！
 
 （全文完）
-
