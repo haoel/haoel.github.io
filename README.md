@@ -1404,7 +1404,7 @@ sudo docker run -d --name gost-warp \
 - **内存泄漏问题**。 目前，`warp-svc` 这个程序有内存泄漏的问题（参看 [#124](https://github.com/haoel/haoel.github.io/issues/124)），所以，你需要定期重启服务。你可以使用cronjob来重启服务。运行 `crontab -e`，然后添加如下内容：
 
   ```cron
-  0 * * * * /bin/systemctl resetart warp-svc
+  0 * * * * /bin/systemctl restart warp-svc
   ```
 
 - **文件描述符不足**。另外，如果你的程序出现文件描述不足的情况：
